@@ -65,24 +65,11 @@
   <hr style="width: 100%; height: 1px; color: #FFF;">
   </hr>
   <div class="title">
-    <div class="TitleCornerLeft">
+    <div class="TitleCornerLeft" style = "max-width: 740px; overflow: hidden;">
       <p class="QuizName"><%=quiz.getQuiz().getQuizName()%></p>
       <p class="Category">Category: <%=quiz.getQuiz().getCategory()%></p>
     </div>
-    <div class="TitleCenter">
-      <%
-        if(quiz.getQuiz().isPracticeMode()){
-      %>
-      <p>Practice Mode</p>
-      <%
-      }else{
-      %>
-      <p>Questions Answered: <%=quiz.getQuiz().getCurrentQuestionNumber() - 1%>/<%=quiz.getQuiz().getTotalNumberOfQuestions()%></p>
-      <%
-        }
-      %>
-    </div>
-    <div class="TitleCornerRight">
+    <div class="TitleCornerRight" style = "max-width: 740px; overflow: hidden;">
       <div class="creator">
         <a href="profile.html" class="creatorLink"><%=quiz.getQuiz().getCreatorName()%></a>
         <img src="assets/creatorWhite.svg" alt="Creator Icon" height="40" ; />
@@ -94,6 +81,21 @@
         <p class="QuizTag">#<%=tags.get(i)%></p>
         <%}%>
       </div>
+    </div>
+  </div>
+  <div style = "display: flex; width: 100%; align-items: center; justify-content: center; position: relative";>
+    <div class="TitleCenter" style = "position: absolute; top: -80px; width: fit-content;">
+      <%
+        if(quiz.getQuiz().isPracticeMode()){
+      %>
+      <p>Practice Mode</p>
+      <%
+      }else{
+      %>
+      <p>Questions Answered: <%=quiz.getQuiz().getCurrentQuestionNumber() - 1%>/<%=quiz.getQuiz().getTotalNumberOfQuestions()%></p>
+      <%
+        }
+      %>
     </div>
   </div>
   <!-- !!!Multiple Page Code!!! -->
@@ -276,14 +278,11 @@
   <hr style="width: 100%; height: 1px; color: #FFF;">
   </hr>
   <div class="title">
-    <div class="TitleCornerLeft">
+    <div class="TitleCornerLeft" style = "max-width: 700px; overflow: hidden;">
       <p class="QuizName"><%=quiz.getQuiz().getQuizName()%></p>
       <p class="Category">Category: <%=quiz.getQuiz().getCategory()%></p>
     </div>
-    <div class="TitleCenter">
-      <p>Total Number of Questions: <%=quiz.getQuiz().getTotalNumberOfQuestions()%></p>
-    </div>
-    <div class="TitleCornerRight">
+    <div class="TitleCornerRight" style = "max-width: 700px; overflow: hidden;">
       <div class="creator">
         <a href="profile.html" class="creatorLink"><%=quiz.getQuiz().getCreatorName()%></a>
         <img src="assets/creatorWhite.svg" alt="Creator Icon" height="40" ; />
@@ -297,10 +296,23 @@
       </div>
     </div>
   </div>
+  <div style = "display: flex; width: 100%; align-items: center; justify-content: center; position: relative;">
+    <div class="TitleCenter" style = "position: absolute; top: -80px; width: fit-content;">
+      <p>Total Number of Questions: <%=quiz.getQuiz().getTotalNumberOfQuestions()%></p>
+    </div>
+  </div>
   <div class=content>
     <div class="contentCard">
-      <div class="contentDiv">
+      <%
+        if(quiz.getQuiz().getTotalNumberOfQuestions() == 1){
+      %>
+      <div class="contentDiv" style="align-items: center; justify-content: center">
         <%
+          }else{
+        %>
+        <div class="contentDiv">
+        <%
+          }
           ArrayList<Question> questions = quiz.getQuiz().getQuestionList();
           for(int j = 0; j < questions.size(); j++){
         %>
