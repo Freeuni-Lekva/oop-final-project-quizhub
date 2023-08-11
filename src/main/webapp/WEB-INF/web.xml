@@ -20,6 +20,18 @@
   <servlet-name>OnePageServlet</servlet-name>
   <servlet-class>Servlets.OnePageServlet</servlet-class>
 </servlet>
+<servlet>
+  <servlet-name>QuizCreateServlet</servlet-name>
+  <servlet-class>Servlets.QuizCreateServlet</servlet-class>
+</servlet>
+<servlet>
+  <servlet-name>QuestionCreateServlet</servlet-name>
+  <servlet-class>Servlets.QuestionCreateServlet</servlet-class>
+</servlet>
+<servlet>
+  <servlet-name>HomePageServlet</servlet-name>
+  <servlet-class>Servlets.HomePageServlet</servlet-class>
+</servlet>
 <servlet-mapping>
   <servlet-name>LogInServlet</servlet-name>
   <url-pattern>/LogIn</url-pattern>
@@ -35,5 +47,17 @@
 <servlet-mapping>
   <servlet-name>OnePageServlet</servlet-name>
   <url-pattern>/OnePage</url-pattern>
+</servlet-mapping>
+<servlet-mapping>
+  <servlet-name>QuizCreateServlet</servlet-name>
+  <url-pattern>/QuizCreate</url-pattern>
+</servlet-mapping>
+<servlet-mapping>
+  <servlet-name>QuestionCreateServlet</servlet-name>
+  <url-pattern>/QuestionCreate</url-pattern>
+</servlet-mapping>
+<servlet-mapping>
+  <servlet-name>HomePageServlet</servlet-name>
+  <url-pattern>/HomePage</url-pattern>
 </servlet-mapping>
 </web-app>
