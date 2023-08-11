@@ -24,7 +24,7 @@ public class TestUserCreatesQuiz extends TestCase {
     @Override
     public void setUp() throws Exception {
         super.setUp();
-        User user = new User("D.Gelashvili");
+        User user = new User("D.Gelashvili", false);
         userCreatesQuiz = new UserCreatesQuiz(user);
         userCreatesQuiz1 = new UserCreatesQuiz(user);
         quizDatabase = new QuizDatabase();
