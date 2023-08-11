@@ -24,6 +24,11 @@ public class OnePageServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        if (request.getSession().getAttribute("result page") != null) {
+            request.getSession().setAttribute("result page", null);
+            request.getRequestDispatcher("ResultPage.jsp").forward(request, response);
+            return;
+        }
         if (request.getParameter("button").equals("exitButton")) {
             request.getRequestDispatcher("Homepage.jsp").forward(request, response);
             return;
