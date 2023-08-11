@@ -184,30 +184,48 @@ public class Quiz {
         return ls;
     }
 
-    public String getProcessedAnswer(ArrayList<String> answer, int type){
+    public String getProcessedAnswer(ArrayList<String> answer, int type, boolean caseS){
         String ans = "";
-        if (answer != null && answer.size() != 0) {
+        if (answer == null) {
+            return "empty";
+        }
+        ArrayList<String> answers = new ArrayList<>();
+        for(int i = 0; i < answer.size(); i++){
+            if(answer.get(i).equals(""))
+                continue;
+            if(!caseS)
+                answers.add(answer.get(i).toLowerCase());
+            else
+                answers.add(answer.get(i));
+        }
+        if (answers.size() != 0) {
             if(type == 1 || type == 3 || type == 4){
-                ans = answer.get(0);
+                if(!caseS)
+                    ans = answers.get(0).toLowerCase();
+                else
+                    ans = answers.get(0);
             }else if(type == 2 || type == 5 || type == 6){
-                ans = "";
-                ArrayList<String> answers = new ArrayList<>();
-                for(int i = 0; i < answer.size() - 1; i++){
-                    if(answer.get(i) == "")
-                        continue;
-                    answers.add(answer.get(i));
-                }
                 for(int i = 0; i < answers.size() - 1; i++){
-                    if(answers.get(i) == "")
+                    if(answers.get(i).equals(""))
                         continue;
-                    ans += answers.get(i);
+                    if(!caseS)
+                        ans += answers.get(i).toLowerCase();
+                    else
+                        ans += answers.get(i);
                     ans += ", ";
                 }
-                ans += answers.get(answers.size()-1);
+                if(!caseS)
+                    ans += answers.get(answers.size()-1).toLowerCase();
+                else
+                    ans += answers.get(answers.size()-1);
             }else{
-                for(int i = 0; i < answer.size()-1; i++){
-                    String ln = matching(answer.get(i));
-                    if(ln == "")
+                for(int i = 0; i < answers.size()-1; i++){
+                    String ln;
+                    if(!caseS)
+                        ln = matching(answers.get(i)).toLowerCase();
+                    else
+                        ln = matching(answers.get(i));
+                    if(ln.equals(""))
                         continue;
                     ans += ln;
                     ans += "@#";
