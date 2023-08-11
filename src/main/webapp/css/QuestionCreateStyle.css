@@ -74,6 +74,7 @@ button {
   font-weight: 400;
   line-height: normal;
   background: #ff3e3e;
+  cursor: pointer;
 }
 
 .eButton:hover {
@@ -95,6 +96,7 @@ button {
   font-weight: 400;
   line-height: normal;
   background: #2bc990;
+  cursor: pointer;
 }
 
 .sButton:hover {
@@ -240,6 +242,7 @@ button {
   border-radius: 50%;
   border: none;
   background: #11023d;
+  cursor: pointer;
 }
 
 .nButton:hover {

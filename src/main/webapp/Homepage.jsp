@@ -3,6 +3,8 @@
 <%@ page import="Usernames_DAO.models.User" %>
 <%@ page import="javafx.util.Pair" %>
 <%@ page import="java.sql.SQLException" %>
+<%@ page import="java.sql.ParameterMetaData" %>
+<%@ page import="Usernames_DAO.manager.HomepageManager" %>
 <!DOCTYPE html>
 <html>
 
@@ -17,6 +19,7 @@
     request.getSession().setAttribute("pageType", null);
     request.getSession().setAttribute("QuestionType", null);
     request.getSession().setAttribute("rowNum", null);
+    request.getSession().setAttribute("result page", null);
   %>
 </head>
 
@@ -53,7 +56,7 @@
       <p>My Recent Activities</p>
     </div>
     <div class="quizCards">
-      <div class="whiteQuizCard">
+      <div class="whiteQuizCard" style="overflow: hidden">
         <div style="position: relative;">
           <p class="whiteQuizCardTitleStroke">Taken Quizzes</p>
           <p class="whiteQuizCardTitle">Taken Quizzes</p>
@@ -78,10 +81,6 @@
             script += "</div>";
             out.println(script);
           }
-          //<div class="whiteQuiz">
-          //  <img src="assets/done.svg" alt="Quiz taken" width="20" height="20" ; />
-          //  <a href="QuizSummary?quizID=1234" class="whiteQuizCardLink">quiz_name</a>
-          //</div>
           if(takenQuizes.size() < 10){
             out.println(
                     "<p class=\"whiteQuizNoMore\">No More Quiz Taken.</p>"
@@ -89,7 +88,7 @@
           }
         %>
       </div>
-      <div class="whiteQuizCard">
+      <div class="whiteQuizCard" style = "overflow: hidden">
         <div style="position: relative;">
           <p class="whiteQuizCardTitleStroke">Created Quizzes</p>
           <p class="whiteQuizCardTitle">Created Quizzes</p>
@@ -179,9 +178,9 @@
   <div class="announcements">
     <div class="announcement">
       <div class="announcementTitle">
-        <p class="announcementName">Announcement_name</p>
+        <p class="announcementName" style="max-width: 600px; overflow: hidden">Announcement_name</p>
         <div class="creatorTitle">
-          <a href="profile.html" class="creatorLink">Creator_name</a>
+          <a href="profile.html" class="creatorLink" style="max-width: 300px; overflow: hidden">Creator_name</a>
           <img src="assets/creator.svg" alt="Creator icon" width="40"></img>
         </div>
       </div>
@@ -207,13 +206,12 @@
         </div>
         <div class="friendQuiz">
           <p>Taken Quiz:&nbsp</p>
-          <a href="QuizSummary.html" class="friendQuizName">quiz_name</a>
+          <a href="QuizSummary.html" class="friendQuizName" style="max-width: 200px; overflow: hidden">quiz_name</a>
         </div>
       </div>
       <div class="activity">
         <div class="friendName">
           <hr class="dot">
-          </hr>
           <p>Friend_name</p>
           <img src="assets/medal2.svg" alt="Medal icon" width="25" height="25"></img>
           <img src="assets/medal5.svg" alt="Medal icon" width="25" height="25"></img>
@@ -256,135 +254,56 @@
       </div>
     </div>
     <div class="blueQuizCard">
-      <div class="blueQuizCardTitle">
-        <p>Popular</p>
-        <label class="switch">
-          <input name = "popularOrRecent" type="checkbox">
-          <span class="slider round"></span>
-        </label>
-        <p>Recent</p>
-      </div>
-      <div class="blueQuizCardList">
+        <div class="blueQuizCardTitle">
+          <p>Popular</p>
+          <form action = "HomePage" method = "POST">
+            <%
+              if (request.getSession().getAttribute("recentSwitch") == null){
+            %>
+              <button name = "popularOrRecent" class = "switch">
+                <hr style="width: 24px; height: 24px; border-radius: 50%; background: white; margin-left: 3px;">
+              </button>
+            <%
+              }else{
+            %>
+              <button name = "popularOrRecent" class = "switch" style = "direction: rtl;">
+                <hr style="width: 24px; height: 24px; border-radius: 50%; background: white; margin-right: 3px;">
+              </button>
+            <%
+              }
+            %>
+          </form>
+          <p>Recent</p>
+        </div>
+      <div class="blueQuizCardList" style="overflow:hidden;">
+        <%
+          List<Pair<Pair<Integer, Integer>, String>> ls;
+          HomepageManager homepageManager = (HomepageManager) request.getSession().getAttribute("homepage");
+          try {
+            if (request.getSession().getAttribute("recentSwitch") == null) {
+              ls = homepageManager.getPopularQuizes();
+            } else {
+              ls = homepageManager.getRecentQuizes();
+            }
+          } catch (SQLException e) {
+            throw new RuntimeException(e);
+          }
+
+          for (int i = 0; i < ls.size(); i++) {
+        %>
         <div class="blueQuizCardLine">
           <div class="blueQuizCardQuiz">
             <img src="assets/doneBlue.svg" alt="Quiz" width="22" height="22" ; />
-            <a href="QuizSummary.html" class="blueQuizCardLink">quiz_name</a>
+            <a href="<%="QuizSummary.jsp?quizID=" + ls.get(i).getKey().getKey()%>" class="blueQuizCardLink"><%=ls.get(i).getValue()%></a>
           </div>
           <div class="blueQuizCardParticipant">
-            10425
+            <%=ls.get(i).getKey().getValue()%>
             <img src="assets/group.svg" alt="Participants Icon" width="22" height="22" ; />
           </div>
         </div>
-        <div class="blueQuizCardLine">
-          <div class="blueQuizCardQuiz">
-            <img src="assets/doneBlue.svg" alt="Quiz" width="22" height="22" ; />
-            <a href="QuizSummary.html" class="blueQuizCardLink">quiz_name</a>
-          </div>
-          <div class="blueQuizCardParticipant">
-            10425
-            <img src="assets/group.svg" alt="Participants Icon" width="22" height="22" ; />
-          </div>
-        </div>
-        <div class="blueQuizCardLine">
-          <div class="blueQuizCardQuiz">
-            <img src="assets/doneBlue.svg" alt="Quiz" width="22" height="22" ; />
-            <a href="QuizSummary.html" class="blueQuizCardLink">quiz_name</a>
-          </div>
-          <div class="blueQuizCardParticipant">
-            10425
-            <img src="assets/group.svg" alt="Participants Icon" width="22" height="22" ; />
-          </div>
-        </div>
-        <div class="blueQuizCardLine">
-          <div class="blueQuizCardQuiz">
-            <img src="assets/doneBlue.svg" alt="Quiz" width="22" height="22" ; />
-            <a href="QuizSummary.html" class="blueQuizCardLink">quiz_name</a>
-          </div>
-          <div class="blueQuizCardParticipant">
-            10425
-            <img src="assets/group.svg" alt="Participants Icon" width="22" height="22" ; />
-          </div>
-        </div>
-        <div class="blueQuizCardLine">
-          <div class="blueQuizCardQuiz">
-            <img src="assets/doneBlue.svg" alt="Quiz" width="22" height="22" ; />
-            <a href="QuizSummary.html" class="blueQuizCardLink">quiz_name</a>
-          </div>
-          <div class="blueQuizCardParticipant">
-            10425
-            <img src="assets/group.svg" alt="Participants Icon" width="22" height="22" ; />
-          </div>
-        </div>
-        <div class="blueQuizCardLine">
-          <div class="blueQuizCardQuiz">
-            <img src="assets/doneBlue.svg" alt="Quiz" width="22" height="22" ; />
-            <a href="QuizSummary.html" class="blueQuizCardLink">quiz_name</a>
-          </div>
-          <div class="blueQuizCardParticipant">
-            10425
-            <img src="assets/group.svg" alt="Participants Icon" width="22" height="22" ; />
-          </div>
-        </div>
-        <div class="blueQuizCardLine">
-          <div class="blueQuizCardQuiz">
-            <img src="assets/doneBlue.svg" alt="Quiz" width="22" height="22" ; />
-            <a href="QuizSummary.html" class="blueQuizCardLink">quiz_name</a>
-          </div>
-          <div class="blueQuizCardParticipant">
-            10425
-            <img src="assets/group.svg" alt="Participants Icon" width="22" height="22" ; />
-          </div>
-        </div>
-        <div class="blueQuizCardLine">
-          <div class="blueQuizCardQuiz">
-            <img src="assets/doneBlue.svg" alt="Quiz" width="22" height="22" ; />
-            <a href="QuizSummary.html" class="blueQuizCardLink">quiz_name</a>
-          </div>
-          <div class="blueQuizCardParticipant">
-            10425
-            <img src="assets/group.svg" alt="Participants Icon" width="22" height="22" ; />
-          </div>
-        </div>
-        <div class="blueQuizCardLine">
-          <div class="blueQuizCardQuiz">
-            <img src="assets/doneBlue.svg" alt="Quiz" width="22" height="22" ; />
-            <a href="QuizSummary.html" class="blueQuizCardLink">quiz_name</a>
-          </div>
-          <div class="blueQuizCardParticipant">
-            10425
-            <img src="assets/group.svg" alt="Participants Icon" width="22" height="22" ; />
-          </div>
-        </div>
-        <div class="blueQuizCardLine">
-          <div class="blueQuizCardQuiz">
-            <img src="assets/doneBlue.svg" alt="Quiz" width="22" height="22" ; />
-            <a href="QuizSummary.html" class="blueQuizCardLink">quiz_name</a>
-          </div>
-          <div class="blueQuizCardParticipant">
-            10425
-            <img src="assets/group.svg" alt="Participants Icon" width="22" height="22" ; />
-          </div>
-        </div>
-        <div class="blueQuizCardLine">
-          <div class="blueQuizCardQuiz">
-            <img src="assets/doneBlue.svg" alt="Quiz" width="22" height="22" ; />
-            <a href="QuizSummary.html" class="blueQuizCardLink">quiz_name</a>
-          </div>
-          <div class="blueQuizCardParticipant">
-            10425
-            <img src="assets/group.svg" alt="Participants Icon" width="22" height="22" ; />
-          </div>
-        </div>
-        <div class="blueQuizCardLine">
-          <div class="blueQuizCardQuiz">
-            <img src="assets/doneBlue.svg" alt="Quiz" width="22" height="22" ; />
-            <a href="QuizSummary.html" class="blueQuizCardLink">quiz_name</a>
-          </div>
-          <div class="blueQuizCardParticipant">
-            10425
-            <img src="assets/group.svg" alt="Participants Icon" width="22" height="22" ; />
-          </div>
-        </div>
+        <%
+          }
+        %>
       </div>
     </div>
   </div>

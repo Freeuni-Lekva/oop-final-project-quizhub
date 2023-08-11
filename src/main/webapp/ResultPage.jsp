@@ -10,6 +10,7 @@
     <link rel="stylesheet" type="text/css" href="css/QuizResultStyle.css" />
     <%
         UserTakesQuiz quiz = (UserTakesQuiz) request.getSession().getAttribute("quiz");
+        request.getSession().setAttribute("result page", 1);
     %>
 </head>
 

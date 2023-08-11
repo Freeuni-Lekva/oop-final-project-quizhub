@@ -105,6 +105,7 @@ button {
   text-align: center;
   font-size: 32px;
   letter-spacing: 0.64px;
+  cursor: pointer;
 }
 
 .cButton:hover {
