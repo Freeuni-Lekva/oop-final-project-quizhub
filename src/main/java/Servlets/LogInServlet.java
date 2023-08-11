@@ -1,5 +1,6 @@
 package Servlets;
 
+import Usernames_DAO.manager.HomepageManager;
 import Usernames_DAO.manager.accountManager;
 import Usernames_DAO.models.User;
 
@@ -37,11 +38,16 @@ public class LogInServlet extends HttpServlet {
         if (loginIsSuccessful) {
             User user = null;
             try {
-                user = new User(username);
+                user = new User(username, false);
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
             request.getSession().setAttribute("user", user);
+            try {
+                request.getSession().setAttribute("homepage", new HomepageManager());
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
             request.getRequestDispatcher("Homepage.jsp").forward(request, response);
         }
         else
