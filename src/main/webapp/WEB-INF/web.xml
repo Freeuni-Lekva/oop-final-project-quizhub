@@ -12,6 +12,14 @@
   <servlet-name>RegisterServlet</servlet-name>
   <servlet-class>Servlets.RegisterServlet</servlet-class>
 </servlet>
+<servlet>
+  <servlet-name>MultiPageServlet</servlet-name>
+  <servlet-class>Servlets.MultiPageServlet</servlet-class>
+</servlet>
+<servlet>
+  <servlet-name>OnePageServlet</servlet-name>
+  <servlet-class>Servlets.OnePageServlet</servlet-class>
+</servlet>
 <servlet-mapping>
   <servlet-name>LogInServlet</servlet-name>
   <url-pattern>/LogIn</url-pattern>
@@ -19,5 +27,13 @@
 <servlet-mapping>
   <servlet-name>RegisterServlet</servlet-name>
   <url-pattern>/Register</url-pattern>
+</servlet-mapping>
+<servlet-mapping>
+  <servlet-name>MultiPageServlet</servlet-name>
+  <url-pattern>/MultiPage</url-pattern>
+</servlet-mapping>
+<servlet-mapping>
+  <servlet-name>OnePageServlet</servlet-name>
+  <url-pattern>/OnePage</url-pattern>
 </servlet-mapping>
 </web-app>
