@@ -6,6 +6,8 @@ import DATABASE_DAO.QuizDatabases.TagsQuizDatabase;
 import DATABASE_DAO.UsernameDatabases.RankingsDatabase;
 import Questions_DAO.Question;
 import Questions_DAO.Quiz;
+import Usernames_DAO.models.UserAction;
+import javafx.util.Pair;
 
 import java.sql.SQLException;
 import java.sql.Timestamp;
@@ -13,11 +15,11 @@ import java.util.ArrayList;
 
 public class SummaryQuiz {
     private QuizDatabase quizDatabase;
-    private RankingsDatabase rankingsDatabase;
+    private final RankingsDatabase rankingsDatabase;
     private TagsQuizDatabase tagsQuizDatabase;
     private QuizQuestionDatabase quizQuestionDatabase;
-    private Quiz quiz;
-    private int quiz_id;
+    private final Quiz quiz;
+    private final int quiz_id;
     public SummaryQuiz (int quiz_id) throws SQLException {
         quizDatabase = new QuizDatabase();
         rankingsDatabase = new RankingsDatabase();
@@ -32,6 +34,7 @@ public class SummaryQuiz {
 
         this.quiz_id = quiz_id;
     }
+    public int getQuiz_id() { return quiz_id; }
     public String getQuizName() { return quiz.getQuizName(); }
     public String getCreatorName() { return quiz.getCreatorName(); }
     public String getCategory() { return quiz.getCategory(); }
@@ -50,10 +53,34 @@ public class SummaryQuiz {
         return timeToString(rankingsDatabase.quizMinTime(quiz_id));
     }
     public Integer getAverageScore() throws SQLException {
-        return Math.toIntExact(Math.round((rankingsDatabase.quizAverageScore(quiz_id) / quiz.getMaxScore()) * 100));
+        return toPercent(rankingsDatabase.quizAverageScore(quiz_id), quiz.getMaxScore());
     }
     public Integer getBestScore() throws SQLException {
-        return Math.toIntExact(Math.round(((double) rankingsDatabase.quizMaxScore(quiz_id) / quiz.getMaxScore()) * 100));
+        return toPercent((double) rankingsDatabase.quizMaxScore(quiz_id), quiz.getMaxScore());
+    }
+    public ArrayList<Pair<String, Pair<Integer, String>>> getRecentPerfomers() throws SQLException {
+        ArrayList<UserAction> ls1 = rankingsDatabase.quizGetPerformers(quiz_id, "Recent");
+        return getPairs(ls1);
+    }
+
+    public ArrayList<Pair<String, Pair<Integer, String>>> getTopPerfomers(String date) throws SQLException {
+        ArrayList<UserAction> ls1 = rankingsDatabase.quizGetPerformers(quiz_id, date);
+        return getPairs(ls1);
+    }
+
+    private ArrayList<Pair<String, Pair<Integer, String>>> getPairs(ArrayList<UserAction> ls1) {
+        ArrayList<Pair<String, Pair<Integer, String>>> ls = new ArrayList<>();
+        for (UserAction element : ls1) {
+            String username = element.getUsername();
+            int score = Integer.parseInt(element.getScore());
+            int time = (int)(element.getActionTime().getTime());
+            ls.add(new Pair<>(username, new Pair<>(toPercent((double) score, quiz.getMaxScore()), timeToString(time))));
+        }
+        return ls;
+    }
+
+    public static Integer toPercent(double score, int max_score) {
+        return Math.toIntExact(Math.round((score / max_score) * 100));
     }
 
     public static String timeToString(int t) {

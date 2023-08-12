@@ -16,10 +16,10 @@ public class HomePageServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        if (request.getSession().getAttribute("recentSwitch") == null) {
-            request.getSession().setAttribute("recentSwitch", "Recent");
+        if (request.getParameter("popularOrRecent").equals("recent")) {
+            request.getSession().setAttribute("recentSwitch", "popular");
         } else {
-            request.getSession().setAttribute("recentSwitch", null);
+            request.getSession().setAttribute("recentSwitch", "recent");
         }
         request.getRequestDispatcher("Homepage.jsp").forward(request, response);
     }
