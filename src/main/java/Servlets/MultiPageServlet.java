@@ -27,8 +27,11 @@ public class MultiPageServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        if (request.getSession().getAttribute("quizSummaryPage") != null) {
+            request.getRequestDispatcher("QuizSummary.jsp").forward(request, response);
+            return;
+        }
         if (request.getSession().getAttribute("result page") != null) {
-            request.getSession().setAttribute("result page", null);
             request.getRequestDispatcher("ResultPage.jsp").forward(request, response);
             return;
         }
