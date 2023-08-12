@@ -27,6 +27,9 @@
       }
       request.getSession().setAttribute("quiz", quiz);
     }
+    request.getSession().setAttribute("LastDaySwitch", null);
+    request.getSession().setAttribute("order", null);
+    request.getSession().setAttribute("quizSummaryPage", null);
   %>
 </head>
 <%
@@ -308,174 +311,174 @@
       %>
       <div class="contentDiv" style="align-items: center; justify-content: center">
         <%
-          }else{
+        }else{
         %>
         <div class="contentDiv">
-        <%
-          }
-          ArrayList<Question> questions = quiz.getQuiz().getQuestionList();
-          for(int j = 0; j < questions.size(); j++){
-        %>
-        <div class="questionDiv">
           <%
-            Question curr = questions.get(j);
-            int type = curr.getType();
-            if(type == 1){
+            }
+            ArrayList<Question> questions = quiz.getQuiz().getQuestionList();
+            for(int j = 0; j < questions.size(); j++){
           %>
-          <div class="questionResponse">
-            <div class="questionResponseQ">
-              <p><%=curr.getQuestion()%></p>
-            </div>
-            <div class="questionResponseA">
-              <textarea name = "<%=j%>questionResponseAns" class="questionResponseTextArea"
-                        placeholder="Type your answer here..."></textarea>
-            </div>
-          </div>
-          <%
-          }else if(type == 2){
-            ArrayList<String> cuts = curr.getTexts();
-          %>
-          <div class="fillInTheBlank">
-            <div class="fillInTheBlankTitle">
-              <p>Fill in the blank spaces:</p>
-            </div>
-            <div class="fillInTheBlankDiv">
-              <div class="fillInTheBlankContent">
-                <p>
-                  <%
-                    for(int i = 0; i < cuts.size() - 1; i++){
-                  %>
-                  <%=cuts.get(i)%> <input type="text" name = "<%=j%>fillInBlank<%=i%>">
-                  <%
-                    }
-                  %>
-                  <%=cuts.get(cuts.size() - 1)%>
-                </p>
-              </div>
-            </div>
-          </div>
-          <%
-          }else if(type == 3){
-          %>
-          <div class="multipleChoice">
-            <div class="multipleChoiceTitle">
-              <p>Select only one correct option:</p>
-            </div>
-            <div class="multipleChoiceQ">
-              <p><%=curr.getQuestion()%></p>
-            </div>
-            <div class="multipleChoiceA">
-              <%
-                ArrayList<String> possibleAnswers = curr.getPossibleAnswers();
-                for(int i = 0; i < possibleAnswers.size(); i++){
-              %>
-              <label class="multipleChoiceAns">
-                <input type="radio" name="<%=j%>multiChoice" value="<%=i%>">
-                <%=possibleAnswers.get(i)%>
-              </label>
-              <%
-                }
-              %>
-            </div>
-          </div>
-          <%
-          }else if(type == 4) {
-          %>
-          <div class="pictureResponse">
-            <div class="pictureResponseQuest">
-              <img src= "<%=curr.getImage()%>" alt="Question Picture" class="pictureResponseP" ; />
-              <div class="pictureResponseQ">
+          <div class="questionDiv">
+            <%
+              Question curr = questions.get(j);
+              int type = curr.getType();
+              if(type == 1){
+            %>
+            <div class="questionResponse">
+              <div class="questionResponseQ">
                 <p><%=curr.getQuestion()%></p>
               </div>
+              <div class="questionResponseA">
+              <textarea name = "<%=j%>questionResponseAns" class="questionResponseTextArea"
+                        placeholder="Type your answer here..."></textarea>
+              </div>
             </div>
-            <div class="pictureResponseA">
+            <%
+            }else if(type == 2){
+              ArrayList<String> cuts = curr.getTexts();
+            %>
+            <div class="fillInTheBlank">
+              <div class="fillInTheBlankTitle">
+                <p>Fill in the blank spaces:</p>
+              </div>
+              <div class="fillInTheBlankDiv">
+                <div class="fillInTheBlankContent">
+                  <p>
+                    <%
+                      for(int i = 0; i < cuts.size() - 1; i++){
+                    %>
+                    <%=cuts.get(i)%> <input type="text" name = "<%=j%>fillInBlank<%=i%>">
+                    <%
+                      }
+                    %>
+                    <%=cuts.get(cuts.size() - 1)%>
+                  </p>
+                </div>
+              </div>
+            </div>
+            <%
+            }else if(type == 3){
+            %>
+            <div class="multipleChoice">
+              <div class="multipleChoiceTitle">
+                <p>Select only one correct option:</p>
+              </div>
+              <div class="multipleChoiceQ">
+                <p><%=curr.getQuestion()%></p>
+              </div>
+              <div class="multipleChoiceA">
+                <%
+                  ArrayList<String> possibleAnswers = curr.getPossibleAnswers();
+                  for(int i = 0; i < possibleAnswers.size(); i++){
+                %>
+                <label class="multipleChoiceAns">
+                  <input type="radio" name="<%=j%>multiChoice" value="<%=i%>">
+                  <%=possibleAnswers.get(i)%>
+                </label>
+                <%
+                  }
+                %>
+              </div>
+            </div>
+            <%
+            }else if(type == 4) {
+            %>
+            <div class="pictureResponse">
+              <div class="pictureResponseQuest">
+                <img src= "<%=curr.getImage()%>" alt="Question Picture" class="pictureResponseP" ; />
+                <div class="pictureResponseQ">
+                  <p><%=curr.getQuestion()%></p>
+                </div>
+              </div>
+              <div class="pictureResponseA">
               <textarea name = "<%=j%>pictureResponseAns" class="pictureResponseTextArea"
                         placeholder="Type your answer here..."></textarea>
-            </div>
-          </div>
-          <%
-          }else if(type == 5) {
-          %>
-          <div class="multiAnswer">
-            <div class="multiAnswerQ">
-              <p><%=curr.getQuestion()%></p>
-            </div>
-            <div class="multiAnswerA">
-              <%
-                for(int i = 0; i < curr.getAnswers().size(); i++){
-              %>
-              <div class="multiAnswerAns">
-                <textarea name = "<%=j%>multiAnswer<%=i%>" class="multiAnswerTextArea" placeholder="Type your answer here..."></textarea>
               </div>
-              <%
-                }
-              %>
             </div>
-          </div>
-          <%
-          }else if(type == 6){
-          %>
-          <div class="multipleChoice">
-            <div class="multipleChoiceTitle">
-              <p>You can select multiple answers:</p>
-            </div>
-            <div class="multipleChoiceQ">
-              <p><%=curr.getQuestion()%></p>
-            </div>
-            <div class="multipleChoiceA">
-              <%
-                ArrayList<String> possibleAnswers = curr.getPossibleAnswers();
-                for(int i = 0; i < possibleAnswers.size(); i++){
-              %>
-              <label class="multipleChoiceAns">
-                <input type="checkbox" name="<%=j%>multiChoiceMultiAns<%=i%>" value="<%=i%>">
-                <%=possibleAnswers.get(i)%>
-              </label>
-              <%
-                }
-              %>
-            </div>
-          </div>
-          <%
-          }else if(type == 7){
-            ArrayList<String> rows = curr.getPossibleAnswers();
-          %>
-          <div class = "matching">
-            <div class = "matchingTitle">
-              <p><%=curr.getQuestion()%></p>
-            </div>
-            <div class = "matchingColumns">
-              <div class = matchColumnLeft>
-                <%for(int i = 0; i < rows.size()/2; i++){%>
-                <div class = "matchColumnRow">
-                  <div class = "matchingQDiv">
-                    <p class = "matchingQ"><%=rows.get(i)%></p>
-                  </div>
-                  <input type="text" name="<%=Integer.toString(j) + "matching" + Integer.toString(i)%>" class = "matchingA">
+            <%
+            }else if(type == 5) {
+            %>
+            <div class="multiAnswer">
+              <div class="multiAnswerQ">
+                <p><%=curr.getQuestion()%></p>
+              </div>
+              <div class="multiAnswerA">
+                <%
+                  for(int i = 0; i < curr.getAnswers().size(); i++){
+                %>
+                <div class="multiAnswerAns">
+                  <textarea name = "<%=j%>multiAnswer<%=i%>" class="multiAnswerTextArea" placeholder="Type your answer here..."></textarea>
                 </div>
-                <%}%>
-              </div>
-              <div class = matchColumnRight>
-                <%for(int i = 0; i < rows.size()/2; i++){%>
-                <div class = "matchColumnRow">
-                  <p class = "matchingNum"><%=i+1%></p>
-                  <div class = "matchingQDiv">
-                    <p class = "matchingQ"><%=rows.get(rows.size()/2 + i)%></p>
-                  </div>
-                </div>
-                <%}%>
+                <%
+                  }
+                %>
               </div>
             </div>
+            <%
+            }else if(type == 6){
+            %>
+            <div class="multipleChoice">
+              <div class="multipleChoiceTitle">
+                <p>You can select multiple answers:</p>
+              </div>
+              <div class="multipleChoiceQ">
+                <p><%=curr.getQuestion()%></p>
+              </div>
+              <div class="multipleChoiceA">
+                <%
+                  ArrayList<String> possibleAnswers = curr.getPossibleAnswers();
+                  for(int i = 0; i < possibleAnswers.size(); i++){
+                %>
+                <label class="multipleChoiceAns">
+                  <input type="checkbox" name="<%=j%>multiChoiceMultiAns<%=i%>" value="<%=i%>">
+                  <%=possibleAnswers.get(i)%>
+                </label>
+                <%
+                  }
+                %>
+              </div>
+            </div>
+            <%
+            }else if(type == 7){
+              ArrayList<String> rows = curr.getPossibleAnswers();
+            %>
+            <div class = "matching">
+              <div class = "matchingTitle">
+                <p><%=curr.getQuestion()%></p>
+              </div>
+              <div class = "matchingColumns">
+                <div class = matchColumnLeft>
+                  <%for(int i = 0; i < rows.size()/2; i++){%>
+                  <div class = "matchColumnRow">
+                    <div class = "matchingQDiv">
+                      <p class = "matchingQ"><%=rows.get(i)%></p>
+                    </div>
+                    <input type="text" name="<%=Integer.toString(j) + "matching" + Integer.toString(i)%>" class = "matchingA">
+                  </div>
+                  <%}%>
+                </div>
+                <div class = matchColumnRight>
+                  <%for(int i = 0; i < rows.size()/2; i++){%>
+                  <div class = "matchColumnRow">
+                    <p class = "matchingNum"><%=i+1%></p>
+                    <div class = "matchingQDiv">
+                      <p class = "matchingQ"><%=rows.get(rows.size()/2 + i)%></p>
+                    </div>
+                  </div>
+                  <%}%>
+                </div>
+              </div>
+            </div>
+            <%}%>
           </div>
-          <%}%>
+          <%
+            }
+          %>
         </div>
-        <%
-          }
-        %>
       </div>
     </div>
-  </div>
-  <%
+      <%
     }
   %>
 </form>

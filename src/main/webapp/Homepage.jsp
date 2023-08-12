@@ -20,6 +20,11 @@
     request.getSession().setAttribute("QuestionType", null);
     request.getSession().setAttribute("rowNum", null);
     request.getSession().setAttribute("result page", null);
+    request.getSession().setAttribute("quizSummary", null);
+    request.getSession().setAttribute("LastDaySwitch", null);
+    request.getSession().setAttribute("order", null);
+    request.getSession().setAttribute("TopFriendsSwitch", null);
+    request.getSession().setAttribute("quizSummaryPage", null);
   %>
 </head>
 
@@ -167,147 +172,145 @@
           out.println(script);
         %>
       </div>
-    <hr style="width: 100%; height: 1px;">
+      <hr style="width: 100%; height: 1px;">
+      </hr>
+      <div class="recents">
+        <a href="Profile.html" class="whiteQuizCardLink">My Activity History</a>
+      </div>
+    </div>
+    <hr style="width: 1px; height: 840px;">
     </hr>
-    <div class="recents">
-      <a href="Profile.html" class="whiteQuizCardLink">My Activity History</a>
-    </div>
-  </div>
-  <hr style="width: 1px; height: 840px;">
-  </hr>
-  <div class="announcements">
-    <div class="announcement">
-      <div class="announcementTitle">
-        <p class="announcementName" style="max-width: 600px; overflow: hidden">Announcement_name</p>
-        <div class="creatorTitle">
-          <a href="profile.html" class="creatorLink" style="max-width: 300px; overflow: hidden">Creator_name</a>
-          <img src="assets/creator.svg" alt="Creator icon" width="40"></img>
+    <div class="announcements">
+      <div class="announcement">
+        <div class="announcementTitle">
+          <p class="announcementName" style="max-width: 600px; overflow: hidden">Announcement_name</p>
+          <div class="creatorTitle">
+            <a href="profile.html" class="creatorLink" style="max-width: 300px; overflow: hidden">Creator_name</a>
+            <img src="assets/creator.svg" alt="Creator icon" width="40"></img>
+          </div>
         </div>
-      </div>
-      <div class="announcementContent">
-        <p class="text"> Lorem ipsum.
-        <p>
+        <div class="announcementContent">
+          <p class="text"> Lorem ipsum.
+          <p>
+        </div>
       </div>
     </div>
-  </div>
-  <div class="rightPannel">
-    <div class="friendsActivities">
-      <div class="friendsActivitiesTitle">
-        <p>Friends' Activities</p>
-      </div>
-      <div class="timeLine"></div>
-      <div class="activity">
-        <div class="friendName">
-          <hr class="dot">
+    <div class="rightPannel">
+      <div class="friendsActivities">
+        <div class="friendsActivitiesTitle">
+          <p>Friends' Activities</p>
+        </div>
+        <div class="timeLine"></div>
+        <div class="activity">
+          <div class="friendName">
+            <hr class="dot">
+            </hr>
+            <p>Friend_name</p>
+            <img src="assets/medal4.svg" alt="Medal icon" width="25" height="25"></img>
+            <img src="assets/medal6.svg" alt="Medal icon" width="25" height="25"></img>
+          </div>
+          <div class="friendQuiz">
+            <p>Taken Quiz:&nbsp</p>
+            <a href="QuizSummary.html" class="friendQuizName" style="max-width: 200px; overflow: hidden">quiz_name</a>
+          </div>
+        </div>
+        <div class="activity">
+          <div class="friendName">
+            <hr class="dot">
+            <p>Friend_name</p>
+            <img src="assets/medal2.svg" alt="Medal icon" width="25" height="25"></img>
+            <img src="assets/medal5.svg" alt="Medal icon" width="25" height="25"></img>
+            <img src="assets/medal6.svg" alt="Medal icon" width="25" height="25"></img>
+          </div>
+          <div class="friendQuiz">
+            <p>Taken Quiz:&nbsp</p>
+            <a href="QuizSummary.html" class="friendQuizName">quiz_name</a>
+          </div>
+        </div>
+        <div class="activity">
+          <div class="friendName">
+            <hr class="dot">
+            </hr>
+            <p>Friend_name</p>
+            <img src="assets/medal1.svg" alt="Medal icon" width="25" height="25"></img>
+          </div>
+          <div class="friendQuiz">
+            <p>Taken Quiz:&nbsp</p>
+            <a href="QuizSummary.html" class="friendQuizName">quiz_name</a>
+          </div>
+        </div>
+        <div class="activity">
+          <div class="friendName">
+            <hr class="dot">
+            </hr>
+            <p>Friend_name</p>
+            <img src="assets/medal3.svg" alt="Medal icon" width="25" height="25"></img>
+            <img src="assets/medal5.svg" alt="Medal icon" width="25" height="25"></img>
+          </div>
+          <div class="friendQuiz">
+            <p>Taken Quiz:&nbsp</p>
+            <a href="QuizSummary.html" class="friendQuizName">quiz_name</a>
+          </div>
+        </div>
+        <div class="noMoreActivity">
+          <hr class="emptyDot">
           </hr>
-          <p>Friend_name</p>
-          <img src="assets/medal4.svg" alt="Medal icon" width="25" height="25"></img>
-          <img src="assets/medal6.svg" alt="Medal icon" width="25" height="25"></img>
-        </div>
-        <div class="friendQuiz">
-          <p>Taken Quiz:&nbsp</p>
-          <a href="QuizSummary.html" class="friendQuizName" style="max-width: 200px; overflow: hidden">quiz_name</a>
+          <p>No More Activities.</p>
         </div>
       </div>
-      <div class="activity">
-        <div class="friendName">
-          <hr class="dot">
-          <p>Friend_name</p>
-          <img src="assets/medal2.svg" alt="Medal icon" width="25" height="25"></img>
-          <img src="assets/medal5.svg" alt="Medal icon" width="25" height="25"></img>
-          <img src="assets/medal6.svg" alt="Medal icon" width="25" height="25"></img>
-        </div>
-        <div class="friendQuiz">
-          <p>Taken Quiz:&nbsp</p>
-          <a href="QuizSummary.html" class="friendQuizName">quiz_name</a>
-        </div>
-      </div>
-      <div class="activity">
-        <div class="friendName">
-          <hr class="dot">
-          </hr>
-          <p>Friend_name</p>
-          <img src="assets/medal1.svg" alt="Medal icon" width="25" height="25"></img>
-        </div>
-        <div class="friendQuiz">
-          <p>Taken Quiz:&nbsp</p>
-          <a href="QuizSummary.html" class="friendQuizName">quiz_name</a>
-        </div>
-      </div>
-      <div class="activity">
-        <div class="friendName">
-          <hr class="dot">
-          </hr>
-          <p>Friend_name</p>
-          <img src="assets/medal3.svg" alt="Medal icon" width="25" height="25"></img>
-          <img src="assets/medal5.svg" alt="Medal icon" width="25" height="25"></img>
-        </div>
-        <div class="friendQuiz">
-          <p>Taken Quiz:&nbsp</p>
-          <a href="QuizSummary.html" class="friendQuizName">quiz_name</a>
-        </div>
-      </div>
-      <div class="noMoreActivity">
-        <hr class="emptyDot">
-        </hr>
-        <p>No More Activities.</p>
-      </div>
-    </div>
-    <div class="blueQuizCard">
+      <div class="blueQuizCard">
         <div class="blueQuizCardTitle">
           <p>Popular</p>
           <form action = "HomePage" method = "POST">
             <%
-              if (request.getSession().getAttribute("recentSwitch") == null){
+              boolean recent = false;
+              if (request.getSession().getAttribute("recentSwitch") == null || request.getSession().getAttribute("recentSwitch").equals("popular")){
             %>
-              <button name = "popularOrRecent" class = "switch">
-                <hr style="width: 24px; height: 24px; border-radius: 50%; background: white; margin-left: 3px;">
-              </button>
+            <button name = "popularOrRecent" value = "popular" class = "switch">
+              <hr style="width: 24px; height: 24px; border-radius: 50%; background: white; margin-left: 3px;">
+            </button>
             <%
-              }else{
+            }else{
             %>
-              <button name = "popularOrRecent" class = "switch" style = "direction: rtl;">
-                <hr style="width: 24px; height: 24px; border-radius: 50%; background: white; margin-right: 3px;">
-              </button>
+            <button name = "popularOrRecent" value = "recent" class = "switch" style = "direction: rtl;">
+              <hr style="width: 24px; height: 24px; border-radius: 50%; background: white; margin-right: 3px;">
+            </button>
             <%
+                recent = true;
               }
             %>
           </form>
           <p>Recent</p>
         </div>
-      <div class="blueQuizCardList" style="overflow:hidden;">
-        <%
-          List<Pair<Pair<Integer, Integer>, String>> ls;
-          HomepageManager homepageManager = (HomepageManager) request.getSession().getAttribute("homepage");
-          try {
-            if (request.getSession().getAttribute("recentSwitch") == null) {
-              ls = homepageManager.getPopularQuizes();
-            } else {
+        <div class="blueQuizCardList" style="overflow:hidden;">
+          <%
+            List<Pair<Pair<Integer, Integer>, String>> ls;
+            HomepageManager homepageManager = (HomepageManager) request.getSession().getAttribute("homepage");
+            if(recent){
               ls = homepageManager.getRecentQuizes();
+            }else{
+              ls = homepageManager.getPopularQuizes();
             }
-          } catch (SQLException e) {
-            throw new RuntimeException(e);
-          }
 
-          for (int i = 0; i < ls.size(); i++) {
-        %>
-        <div class="blueQuizCardLine">
-          <div class="blueQuizCardQuiz">
-            <img src="assets/doneBlue.svg" alt="Quiz" width="22" height="22" ; />
-            <a href="<%="QuizSummary.jsp?quizID=" + ls.get(i).getKey().getKey()%>" class="blueQuizCardLink"><%=ls.get(i).getValue()%></a>
+            for (int i = 0; i < ls.size(); i++) {
+          %>
+          <div class="blueQuizCardLine">
+            <div class="blueQuizCardQuiz">
+              <img src="assets/doneBlue.svg" alt="Quiz" width="22" height="22" ; />
+              <a href="<%="QuizSummary.jsp?quizID=" + ls.get(i).getKey().getKey()%>" class="blueQuizCardLink"><%=ls.get(i).getValue()%></a>
+            </div>
+            <div class="blueQuizCardParticipant">
+              <%=ls.get(i).getKey().getValue()%>
+              <img src="assets/group.svg" alt="Participants Icon" width="22" height="22" ; />
+            </div>
           </div>
-          <div class="blueQuizCardParticipant">
-            <%=ls.get(i).getKey().getValue()%>
-            <img src="assets/group.svg" alt="Participants Icon" width="22" height="22" ; />
-          </div>
+          <%
+            }
+          %>
         </div>
-        <%
-          }
-        %>
       </div>
     </div>
   </div>
-</div>
 </div>
 </body>
 

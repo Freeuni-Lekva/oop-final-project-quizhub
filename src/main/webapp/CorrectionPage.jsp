@@ -109,11 +109,11 @@
                                             }
                                             ans.add(tmp);
                                             for(int i = 0; i < ans.size(); i++){
-                                            %>
+                                    %>
                                     <%=ans.get(i)%>
                                     <br>
-                                            <%
-                                                }
+                                    <%
+                                        }
                                     }else{
                                     %>
                                     <%=userAns%>

@@ -32,6 +32,14 @@
   <servlet-name>HomePageServlet</servlet-name>
   <servlet-class>Servlets.HomePageServlet</servlet-class>
 </servlet>
+<servlet>
+  <servlet-name>QuizSummaryServlet</servlet-name>
+  <servlet-class>Servlets.QuizSummaryServlet</servlet-class>
+</servlet>
+<servlet>
+  <servlet-name>QuizResultServlet</servlet-name>
+  <servlet-class>Servlets.QuizResultServlet</servlet-class>
+</servlet>
 <servlet-mapping>
   <servlet-name>LogInServlet</servlet-name>
   <url-pattern>/LogIn</url-pattern>
@@ -59,5 +67,13 @@
 <servlet-mapping>
   <servlet-name>HomePageServlet</servlet-name>
   <url-pattern>/HomePage</url-pattern>
+</servlet-mapping>
+<servlet-mapping>
+  <servlet-name>QuizSummaryServlet</servlet-name>
+  <url-pattern>/QuizSummary</url-pattern>
+</servlet-mapping>
+<servlet-mapping>
+  <servlet-name>QuizResultServlet</servlet-name>
+  <url-pattern>/QuizResult</url-pattern>
 </servlet-mapping>
 </web-app>
