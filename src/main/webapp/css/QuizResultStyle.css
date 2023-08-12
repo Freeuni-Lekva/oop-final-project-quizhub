@@ -287,7 +287,7 @@ button {
 }
 
 .cellDiv {
-  max-height: 200px;
+  max-height: 215px;
   width: 365px;
   overflow-wrap: break-word;
   overflow-y: auto;
@@ -360,6 +360,7 @@ button {
   font-weight: 400;
   line-height: normal;
   letter-spacing: 0.8px;
+  cursor: pointer;
 }
 
 .sButton:hover {
@@ -417,16 +418,22 @@ button {
   z-index: 1;
 }
 
-.dropdown-content a {
+.dropdown-content button {
+  outline: none;
+  border: 1px solid #11023d;
+  width: 80px;
   color: #11023d;
   font-size: 24px;
   padding: 12px 12px;
   text-decoration: none;
   display: block;
+  cursor: pointer;
 }
 
-.dropdown-content a:hover {
-  background-color: #f1f1f1;
+.dropdown-content button:hover {
+  outline: none;
+  color: white;
+  background-color: #11023d;
 }
 
 .dropdown:hover .dropdown-content {
@@ -494,62 +501,21 @@ button {
 }
 
 .switch {
-  position: relative;
-  display: inline-block;
-  width: 36px;
-  height: 22px;
-}
-
-.switch input {
-  opacity: 0;
-  width: 0;
-  height: 0;
-}
-
-.slider {
-  position: absolute;
+  height: 30px;
+  width: 50px;
   cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: #11023d;
-  -webkit-transition: 0.4s;
-  transition: 0.4s;
+  border-radius: 30px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  outline: none;
+  border: none;
+  background: #11023d;
 }
 
-.slider:before {
-  position: absolute;
-  content: "";
-  height: 14px;
-  width: 14px;
-  left: 4px;
-  bottom: 4px;
-  background-color: white;
-  -webkit-transition: 0.4s;
-  transition: 0.4s;
-}
-
-input:checked + .slider {
-  background-color: #11023d;
-}
-
-input:focus + .slider {
-  box-shadow: 0 0 1px #11023d;
-}
-
-input:checked + .slider:before {
-  -webkit-transform: translateX(14px);
-  -ms-transform: translateX(14px);
-  transform: translateX(14px);
-}
-
-.slider.round {
-  border-radius: 34px;
-}
-
-.slider.round:before {
-  border-radius: 50%;
+.switch:hover {
+  outline: none;
+  border: none;
 }
 
 .topPerformersName {

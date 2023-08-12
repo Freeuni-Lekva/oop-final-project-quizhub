@@ -6,6 +6,13 @@
     <title>QuizHub</title>
     <link rel="stylesheet" type="text/css" href="css/QuizCreateStyle.css" />
 </head>
+<%
+    request.getSession().setAttribute("quizSummary", null);
+    request.getSession().setAttribute("LastDaySwitch", null);
+    request.getSession().setAttribute("order", null);
+    request.getSession().setAttribute("TopFriendsSwitch", null);
+    request.getSession().setAttribute("quizSummaryPage", null);
+%>
 
 <body style="overflow-y: hidden;">
 <form action = "QuizCreate" method = "POST">

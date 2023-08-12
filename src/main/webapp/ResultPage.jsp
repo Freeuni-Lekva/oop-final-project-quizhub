@@ -1,6 +1,10 @@
 <%@ page import="Usernames_DAO.UserQuiz.UserTakesQuiz" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="Questions_DAO.Question" %>
+<%@ page import="javafx.util.Pair" %>
+<%@ page import="java.sql.SQLException" %>
+<%@ page import="Usernames_DAO.UserQuiz.SummaryQuiz" %>
+<%@ page import="Usernames_DAO.models.User" %>
 <!DOCTYPE html>
 <html>
 
@@ -9,12 +13,15 @@
     <title>QuizHub</title>
     <link rel="stylesheet" type="text/css" href="css/QuizResultStyle.css" />
     <%
+        User user = (User) request.getSession().getAttribute("user");
         UserTakesQuiz quiz = (UserTakesQuiz) request.getSession().getAttribute("quiz");
+        SummaryQuiz quizSummary = (SummaryQuiz) request.getSession().getAttribute("quizSummary");
         request.getSession().setAttribute("result page", 1);
     %>
 </head>
 
 <body style="overflow-y: hidden;">
+<form action = "QuizResult" method = "POST">
 <div class="top">
     <div style="display: flex; flex-direction: row; gap: 5px; align-items: center; padding: 10px">
         <a href="Homepage.jsp"><img src="logo.png" alt="QuizHub Logo" width="80" height="80" ; /></a>
@@ -28,8 +35,8 @@
             <button type="submit" class="cButton"><img src="assets/search.svg" alt="Search button" width="34"
                                                        height="34" ; /></button>
         </div>
-        <button type="addQuiz" class="addButton"><img src="assets/addQuiz.svg" alt="Add quiz button" width="50"
-                                                      height="50" ; /></button>
+        <a href = "QuizCreate.jsp" class="addButton"><img src="assets/addQuiz.svg" alt="Add quiz button" width="50"
+                                                          height="50" ; /></a>
         <div style="position: relative;">
             <a href="Inbox.html" style="margin-top: -2px"><img src="assets/inbox.svg" alt="Inbox button" height="52"
                                                                ; /></a>
@@ -40,7 +47,6 @@
     </div>
 </div>
 <hr style="width: 100%; height: 1px; color: #FFF;">
-</hr>
 <div class="content">
     <div class="leftPannel">
         <div class="QuizCard">
@@ -72,14 +78,14 @@
                                     <th>Your Answer</th>
                                     <th>Correct Answer</th>
                                 </tr>
-                                    <%
-                                        ArrayList<ArrayList<String>> userAnswers= quiz.getQuiz().getUserAnswers();
-                                        ArrayList<ArrayList<String>> correctAnswers = quiz.getQuiz().getCorrectAnswers();
-                                        ArrayList<Integer> userScores = quiz.getQuiz().getUserScores();
-                                        ArrayList<Integer> scores = quiz.getQuiz().getQuestionScores();
-                                        ArrayList<Question> questions = quiz.getQuiz().getQuestionList();
-                                        for(int j = 0; j < quiz.getQuiz().getTotalNumberOfQuestions(); j++){
-                                    %>
+                                <%
+                                    ArrayList<ArrayList<String>> userAnswers= quiz.getQuiz().getUserAnswers();
+                                    ArrayList<ArrayList<String>> correctAnswers = quiz.getQuiz().getCorrectAnswers();
+                                    ArrayList<Integer> userScores = quiz.getQuiz().getUserScores();
+                                    ArrayList<Integer> scores = quiz.getQuiz().getQuestionScores();
+                                    ArrayList<Question> questions = quiz.getQuiz().getQuestionList();
+                                    for(int j = 0; j < quiz.getQuiz().getTotalNumberOfQuestions(); j++){
+                                %>
                                 <tr>
                                     <td><%=j+1%></td>
                                     <td><%=userScores.get(j)%>/<%=scores.get(j)%></td>
@@ -148,9 +154,9 @@
                                         </div>
                                     </td>
                                 </tr>
-                                    <%
-                                        }
-                                    %>
+                                <%
+                                    }
+                                %>
                             </table>
                         </div>
                     </div>
@@ -168,17 +174,27 @@
         </div>
     </div>
     <hr style="width: 1px; height: 840px;">
-    </hr>
     <div class="rightPannel">
         <div class="outlineContainer">
             <div class="upperContainer">
                 <div class="topPerformersTitle">
                     <div class="topPerfSwitcher">
                         <p class="topPerformersName">Top Performers</p>
-                        <label class="switch">
-                            <input type="checkbox">
-                            <span class="slider round"></span>
-                        </label>
+                        <%
+                            if (request.getSession().getAttribute("TopFriendsSwitch") == null || request.getSession().getAttribute("TopFriendsSwitch").equals("top")){
+                        %>
+                        <button name = "TopOrFriends" value = "top" class = "switch">
+                            <hr style="width: 24px; height: 24px; border-radius: 50%; background: white; margin-left: 3px;">
+                        </button>
+                        <%
+                        }else{
+                        %>
+                        <button name = "TopOrFriends" value = "friends" class = "switch" style = "direction: rtl;">
+                            <hr style="width: 24px; height: 24px; border-radius: 50%; background: white; margin-right: 3px;">
+                        </button>
+                        <%
+                            }
+                        %>
                         <p class="topPerformersName">Friends</p>
                     </div>
                 </div>
@@ -190,86 +206,24 @@
                                 <th>Score</th>
                                 <th>Time</th>
                             </tr>
+                            <%
+                                ArrayList<Pair<String, Pair<Integer, String>>> ls;
+                                if (request.getSession().getAttribute("TopFriendsSwitch") == null || request.getSession().getAttribute("TopFriendsSwitch").equals("top")) {
+                                    ls = quizSummary.getTopPerfomers("All Time");
+                                } else {
+                                    ls = quizSummary.getFriendPerformers(user);
+                                }
+
+                                for (int i = 0; i < ls.size(); i++) {
+                            %>
                             <tr>
-                                <td>User_name</td>
-                                <td>64%</td>
-                                <td>1h 54m</td>
+                                <td><%=ls.get(i).getKey()%></td>
+                                <td><%=ls.get(i).getValue().getKey()%>%</td>
+                                <td><%=ls.get(i).getValue().getValue()%></td>
                             </tr>
-                            <tr>
-                                <td>User_name</td>
-                                <td>64%</td>
-                                <td>1h 54m</td>
-                            </tr>
-                            <tr>
-                                <td>User_name</td>
-                                <td>64%</td>
-                                <td>1h 54m</td>
-                            </tr>
-                            <tr>
-                                <td>User_name</td>
-                                <td>64%</td>
-                                <td>1h 54m</td>
-                            </tr>
-                            <tr>
-                                <td>User_name</td>
-                                <td>64%</td>
-                                <td>1h 54m</td>
-                            </tr>
-                            <tr>
-                                <td>User_name</td>
-                                <td>64%</td>
-                                <td>1h 54m</td>
-                            </tr>
-                            <tr>
-                                <td>User_name</td>
-                                <td>64%</td>
-                                <td>1h 54m</td>
-                            </tr>
-                            <tr>
-                                <td>User_name</td>
-                                <td>64%</td>
-                                <td>1h 54m</td>
-                            </tr>
-                            <tr>
-                                <td>User_name</td>
-                                <td>64%</td>
-                                <td>1h 54m</td>
-                            </tr>
-                            <tr>
-                                <td>User_name</td>
-                                <td>64%</td>
-                                <td>1h 54m</td>
-                            </tr>
-                            <tr>
-                                <td>User_name</td>
-                                <td>64%</td>
-                                <td>1h 54m</td>
-                            </tr>
-                            <tr>
-                                <td>User_name</td>
-                                <td>64%</td>
-                                <td>1h 54m</td>
-                            </tr>
-                            <tr>
-                                <td>User_name</td>
-                                <td>64%</td>
-                                <td>1h 54m</td>
-                            </tr>
-                            <tr>
-                                <td>User_name</td>
-                                <td>64%</td>
-                                <td>1h 54m</td>
-                            </tr>
-                            <tr>
-                                <td>User_name</td>
-                                <td>64%</td>
-                                <td>1h 54m</td>
-                            </tr>
-                            <tr>
-                                <td>User_name</td>
-                                <td>64%</td>
-                                <td>1h 54m</td>
-                            </tr>
+                            <%
+                                }
+                            %>
                         </table>
                     </div>
                 </div>
@@ -280,11 +234,31 @@
                     <div class="orderBy">
                         <p>Order By:</p>
                         <div class="dropdown">
-                            <button class="dropbtn">Score</button>
+                            <button class="dropbtn" disabled>
+                                <%
+                                    String ordering;
+                                    if(request.getSession().getAttribute("order") == null || request.getSession().getAttribute("order").equals("score")){
+                                        ordering = "score";
+                                %>
+                                Score
+                                <%
+                                }else if (request.getSession().getAttribute("order").equals("date")){
+                                    ordering = "date";
+                                %>
+                                Date
+                                <%
+                                }else{
+                                    ordering = "time";
+                                %>
+                                Time
+                                <%
+                                    }
+                                %>
+                            </button>
                             <div class="dropdown-content">
-                                <a href="QuizSummary.html">Date</a>
-                                <a href="QuizSummary.html">Score</a>
-                                <a href="QuizSummary.html">Time</a>
+                                <button name = "ordering" value = "date">Date</button>
+                                <button name = "ordering" value = "score">Score</button>
+                                <button name = "ordering" value = "time">Time</button>
                             </div>
                         </div>
                     </div>
@@ -297,86 +271,18 @@
                                 <th>Score</th>
                                 <th>Time</th>
                             </tr>
+                            <%
+                                ls = quizSummary.getMyHistory(user, ordering);
+                                for(int i = 0; i < ls.size(); i++){
+                            %>
                             <tr>
-                                <td>15:45:07 12/07/2023</td>
-                                <td>64%</td>
-                                <td>1h 54m</td>
+                                <td><%=ls.get(i).getKey()%></td>
+                                <td><%=ls.get(i).getValue().getKey()%>%</td>
+                                <td><%=ls.get(i).getValue().getValue()%></td>
                             </tr>
-                            <tr>
-                                <td>15:45:07 12/07/2023</td>
-                                <td>64%</td>
-                                <td>1h 54m</td>
-                            </tr>
-                            <tr>
-                                <td>15:45:07 12/07/2023</td>
-                                <td>64%</td>
-                                <td>1h 54m</td>
-                            </tr>
-                            <tr>
-                                <td>15:45:07 12/07/2023</td>
-                                <td>64%</td>
-                                <td>1h 54m</td>
-                            </tr>
-                            <tr>
-                                <td>15:45:07 12/07/2023</td>
-                                <td>64%</td>
-                                <td>1h 54m</td>
-                            </tr>
-                            <tr>
-                                <td>15:45:07 12/07/2023</td>
-                                <td>64%</td>
-                                <td>1h 54m</td>
-                            </tr>
-                            <tr>
-                                <td>15:45:07 12/07/2023</td>
-                                <td>64%</td>
-                                <td>1h 54m</td>
-                            </tr>
-                            <tr>
-                                <td>15:45:07 12/07/2023</td>
-                                <td>64%</td>
-                                <td>1h 54m</td>
-                            </tr>
-                            <tr>
-                                <td>15:45:07 12/07/2023</td>
-                                <td>64%</td>
-                                <td>1h 54m</td>
-                            </tr>
-                            <tr>
-                                <td>15:45:07 12/07/2023</td>
-                                <td>64%</td>
-                                <td>1h 54m</td>
-                            </tr>
-                            <tr>
-                                <td>15:45:07 12/07/2023</td>
-                                <td>64%</td>
-                                <td>1h 54m</td>
-                            </tr>
-                            <tr>
-                                <td>15:45:07 12/07/2023</td>
-                                <td>64%</td>
-                                <td>1h 54m</td>
-                            </tr>
-                            <tr>
-                                <td>15:45:07 12/07/2023</td>
-                                <td>64%</td>
-                                <td>1h 54m</td>
-                            </tr>
-                            <tr>
-                                <td>15:45:07 12/07/2023</td>
-                                <td>64%</td>
-                                <td>1h 54m</td>
-                            </tr>
-                            <tr>
-                                <td>15:45:07 12/07/2023</td>
-                                <td>64%</td>
-                                <td>1h 54m</td>
-                            </tr>
-                            <tr>
-                                <td>15:45:07 12/07/2023</td>
-                                <td>64%</td>
-                                <td>1h 54m</td>
-                            </tr>
+                            <%
+                                }
+                            %>
                         </table>
                     </div>
                 </div>
@@ -384,6 +290,6 @@
         </div>
     </div>
 </div>
+</form>
 </body>
-
 </html>
