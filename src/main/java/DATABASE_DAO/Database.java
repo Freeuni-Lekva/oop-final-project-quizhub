@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 
 public class Database {
 
-    public Connection connection;
+    private static Connection connection;
 
     public Database() throws SQLException {
         BasicDataSource dataSource = new BasicDataSource();
@@ -16,6 +16,10 @@ public class Database {
         dataSource.setPassword("1234");
         connection = DriverManager.getConnection("jdbc:mysql://localhost:3306",
                 "root", "1234");
+    }
+
+    public static Connection getConnection() {
+        return connection;
     }
 
     public void clearTable(String tablename) throws SQLException {

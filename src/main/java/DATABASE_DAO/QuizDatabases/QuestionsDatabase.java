@@ -11,7 +11,6 @@ public class QuestionsDatabase extends Database {
 
     public static String tablename = "QuestionsTable";
     public QuestionsDatabase() throws SQLException {
-        super();
     }
 
     private String ListToString(ArrayList<String> list){
@@ -31,7 +30,7 @@ public class QuestionsDatabase extends Database {
         String answersStr = ListToString(answers);
         String insertStatement = "INSERT INTO " + tablename + " (id, type, question, possibleAnswers, answer, ordered, caseSensitive) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?)";
-        PreparedStatement preparedStatement = connection.prepareStatement(insertStatement);
+        PreparedStatement preparedStatement = getConnection().prepareStatement(insertStatement);
         preparedStatement.setInt(1, id);
         preparedStatement.setInt(2, type);
         preparedStatement.setString(3, question);
@@ -46,7 +45,7 @@ public class QuestionsDatabase extends Database {
 
     public Question getQuestion(int id) throws SQLException {
         Question question = null;
-        Statement statement = connection.createStatement();
+        Statement statement = getConnection().createStatement();
         statement.execute("USE " + "my_database;");
         ResultSet resultSet = statement.executeQuery("SELECT* FROM " + tablename + " WHERE id =" + id + ";");
         int type = -1;

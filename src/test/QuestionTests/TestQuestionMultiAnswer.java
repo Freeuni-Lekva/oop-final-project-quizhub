@@ -2,10 +2,12 @@ package QuestionTests;
 
 import Questions_DAO.QuestionMultiAnswer;
 import junit.framework.TestCase;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
 public class TestQuestionMultiAnswer extends TestCase {
+    @Test
     public void testVariables() {
         QuestionMultiAnswer qma1 = new QuestionMultiAnswer("Name 5 Europian City", "London//Paris//Tbilisi//Kiev//Madrid",
                                                                                                 false, false);
@@ -27,8 +29,12 @@ public class TestQuestionMultiAnswer extends TestCase {
         assertTrue(qma3.isOrdered());
         assertFalse(qma3.isCaseSensitive());
         assertEquals(3, qma3.getMaxScore());
+
+        assertNull(qma1.getImage());
+        assertNull(qma2.getTexts());
     }
 
+    @Test
     public void testGetAnswers() {
         QuestionMultiAnswer qma1 = new QuestionMultiAnswer("Name 5 Europian City", "London//Paris//Tbilisi//Kiev//Madrid",
                 false, false);
@@ -59,6 +65,7 @@ public class TestQuestionMultiAnswer extends TestCase {
         assertEquals("USA", ls3.get(2));
     }
 
+    @Test
     public void testCheckAnswer() {
         QuestionMultiAnswer qma1 = new QuestionMultiAnswer("Name 5 Europian City", "London//Paris//Tbilisi//Kiev//Madrid",
                 false, false);

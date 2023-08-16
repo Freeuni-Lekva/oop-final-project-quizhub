@@ -2,10 +2,12 @@ package QuestionTests;
 
 import Questions_DAO.QuestionResponse;
 import junit.framework.TestCase;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
 public class TestQuestionResponse extends TestCase {
+    @Test
     public void testVariables() {
         QuestionResponse qr1 = new QuestionResponse("What is 3 x 4?", "12", false, false);
         assertEquals("What is 3 x 4?", qr1.getQuestion());
@@ -18,8 +20,12 @@ public class TestQuestionResponse extends TestCase {
         assertFalse(qr2.isOrdered());
         assertTrue(qr2.isCaseSensitive());
         assertEquals(1, qr2.getMaxScore());
+
+        assertNull(qr1.getTexts());
+        assertNull(qr2.getImage());
     }
 
+    @Test
     public void testGetAnswers() {
         QuestionResponse qr1 = new QuestionResponse("What is 3 x 4?", "12", false, false);
         ArrayList<String> ls1 = qr1.getAnswers();
@@ -37,6 +43,7 @@ public class TestQuestionResponse extends TestCase {
         assertEquals("TBILISI", ls3.get(0));
     }
 
+    @Test
     public void testCheckAnswer() {
         QuestionResponse qr1 = new QuestionResponse("What is 3 x 4?", "12", false, false);
         ArrayList<String> ls1 = new ArrayList<>();
@@ -64,6 +71,4 @@ public class TestQuestionResponse extends TestCase {
         ls3.add("Tbilisi");
         assertEquals(1, qr3.checkAnswer(ls3));
     }
-
-
 }

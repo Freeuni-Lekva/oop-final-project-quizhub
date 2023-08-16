@@ -2,11 +2,13 @@ package QuestionTests;
 
 import Questions_DAO.QuestionMultiChoice;
 import junit.framework.TestCase;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.Collections;
 
 public class TestQuestionMultiChoice extends TestCase {
+    @Test
     public void testVariables() {
         QuestionMultiChoice qmc1 = new QuestionMultiChoice("What is 3 x 4?", "10//11//12//13", "12",
                                                                                                 false, true);
@@ -21,8 +23,12 @@ public class TestQuestionMultiChoice extends TestCase {
         assertTrue(qmc2.isOrdered());
         assertTrue(qmc2.isCaseSensitive());
         assertEquals(1, qmc2.getMaxScore());
+
+        assertNull(qmc1.getTexts());
+        assertNull(qmc2.getImage());
     }
 
+    @Test
     public void testGetPossibleAnswers() {
         QuestionMultiChoice qmc1 = new QuestionMultiChoice("What is 3 x 4?", "10//11//12//13", "12",
                                                                                                 false, true);
@@ -43,6 +49,7 @@ public class TestQuestionMultiChoice extends TestCase {
         assertEquals("Batumi", ls2.get(2));
     }
 
+    @Test
     public void testGetAnswers() {
         QuestionMultiChoice qmc1 = new QuestionMultiChoice("What is 3 x 4?", "10//11//12//13", "12",
                                                                                                 false, true);
@@ -57,6 +64,7 @@ public class TestQuestionMultiChoice extends TestCase {
         assertEquals("Tbilisi", ls2.get(0));
     }
 
+    @Test
     public void testCheckAnswer() {
         QuestionMultiChoice qmc1 = new QuestionMultiChoice("What is 3 x 4?", "10//11//12//13", "12",
                                                                                                 false, true);

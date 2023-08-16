@@ -28,17 +28,25 @@ public class Quiz {
         this.creator_name = creator_name;
         this.category = category;
         this.description = description;
-        this.tags = tags;
+        if (tags != null) {
+            this.tags = new ArrayList<>(tags);
+        } else {
+            this.tags = null;
+        }
         this.random = random;
-        this.questions = questions;
-        if (isRandom() && questions != null) {
-            Collections.shuffle(questions);
+        if (questions != null) {
+            this.questions = new ArrayList<>(questions);
+        } else {
+            this.questions = null;
+        }
+        if (isRandom() && this.questions != null) {
+            Collections.shuffle(this.questions);
         }
         this.onePage = onePage;
         this.immediateCorrection = immediateCorrection;
         this.practiceMode = practiceMode;
 
-        if (questions != null) {
+        if (this.questions != null) {
             max_score = calculateMaxScore();
         } else {
             max_score = 0;
@@ -48,9 +56,9 @@ public class Quiz {
         userAnswers = new ArrayList<>();
         userScore = 0;
 
-        if (questions != null) {
+        if (this.questions != null) {
             question = new ArrayList<>();
-            for (int i = 0; i < questions.size(); i++){
+            for (int i = 0; i < this.questions.size(); i++){
                 question.add(i);
             }
             frequencies = new HashMap<>();
@@ -200,37 +208,22 @@ public class Quiz {
         }
         if (answers.size() != 0) {
             if(type == 1 || type == 3 || type == 4){
-                if(!caseS)
-                    ans = answers.get(0).toLowerCase();
-                else
-                    ans = answers.get(0);
+                ans = answers.get(0);
             }else if(type == 2 || type == 5 || type == 6){
                 for(int i = 0; i < answers.size() - 1; i++){
-                    if(answers.get(i).equals(""))
-                        continue;
-                    if(!caseS)
-                        ans += answers.get(i).toLowerCase();
-                    else
-                        ans += answers.get(i);
+                    ans += answers.get(i);
                     ans += ", ";
                 }
-                if(!caseS)
-                    ans += answers.get(answers.size()-1).toLowerCase();
-                else
-                    ans += answers.get(answers.size()-1);
+                ans += answers.get(answers.size()-1);
             }else{
                 for(int i = 0; i < answers.size()-1; i++){
                     String ln;
-                    if(!caseS)
-                        ln = matching(answers.get(i)).toLowerCase();
-                    else
-                        ln = matching(answers.get(i));
-                    if(ln.equals(""))
-                        continue;
+                    ln = matching(answers.get(i));
+                    if(ln.equals("")) continue;
                     ans += ln;
                     ans += "@#";
                 }
-                ans += matching(answer.get(answer.size()-1));
+                ans += matching(answers.get(answers.size() - 1));
             }
         }
         if (ans.equals("")){

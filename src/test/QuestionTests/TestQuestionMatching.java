@@ -2,12 +2,14 @@ package QuestionTests;
 
 import Questions_DAO.QuestionMatching;
 import junit.framework.TestCase;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
 import java.util.Collections;
 
 public class TestQuestionMatching extends TestCase {
+    @Test
     public void testVariables() {
         QuestionMatching qm1 = new QuestionMatching("Match these two columns:", "3x4//7-2//36/6//6//5//12",
                                                             "3x4//12//7-2//5//36/6//6", false, false);
@@ -24,8 +26,12 @@ public class TestQuestionMatching extends TestCase {
         assertTrue(qm2.isOrdered());
         assertFalse(qm2.isCaseSensitive());
         assertEquals(3, qm2.getMaxScore());
+
+        assertNull(qm1.getTexts());
+        assertNull(qm2.getImage());
     }
 
+    @Test
     public void testGetPossibleAnswers() {
         QuestionMatching qm1 = new QuestionMatching("Match these two columns:", "3x4//7-2//36/6//6//5//12",
                                                             "3x4//12//7-2//5//36/6//6", false, false);
@@ -47,6 +53,7 @@ public class TestQuestionMatching extends TestCase {
         assertEquals("Carrot", qm2.getPossibleAnswers().get(5));
     }
 
+    @Test
     public void testGetAnswers() {
         QuestionMatching qm1 = new QuestionMatching("Match these two columns:", "3x4//7-2//36/6//6//5//12",
                 "3x4//12//7-2//5//36/6//6", false, false);
@@ -67,6 +74,7 @@ public class TestQuestionMatching extends TestCase {
         assertEquals(ls2, qm2.getAnswers());
     }
 
+    @Test
     public void testCheckAnswer() {
         QuestionMatching qm1 = new QuestionMatching("Match these two columns:", "3x4//7-2//36/6//6//5//12",
                 "3x4//12//7-2//5//36/6//6", false, false);

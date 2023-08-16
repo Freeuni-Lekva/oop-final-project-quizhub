@@ -2,11 +2,13 @@ package QuestionTests;
 
 import Questions_DAO.QuestionMultiChoiceMultiAnswer;
 import junit.framework.TestCase;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.Collections;
 
 public class TestQuestionMultiChoiceMultiAnswer extends TestCase {
+    @Test
     public void testVariables() {
         QuestionMultiChoiceMultiAnswer qmcma1 = new QuestionMultiChoiceMultiAnswer("x^2 - 5x + 6 = 0. x = ?",
                                                     "1//2//3//6", "2//3", false, true);
@@ -21,8 +23,12 @@ public class TestQuestionMultiChoiceMultiAnswer extends TestCase {
         assertTrue(qmcma2.isOrdered());
         assertTrue(qmcma2.isCaseSensitive());
         assertEquals(2, qmcma2.getMaxScore());
+
+        assertNull(qmcma1.getImage());
+        assertNull(qmcma2.getTexts());
     }
 
+    @Test
     public void testGetPossibleAnswers() {
         QuestionMultiChoiceMultiAnswer qmcma1 = new QuestionMultiChoiceMultiAnswer("x^2 - 5x + 6 = 0. x = ?",
                                                     "2//3//1//6", "2//3", false, true);
@@ -44,6 +50,7 @@ public class TestQuestionMultiChoiceMultiAnswer extends TestCase {
         assertEquals("6", ls2.get(3));
     }
 
+    @Test
     public void testGetAnswers() {
         QuestionMultiChoiceMultiAnswer qmcma1 = new QuestionMultiChoiceMultiAnswer("x^2 - 5x + 6 = 0. x = ?",
                                                     "2//3//1//6", "3//2", false, true);
@@ -60,6 +67,7 @@ public class TestQuestionMultiChoiceMultiAnswer extends TestCase {
         assertEquals("6", ls2.get(1));
     }
 
+    @Test
     public void testCheckAnswer() {
         QuestionMultiChoiceMultiAnswer qmcma1 = new QuestionMultiChoiceMultiAnswer("x^2 - 5x + 6 = 0. x = ?",
                                                     "2//3//1//6", "3//2", false, true);
