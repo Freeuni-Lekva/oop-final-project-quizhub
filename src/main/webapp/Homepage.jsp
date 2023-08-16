@@ -5,6 +5,11 @@
 <%@ page import="java.sql.SQLException" %>
 <%@ page import="java.sql.ParameterMetaData" %>
 <%@ page import="Usernames_DAO.manager.HomepageManager" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="Usernames_DAO.manager.AdminManager" %>
+<%@ page import="Usernames_DAO.models.Announcement" %>
+<%@ page import="DATABASE_DAO.Database" %>
+<%@ page import="Usernames_DAO.models.profile" %>
 <!DOCTYPE html>
 <html>
 
@@ -25,9 +30,22 @@
     request.getSession().setAttribute("order", null);
     request.getSession().setAttribute("TopFriendsSwitch", null);
     request.getSession().setAttribute("quizSummaryPage", null);
+    request.getSession().setAttribute("profilePage", null);
+    request.getSession().setAttribute("challenge", null);
+    request.getSession().setAttribute("annCreated", null);
+    request.getSession().setAttribute("challengeID", null);
   %>
 </head>
-
+<%
+  if(request.getSession().getAttribute("user") == null){
+%>
+<body style ="height: 820px; overflow-y: hidden; display: flex; flex-direction: column; justify-content: center; align-items: center">
+<p style="font-size: 68px; color: white">Did you get lost?</p>
+<p style="font-size: 68px; color: white">You can't get in without log in! ;)</p>
+</body>
+<%
+  }else{
+%>
 <body style ="overflow-y: hidden;">
 <div class="top">
   <div style="display: flex; flex-direction: row; gap: 5px; align-items: center; padding: 10px">
@@ -37,20 +55,38 @@
     </a>
   </div>
   <div style="display: flex; flex-direction: row; gap: 30px; padding-right: 30px;">
+    <form action = "Search" method = "POST">
     <div style="position: relative;">
-      <input type="search" placeholder="Search..." class="search" />
-      <button type="submit" class="cButton"><img src="assets/search.svg" alt="Search button" width="34"
+      <input placeholder="Search..." class="search" name = "searchField" />
+      <button class="cButton" name = "searchButton" value="search"><img src="assets/search.svg" alt="Search button" width="34"
                                                  height="34" ; /></button>
     </div>
+    </form>
     <a href = "QuizCreate.jsp" class="addButton"><img src="assets/addQuiz.svg" alt="Add quiz button" width="50"
                                                       height="50" ; /></a>
     <div style="position: relative;">
-      <a href="Inbox.html" style="margin-top: -2px"><img src="assets/inbox.svg" alt="Inbox button" height="52"
+      <a href="Inbox.jsp" style="margin-top: -2px"><img src="assets/inbox.svg" alt="Inbox button" height="52"
                                                          ; /></a>
-      <a href="Inbox.html" style="position: absolute; bottom: -15px; right: -15px;"><img
+      <%
+        profile profile = new profile((String)request.getSession().getAttribute("user"));
+        if(profile.getNotification("message")){
+      %>
+      <a href="Inbox.jsp" style="position: absolute; bottom: -15px; right: -15px;"><img
               src="assets/notificationMessage.svg" alt="Notification Icon" height="30" ; /></a>
+    <%
+      }else if(profile.getNotification("request")){
+    %><a href="Inbox.jsp" style="position: absolute; bottom: -15px; right: -15px;"><img
+            src="assets/notificationAddFriends.svg" alt="Notification Icon" height="30" ; /></a>
+      <%
+        }else if(profile.getNotification("challenge")){
+      %>
+      <a href="Inbox.jsp" style="position: absolute; bottom: -15px; right: -15px;"><img
+              src="assets/notificationChallange.svg" alt="Notification Icon" height="30" ; /></a>
+      <%
+        }
+      %>
     </div>
-    <a href="Profile.html"><img src="assets/profile.svg" alt="Profile button" width="50" height="50" ; /></a>
+    <a href="Profile.jsp"><img src="assets/profile.svg" alt="Profile button" width="50" height="50" ; /></a>
   </div>
 </div>
 <hr style="width: 100%; height: 1px; color: #FFF;">
@@ -67,7 +103,7 @@
           <p class="whiteQuizCardTitle">Taken Quizzes</p>
         </div>
         <%
-          User user = (User) request.getSession().getAttribute("user");
+          User user = User.getUser((String) request.getSession().getAttribute("user"));
           List<Pair<Integer, String>> takenQuizes = null;
           try {
             takenQuizes = user.getRecentTakenQuizes();
@@ -174,26 +210,59 @@
       </div>
       <hr style="width: 100%; height: 1px;">
       </hr>
+        <%
+          user = User.getUser((String) request.getSession().getAttribute("user"));
+          if(user.isAdmin()){
+            AdminManager admin = new AdminManager((String) request.getSession().getAttribute("user"));
+        %>
+        <div style="color: white; margin-top: -15px; display: flex; flex-direction: column; gap: 5px; align-items: center;">
+          <p style="font-size: 30px;">Website Statistics</p>
+          <p style="font-size: 20px;">Total number of users: <%=admin.numOfUsers()%></p>
+          <p style="font-size: 20px;">Total number of quizzes taken: <%=admin.numOfQuizes()%></p>
+        </div>
+        <%
+          }else{
+        %>
       <div class="recents">
-        <a href="Profile.html" class="whiteQuizCardLink">My Activity History</a>
+        <a href="Profile.jsp" class="whiteQuizCardLink">My Activity History</a>
       </div>
-    </div>
+        <%
+          }
+        %>
+  </div>
     <hr style="width: 1px; height: 840px;">
     </hr>
     <div class="announcements">
+      <%
+        user = User.getUser((String) request.getSession().getAttribute("user"));
+        if(user.isAdmin()){
+      %>
+      <a href = "AnnouncementCreate.jsp" class = "addAnnouncement">
+        <p>Add Announcement</p>
+      </a>
+      <%
+        }
+        HomepageManager homepageManager = (HomepageManager) request.getSession().getAttribute("homepage");
+        ArrayList<Announcement> anns = homepageManager.getAnnouncements();
+        for(int i = anns.size() - 1; i >= 0; i--){
+          Announcement curr = anns.get(i);
+      %>
       <div class="announcement">
         <div class="announcementTitle">
-          <p class="announcementName" style="max-width: 600px; overflow: hidden">Announcement_name</p>
+          <p class="announcementName" style="max-width: 600px; overflow: hidden"><%=curr.getSubject()%></p>
           <div class="creatorTitle">
-            <a href="profile.html" class="creatorLink" style="max-width: 300px; overflow: hidden">Creator_name</a>
+            <a href="Profile.jsp?username=<%=curr.getName()%>" class="creatorLink" style="max-width: 300px; overflow: hidden"><%=curr.getName()%></a>
             <img src="assets/creator.svg" alt="Creator icon" width="40"></img>
           </div>
         </div>
         <div class="announcementContent">
-          <p class="text"> Lorem ipsum.
+          <p class="text"> <%=curr.getText()%>
           <p>
         </div>
       </div>
+      <%
+        }
+      %>
     </div>
     <div class="rightPannel">
       <div class="friendsActivities">
@@ -201,62 +270,63 @@
           <p>Friends' Activities</p>
         </div>
         <div class="timeLine"></div>
+        <%
+          ArrayList<Pair<String,Pair<Boolean,Pair<String,Integer>>>> lss =  User.getUser((String)request.getSession().getAttribute("user")).FriendsActivity();
+          int num = lss.size();
+          if(num != 0){
+          for(int i = Math.max(0, num - 1); i >= Math.max(0, num - 5) ; i--){
+            Pair<String,Pair<Boolean,Pair<String,Integer>>> curr = lss.get(i);
+        %>
+
         <div class="activity">
           <div class="friendName">
             <hr class="dot">
-            </hr>
-            <p>Friend_name</p>
-            <img src="assets/medal4.svg" alt="Medal icon" width="25" height="25"></img>
-            <img src="assets/medal6.svg" alt="Medal icon" width="25" height="25"></img>
+            <a href="Profile.jsp?username=<%=curr.getKey()%>" class = "frName" ><%=curr.getKey()%></a>
+            <%
+              List<Achievement> achs = User.getUser(curr.getKey()).getAchievement();
+              if(achs.size() != 0){
+                for(int j = achs.size() - 1; j >= Math.max(0, achs.size() - 3); j--){
+                Achievement currAch = achs.get(j);
+                int type = currAch.getAchievment_id();
+                if(type == 5){
+                  type = 6;
+                }else if(type == 6){
+                  type = 5;
+                }
+            %>
+            <img src="assets/medal<%=type%>.svg" alt="Medal icon" width="25" height="25">
+            <%
+                }
+              }
+            %>
           </div>
-          <div class="friendQuiz">
+          <div class="friendQuiz" >
+            <%
+              if(curr.getValue().getKey()){
+            %>
+            <p>Created Quiz:&nbsp</p>
+            <%
+              }else{
+            %>
             <p>Taken Quiz:&nbsp</p>
-            <a href="QuizSummary.html" class="friendQuizName" style="max-width: 200px; overflow: hidden">quiz_name</a>
+            <%
+              }
+            %>
+            <a href="QuizSummary.jsp?quizID=<%=curr.getValue().getValue().getValue()%>" class="friendQuizName" style="max-width: 200px; overflow: hidden;"><%=curr.getValue().getValue().getKey()%></a>
           </div>
         </div>
-        <div class="activity">
-          <div class="friendName">
-            <hr class="dot">
-            <p>Friend_name</p>
-            <img src="assets/medal2.svg" alt="Medal icon" width="25" height="25"></img>
-            <img src="assets/medal5.svg" alt="Medal icon" width="25" height="25"></img>
-            <img src="assets/medal6.svg" alt="Medal icon" width="25" height="25"></img>
-          </div>
-          <div class="friendQuiz">
-            <p>Taken Quiz:&nbsp</p>
-            <a href="QuizSummary.html" class="friendQuizName">quiz_name</a>
-          </div>
-        </div>
-        <div class="activity">
-          <div class="friendName">
-            <hr class="dot">
-            </hr>
-            <p>Friend_name</p>
-            <img src="assets/medal1.svg" alt="Medal icon" width="25" height="25"></img>
-          </div>
-          <div class="friendQuiz">
-            <p>Taken Quiz:&nbsp</p>
-            <a href="QuizSummary.html" class="friendQuizName">quiz_name</a>
-          </div>
-        </div>
-        <div class="activity">
-          <div class="friendName">
-            <hr class="dot">
-            </hr>
-            <p>Friend_name</p>
-            <img src="assets/medal3.svg" alt="Medal icon" width="25" height="25"></img>
-            <img src="assets/medal5.svg" alt="Medal icon" width="25" height="25"></img>
-          </div>
-          <div class="friendQuiz">
-            <p>Taken Quiz:&nbsp</p>
-            <a href="QuizSummary.html" class="friendQuizName">quiz_name</a>
-          </div>
-        </div>
+        <%
+            }
+          }
+          if(num < 5){
+        %>
         <div class="noMoreActivity">
           <hr class="emptyDot">
-          </hr>
           <p>No More Activities.</p>
         </div>
+        <%
+          }
+        %>
       </div>
       <div class="blueQuizCard">
         <div class="blueQuizCardTitle">
@@ -285,7 +355,6 @@
         <div class="blueQuizCardList" style="overflow:hidden;">
           <%
             List<Pair<Pair<Integer, Integer>, String>> ls;
-            HomepageManager homepageManager = (HomepageManager) request.getSession().getAttribute("homepage");
             if(recent){
               ls = homepageManager.getRecentQuizes();
             }else{
@@ -313,5 +382,7 @@
   </div>
 </div>
 </body>
-
+<%
+  }
+%>
 </html>

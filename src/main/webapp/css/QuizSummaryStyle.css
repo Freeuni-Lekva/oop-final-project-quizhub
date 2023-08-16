@@ -100,6 +100,7 @@ button {
   border: 1px solid #fff;
   border-radius: 50%;
   background: #fff;
+  cursor: pointer;
 }
 
 .cButton:hover {
@@ -188,6 +189,11 @@ button {
   -webkit-text-stroke: 0.5px #11023d;
 }
 
+.QuizName:active {
+  color: rgba(217, 217, 217, 0);
+  -webkit-text-stroke: 0px #eee;
+}
+
 .creator {
   display: flex;
   flex-direction: row;
@@ -239,6 +245,17 @@ button {
   padding-right: 3px;
   border-radius: 7px;
   background-color: #1c1a5e;
+}
+
+.QuizTag:link {
+  color: #fff;
+}
+.QuizTag:visited {
+  color: #fff;
+}
+
+.QuizTag:active {
+  color: rgba(217, 217, 217, 0);
 }
 
 .quizContent {
@@ -326,6 +343,7 @@ button {
   flex-direction: row;
   justify-content: flex-end;
   gap: 10px;
+  padding-left: 30px;
   padding-right: 30px;
 }
 
@@ -371,6 +389,31 @@ button {
   border-radius: 0px 0px 20px 20px;
   background: #2bc990;
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
+.rButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  font-family: Hubballi;
+  font-size: 40px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  letter-spacing: 0.8px;
+  width: 230px;
+  height: 40px;
+  outline: none;
+  border: 0px solid white;
+  border-radius: 0px 0px 20px 20px;
+  background: #ff3e3e;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+}
+
+.rButton:hover{
+  color: #11023d;
 }
 
 .HistoryCard {
@@ -435,6 +478,28 @@ button {
   border: 1px solid #11023d;
   font-weight: normal;
   color: white;
+}
+
+.perfLink:link {
+  color: #000;
+}
+.perfLink:visited {
+  color: #000;
+}
+
+.perfLink:active {
+  color: rgba(217, 217, 217, 0);
+}
+
+.recLink:link {
+  color: #fff;
+}
+.recLink:visited {
+  color: #fff;
+}
+
+.recLink:active {
+  color: rgba(217, 217, 217, 0);
 }
 
 .HistoryTableCard::-webkit-scrollbar {

@@ -7,6 +7,16 @@
     <link rel="stylesheet" type="text/css" href="css/QuizCreateStyle.css" />
 </head>
 <%
+    if(request.getSession().getAttribute("user") == null){
+%>
+<body style ="height: 820px; overflow-y: hidden; display: flex; flex-direction: column; justify-content: center; align-items: center">
+<p style="font-size: 68px; color: white">Did you get lost?</p>
+<p style="font-size: 68px; color: white">You can't get in without log in! ;)</p>
+</body>
+<%
+}else{
+%>
+<%
     request.getSession().setAttribute("quizSummary", null);
     request.getSession().setAttribute("LastDaySwitch", null);
     request.getSession().setAttribute("order", null);
@@ -24,7 +34,7 @@
             </a>
         </div>
         <div class = "endButtons">
-            <button type="exit" class="eButton" name="exit-button" value="exitButton">Exit</button>
+            <button class="eButton" name="exit-button" value= "exitButton">Exit</button>
         </div>
     </div>
     <hr style="width: 100%; height: 1px; color: #FFF;">
@@ -135,5 +145,7 @@
     </div>
 </form>
 </body>
-
+<%
+    }
+%>
 </html>
