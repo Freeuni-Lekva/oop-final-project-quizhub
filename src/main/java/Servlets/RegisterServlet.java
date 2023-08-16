@@ -1,6 +1,7 @@
 package Servlets;
 
 import Usernames_DAO.manager.accountManager;
+import Usernames_DAO.models.User;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;

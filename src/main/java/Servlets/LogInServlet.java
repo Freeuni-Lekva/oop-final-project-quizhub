@@ -38,11 +38,11 @@ public class LogInServlet extends HttpServlet {
         if (loginIsSuccessful) {
             User user = null;
             try {
-                user = new User(username, false);
+                user = User.getUser(username);
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
-            request.getSession().setAttribute("user", user);
+            request.getSession().setAttribute("user", username);
             try {
                 request.getSession().setAttribute("homepage", new HomepageManager());
             } catch (SQLException e) {
