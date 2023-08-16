@@ -1,6 +1,7 @@
 package Servlets;
 
 import Usernames_DAO.manager.accountManager;
+import Usernames_DAO.models.User;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
@@ -14,7 +15,10 @@ public class AccManagerListener implements ServletContextListener {
         accountManager AccountManager = null;
         try {
             AccountManager = new accountManager();
-        } catch (SQLException e) {
+            AccountManager.addAcc("admin", "admin");
+            User user = new User("admin", true);
+            user.promoteToAdmin();
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
         servletContextEvent.getServletContext().setAttribute("accManager", AccountManager);
