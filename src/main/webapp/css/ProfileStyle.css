@@ -1,0 +1,498 @@
+@font-face {
+  font-family: "Hubballi";
+  src: url("Hubballi.ttf");
+}
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+html {
+  height: 100%;
+}
+body {
+  background: #1c1a5e;
+  font-family: Hubballi;
+}
+ul {
+  list-style: none;
+}
+
+li {
+  text-decoration: none;
+  list-style: none;
+}
+a {
+  text-decoration: none;
+}
+input,
+option,
+button {
+  font-family: Hubballi;
+}
+
+:root {
+  scrollbar-color: #11023d #eee;
+  scrollbar-width: thin;
+}
+::-webkit-scrollbar {
+  width: 17px;
+}
+::-webkit-scrollbar-track {
+  border: 4px solid #eee;
+  border-radius: 13px;
+  background: #eee;
+}
+::-webkit-scrollbar-thumb {
+  border: 4px solid #eee;
+  border-radius: 13px;
+  background: #11023d;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #11023d;
+}
+
+.logo {
+  color: #fff;
+  font-family: Hubballi;
+  font-size: 64px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.search {
+  width: 350px;
+  height: 50px;
+  border-radius: 40px;
+  border: 1px solid #fff;
+  background-color: rgba(217, 217, 217, 0);
+  padding-left: 20px;
+  color: #fff;
+  font-family: Hubballi;
+  font-size: 21px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  letter-spacing: 0.42px;
+}
+
+.search:focus {
+  outline: none;
+}
+
+.search::placeholder {
+  color: #fff;
+  font-family: Hubballi;
+  font-size: 21px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  letter-spacing: 0.42px;
+}
+
+.cButton {
+  position: absolute;
+  top: 7px;
+  right: 16px;
+  width: 34px;
+  height: 34px;
+  border: 1px solid #fff;
+  border-radius: 50%;
+  background: #fff;
+  cursor: pointer;
+}
+
+.cButton:hover {
+  background: #fff;
+}
+
+.addButton {
+  width: 50px;
+  height: 50px;
+  border: 1px solid #1c1a5e;
+  border-radius: 50%;
+  background: #1c1a5e;
+}
+
+.addButton:hover {
+  background: #2bc990;
+}
+.inboxButton {
+  width: 50px;
+  height: 50px;
+  margin-top: -4px;
+  border: 1px solid #1c1a5e;
+  border-radius: 50%;
+  background: #1c1a5e;
+}
+
+.inboxButton:hover {
+  background: #1c1a5e;
+}
+.top {
+  height: 100px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.content {
+  width: 100%;
+  height: 850px;
+  padding: 15px;
+  padding-left: 50px;
+  padding-right: 50px;
+  background-color: #eee;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.left {
+  width: 1000px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.cards {
+  width: 1000px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.ProfileCard {
+  width: 400px;
+  height: 700px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  border-radius: 20px;
+  border: 2px solid #1c1a5e;
+  background: #d9d9d9;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.FriendsCard {
+  width: 500px;
+  height: 700px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  border-radius: 20px;
+  border: 2px solid #1c1a5e;
+}
+
+.buttons {
+  height: 150px;
+  width: 1000px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.aButton {
+  width: 200px;
+  height: 50px;
+  border-radius: 50px;
+  align-items: center;
+  border: none;
+  color: #fff;
+  text-align: center;
+  font-family: Hubballi;
+  font-size: 30px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  background: #2bc990;
+  cursor: pointer;
+}
+
+.aButton:hover {
+  border: 2px solid #2bc990;
+  color: #2bc990;
+  background: #eee;
+}
+
+.rButton {
+  width: 210px;
+  height: 50px;
+  border-radius: 50px;
+  align-items: center;
+  border: none;
+  color: #fff;
+  text-align: center;
+  font-family: Hubballi;
+  font-size: 30px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  background: #ff3e3e;
+  cursor: pointer;
+}
+
+.rButton:hover {
+  border: 2px solid #ff3e3e;
+  color: #ff3e3e;
+  background: #eee;
+}
+
+.mButton {
+  width: 200px;
+  height: 50px;
+  border-radius: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  color: #fff;
+  text-align: center;
+  font-family: Hubballi;
+  font-size: 30px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  background: #1c1a5e;
+  cursor: pointer;
+}
+
+.mButton:hover {
+  border: 2px solid #1c1a5e;
+  color: #1c1a5e;
+  background: #eee;
+}
+
+.adminButton {
+  width: 290px;
+  height: 50px;
+  border-radius: 50px;
+  align-items: center;
+  border: none;
+  color: #fff;
+  text-align: center;
+  font-family: Hubballi;
+  font-size: 30px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  background: #1b1b1d;
+  cursor: pointer;
+}
+
+.adminButton:hover {
+  border: 2px solid #1b1b1d;
+  color: #1b1b1d;
+  background: #eee;
+}
+
+.pfp {
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  border: 4px solid #1c1a5e;
+}
+
+.username {
+  color: #11023d;
+  font-family: Hubballi;
+  font-size: 48px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.data {
+  display: flex;
+  flex-direction: column;
+  color: #000;
+  text-align: center;
+  font-family: Hubballi;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  text-decoration-line: underline;
+  gap: 5px;
+}
+
+.awards {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+}
+
+.awardsln {
+  width: 200px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.friendsTitle {
+  width: 230px;
+  border-radius: 40px;
+  background: #d5d4fe;
+  text-align: center;
+  color: #1c1a5e;
+  font-family: Hubballi;
+  font-size: 36px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.friendsList {
+  width: 470px;
+  height: 600px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  overflow-y: auto;
+}
+.friendsList::-webkit-scrollbar-track {
+  border: 4px solid #9795ff;
+  border-radius: 13px;
+  background: #9795ff;
+}
+.friendsList::-webkit-scrollbar-thumb {
+  border: 4px solid #9795ff;
+  border-radius: 13px;
+  background: #fff;
+}
+.friendsList::-webkit-scrollbar-thumb:hover {
+  background: #fff;
+}
+.friendsln {
+  width: 440px;
+  min-height: 41px;
+  border-radius: 40px;
+  background: #9795ff;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+.friendName {
+  width: 400px;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  color: #fff;
+  font-family: Hubballi;
+  font-size: 36px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.friendLink:link {
+  color: #fff;
+}
+.friendLink:visited {
+  color: #fff;
+}
+.friendLink:active {
+  color: rgba(217, 217, 217, 0);
+}
+.HistoryTableContainer {
+  width: 750px;
+  height: 800px;
+  border-radius: 35px;
+  background: #1c1a5e;
+  display: flex;
+  flex-direction: column;
+  padding-top: 20px;
+  align-items: center;
+}
+.HistoryHeader {
+  width: 730px;
+  height: 70px;
+  border-radius: 20px;
+  border: 2px solid #fff;
+  color: #fff;
+  font-family: Hubballi;
+  font-size: 48px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  position: relative;
+}
+
+.HistoryTitle {
+  width: 500px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.ScoreTitle {
+  width: 230px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.ln {
+  width: 2px;
+  height: 780px;
+  outline: none;
+  background: white;
+  border: 1px solid white;
+  margin-top: 710px;
+}
+.HistoryData {
+  width: 730px;
+  height: 700px;
+  padding-top: 5px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.historyln {
+  width: 730px;
+  min-height: 50px;
+  color: #fff;
+  font-family: Hubballi;
+  font-size: 28px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.historylndata {
+  width: 500px;
+  min-height: 50px;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  overflow: hidden;
+  white-space: nowrap;
+  align-items: center;
+}
+.historylnscore {
+  width: 230px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
