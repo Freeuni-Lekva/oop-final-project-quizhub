@@ -2,11 +2,13 @@ package QuestionTests;
 
 import Questions_DAO.*;
 import junit.framework.TestCase;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
 public class TestQuiz extends TestCase {
-    private Questions_DAO.Quiz quiz;
+    private Quiz quiz;
     private ArrayList<String> tags;
     private ArrayList<Question> questions;
     private ArrayList<ArrayList<String>> answers;
@@ -14,11 +16,14 @@ public class TestQuiz extends TestCase {
     private ArrayList<Integer> questionScores;
     private ArrayList<ArrayList<String>> correctAnswers;
 
+    @BeforeEach
     public void setUp() throws Exception {
         super.setUp();
         declareVariables();
         quiz = new Quiz("TestQuiz", "D.Gelashvili", "All","this is test quiz, feel free to take it",
                 tags, questions, false, false, true, false);
+        Quiz quiz2 = new Quiz(quiz.getQuizName(), quiz.getCreatorName(), quiz.getCategory(), quiz.getDescription(),
+                tags, questions, true, true, false, true);
     }
 
     private void declareVariables() {
@@ -33,14 +38,14 @@ public class TestQuiz extends TestCase {
         questions.add(new QuestionMatching("Match these two columns:", "3x4//7-2//36/6//6//5//12",
                                                                     "3x4//12//7-2//5//36/6//6", false, false));
         questions.add(new QuestionMatching("What eats what?", "Rabbit//Chicken//Wolf//Corn//Meat//Carrot",
-                                                    "Rabbit//Carrot//Chicken//Corn//Wolf//Meat", true, false));
+                                                    "Rabbit//Carrot//Chicken//Corn//Wolf//Meat", true, true));
         questions.add(new QuestionMultiAnswer("Name 5 Europian City", "London//Paris//Tbilisi//Kiev//Madrid",
-                                                                                                false, false));
+                                                                                                true, false));
         questions.add(new QuestionMultiChoice("Capital city of Georgia:", "Qutaisi//Tbilisi//Batumi",
                                                                                 "Tbilisi", true, true));
         questions.add(new QuestionMultiChoiceMultiAnswer("x^2 - 5x + 6 = 0. x = ?",
-                                                            "2//3//1//6", "3//2", false, true));
-        questions.add(new QuestionResponse("What is 3 x 4?", "12", false, true));
+                                                            "2//3//1//6", "2//3", true, false));
+        questions.add(new QuestionResponse("What is 3 x 4?", "12", false, false));
 
         answers = new ArrayList<>();
         scores = new ArrayList<>();
@@ -64,6 +69,7 @@ public class TestQuiz extends TestCase {
 
     }
 
+    @Test
     public void testVariables() {
         assertEquals("TestQuiz", quiz.getQuizName());
         assertEquals("D.Gelashvili", quiz.getCreatorName());
@@ -79,6 +85,7 @@ public class TestQuiz extends TestCase {
         assertEquals(7, quiz.getTotalNumberOfQuestions());
     }
 
+    @Test
     public void testSimulateNormalQuiz() {
         assertEquals(1, quiz.getCurrentQuestionNumber());
         assertEquals(questions.get(0), quiz.getCurrentQuestion());
@@ -90,6 +97,8 @@ public class TestQuiz extends TestCase {
         assertEquals(1, quiz.getUserScore());
         answers.add(ls);
         scores.add(1);
+        assertEquals("5, tbilisi", quiz.getProcessedAnswer(ls, quiz.getCurrentQuestion().getType(), quiz.getCurrentQuestion().isCaseSensitive()));
+        assertEquals("4, tbilisi", quiz.getProcessedAnswer(quiz.getCurrentQuestion().getAnswers(), quiz.getCurrentQuestion().getType(), quiz.getCurrentQuestion().isCaseSensitive()));
 
         if (quiz.hasNextQuestion()){
             quiz.goToNextQuestion();
@@ -98,13 +107,12 @@ public class TestQuiz extends TestCase {
         assertEquals(questions.get(1), quiz.getCurrentQuestion());
         assertTrue(quiz.hasNextQuestion());
         ls = new ArrayList<>();
-        ls.add("36/6//5");
-        ls.add("3x4//6");
-        ls.add("7-2//12");
+        ls.add("$//$");
         quiz.processAnswer(ls);
         assertEquals(1, quiz.getUserScore());
         answers.add(ls);
         scores.add(0);
+        assertEquals("empty", quiz.getProcessedAnswer(ls, quiz.getCurrentQuestion().getType(), quiz.getCurrentQuestion().isCaseSensitive()));
 
         if (quiz.hasNextQuestion()){
             quiz.goToNextQuestion();
@@ -120,6 +128,7 @@ public class TestQuiz extends TestCase {
         assertEquals(4, quiz.getUserScore());
         answers.add(ls);
         scores.add(3);
+        assertEquals("Chicken   <-->   Corn@#Rabbit   <-->   Carrot@#Wolf   <-->   Meat", quiz.getProcessedAnswer(quiz.getCurrentQuestion().getAnswers(), quiz.getCurrentQuestion().getType(), quiz.getCurrentQuestion().isCaseSensitive()));
 
         if (quiz.hasNextQuestion()){
             quiz.goToNextQuestion();
@@ -128,14 +137,16 @@ public class TestQuiz extends TestCase {
         assertEquals(questions.get(3), quiz.getCurrentQuestion());
         assertTrue(quiz.hasNextQuestion());
         ls = new ArrayList<>();
-        ls.add("TBILISI");
-        ls.add("Berlin");
-        ls.add("moscow");
         ls.add("london");
+        ls.add("Berlin");
+        ls.add("TBILISI");
+        ls.add("moscow");
         quiz.processAnswer(ls);
         assertEquals(6, quiz.getUserScore());
         answers.add(ls);
         scores.add(2);
+        assertEquals("london, berlin, tbilisi, moscow", quiz.getProcessedAnswer(ls, quiz.getCurrentQuestion().getType(), quiz.getCurrentQuestion().isCaseSensitive()));
+        assertEquals("london, paris, tbilisi, kiev, madrid", quiz.getProcessedAnswer(quiz.getCurrentQuestion().getAnswers(), quiz.getCurrentQuestion().getType(), quiz.getCurrentQuestion().isCaseSensitive()));
 
         if (quiz.hasNextQuestion()){
             quiz.goToNextQuestion();
@@ -149,6 +160,8 @@ public class TestQuiz extends TestCase {
         assertEquals(6, quiz.getUserScore());
         answers.add(ls);
         scores.add(0);
+        assertEquals("Kutaisi", quiz.getProcessedAnswer(ls, quiz.getCurrentQuestion().getType(), quiz.getCurrentQuestion().isCaseSensitive()));
+        assertEquals("Tbilisi", quiz.getProcessedAnswer(quiz.getCurrentQuestion().getAnswers(), quiz.getCurrentQuestion().getType(), quiz.getCurrentQuestion().isCaseSensitive()));
 
         if (quiz.hasNextQuestion()){
             quiz.goToNextQuestion();
@@ -164,6 +177,9 @@ public class TestQuiz extends TestCase {
         assertEquals(6, quiz.getUserScore());
         answers.add(ls);
         scores.add(0);
+        ls.add("");
+        assertEquals("6, 3, 1", quiz.getProcessedAnswer(ls, quiz.getCurrentQuestion().getType(), quiz.getCurrentQuestion().isCaseSensitive()));
+        assertEquals("2, 3", quiz.getProcessedAnswer(quiz.getCurrentQuestion().getAnswers(), quiz.getCurrentQuestion().getType(), quiz.getCurrentQuestion().isCaseSensitive()));
 
         if (quiz.hasNextQuestion()){
             quiz.goToNextQuestion();
@@ -176,6 +192,7 @@ public class TestQuiz extends TestCase {
         assertEquals(7, quiz.getUserScore());
         answers.add(ls);
         scores.add(1);
+        assertEquals("12", quiz.getProcessedAnswer(quiz.getCurrentQuestion().getAnswers(), quiz.getCurrentQuestion().getType(), quiz.getCurrentQuestion().isCaseSensitive()));
 
         assertFalse(quiz.hasNextQuestion());
         assertEquals(scores, quiz.getUserScores());
@@ -184,6 +201,7 @@ public class TestQuiz extends TestCase {
         assertEquals(correctAnswers, quiz.getCorrectAnswers());
     }
 
+    @Test
     public void testSimulatePracticeQuiz() {
         ArrayList<Question> questions1 = new ArrayList<>();
         questions1.add(new QuestionFillBlank("3 x ___ = 12 and ___ is a capital city of Georgia", "4//Tbilisi",
@@ -244,8 +262,11 @@ public class TestQuiz extends TestCase {
         AnswerCorrectly(questions1, quiz1);
 
         assertFalse(quiz1.hasNextQuestion());
+
+        assertEquals("empty", quiz1.getProcessedAnswer(null, 3, true));
     }
 
+    @Test
     private void AnswerCorrectly(ArrayList<Question> questions1, Quiz quiz1) {
         ArrayList<String> ls;
         assertEquals(1, quiz1.getCurrentQuestionNumber());

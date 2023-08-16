@@ -2,10 +2,12 @@ package QuestionTests;
 
 import Questions_DAO.QuestionPictureResponse;
 import junit.framework.TestCase;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
 public class TestQuestionPictureResponse extends TestCase {
+    @Test
     public void testVariables() {
         QuestionPictureResponse qpr1 = new QuestionPictureResponse("Name of the president?", "president.png",
                                                                                     "Donald Trump", false, true);
@@ -22,8 +24,11 @@ public class TestQuestionPictureResponse extends TestCase {
         assertFalse(qpr2.isOrdered());
         assertFalse(qpr2.isCaseSensitive());
         assertEquals(1, qpr2.getMaxScore());
+        assertNull(qpr1.getTexts());
+        assertNull(qpr2.getTexts());
     }
 
+    @Test
     public void testGetAnswers() {
         QuestionPictureResponse qpr1 = new QuestionPictureResponse("Name of the president?", "president.png",
                                                                             "Donald Trump", false, true);
@@ -44,6 +49,7 @@ public class TestQuestionPictureResponse extends TestCase {
         assertEquals("30", ls3.get(0));
     }
 
+    @Test
     public void testCheckAnswer() {
         QuestionPictureResponse qpr1 = new QuestionPictureResponse("Name of the president?", "president.png",
                                                                             "Donald Trump", false, true);

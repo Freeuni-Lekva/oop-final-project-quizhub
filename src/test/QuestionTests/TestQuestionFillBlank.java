@@ -2,10 +2,12 @@ package QuestionTests;
 
 import Questions_DAO.QuestionFillBlank;
 import junit.framework.TestCase;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
 public class TestQuestionFillBlank extends TestCase {
+    @Test
     public void testVariables() {
         QuestionFillBlank qfb1 = new QuestionFillBlank("3 x ___ = 12", "4", true, false);
         assertEquals("3 x ___ = 12", qfb1.getQuestion());
@@ -19,8 +21,10 @@ public class TestQuestionFillBlank extends TestCase {
         assertTrue(qfb2.isOrdered());
         assertTrue(qfb2.isCaseSensitive());
         assertEquals(1, qfb1.getMaxScore());
+        assertNull(qfb1.getImage());
     }
 
+    @Test
     public void testGetAnswers() {
         QuestionFillBlank qfb1 = new QuestionFillBlank("3 x ___ = 12", "4", true, true);
         ArrayList<String> ls1 = qfb1.getAnswers();
@@ -41,6 +45,7 @@ public class TestQuestionFillBlank extends TestCase {
         assertEquals("Tbilisi", ls3.get(1));
     }
 
+    @Test
     public void testCheckAnswer() {
         QuestionFillBlank qfb1 = new QuestionFillBlank("3 x ___ = 12 and ___ is a capital city of Georgia", "4//Tbilisi",
                                                                                     true, true);
@@ -67,5 +72,16 @@ public class TestQuestionFillBlank extends TestCase {
         assertEquals(2, qfb1.checkAnswer(ls2));
         ls2.add("extra");
         assertEquals(0, qfb1.checkAnswer(ls2));
+    }
+
+    @Test
+    public void testGetTexts() {
+        QuestionFillBlank qfb1 = new QuestionFillBlank("3 x ___ = 12 and ___ is a capital city of Georgia", "4//Tbilisi",
+                true, true);
+        ArrayList<String> cuts = new ArrayList<>();
+        cuts.add("3 x ");
+        cuts.add(" = 12 and ");
+        cuts.add(" is a capital city of Georgia");
+        assertEquals(cuts, qfb1.getTexts());
     }
 }
