@@ -6,12 +6,15 @@ import DATABASE_DAO.QuizDatabases.TagsQuizDatabase;
 import DATABASE_DAO.UsernameDatabases.RankingsDatabase;
 import Questions_DAO.Question;
 import Questions_DAO.Quiz;
+import Usernames_DAO.models.User;
 import Usernames_DAO.models.UserAction;
+import Usernames_DAO.models.UserHistory;
 import javafx.util.Pair;
 
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.List;
 
 public class SummaryQuiz {
     private QuizDatabase quizDatabase;
@@ -68,6 +71,33 @@ public class SummaryQuiz {
         return getPairs(ls1);
     }
 
+    public ArrayList<Pair<String, Pair<Integer, String>>> getMyHistory(User u,String order) throws SQLException {
+        ArrayList<Pair<String, Pair<Integer, String>>> ans = new ArrayList<>();
+        List<UserHistory> list = rankingsDatabase.getUserQuizHistory(u.getUsername(),quiz_id,order);
+        for(int i=0;i< list.size();i++){
+            String date = list.get(i).getFinishDate().toString();
+            int score = toPercent(Double.parseDouble(list.get(i).getScore()),quiz.getMaxScore());
+            int time = list.get(i).getAtionTime();
+            ans.add(new Pair<>(date,new Pair<>(score,timeToString(time))));
+        }
+        return ans;
+    }
+
+    public ArrayList<Pair<String, Pair<Integer, String>>> getFriendPerformers(User u) throws SQLException {
+        List<String> friends = u.getFriends();
+        ArrayList<Pair<String, Pair<Integer, String>>> ans = new ArrayList<>();
+        for(int i=0;i< friends.size();i++){
+            String name = friends.get(i);
+            UserHistory uh = rankingsDatabase.FriendMaxScore(name,quiz_id);
+            if(uh == null)
+                return ans;
+            int score = toPercent(Double.parseDouble(uh.getScore()),quiz.getMaxScore());
+            String time = timeToString(uh.getAtionTime());
+            ans.add(new Pair<>(name,new Pair<>(score,time)));
+        }
+        return ans;
+    }
+
     private ArrayList<Pair<String, Pair<Integer, String>>> getPairs(ArrayList<UserAction> ls1) {
         ArrayList<Pair<String, Pair<Integer, String>>> ls = new ArrayList<>();
         for (UserAction element : ls1) {
@@ -77,6 +107,7 @@ public class SummaryQuiz {
             ls.add(new Pair<>(username, new Pair<>(toPercent((double) score, quiz.getMaxScore()), timeToString(time))));
         }
         return ls;
+
     }
 
     public static Integer toPercent(double score, int max_score) {
