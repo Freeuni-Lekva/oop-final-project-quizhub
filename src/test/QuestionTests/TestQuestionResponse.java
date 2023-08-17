@@ -23,6 +23,7 @@ public class TestQuestionResponse extends TestCase {
 
         assertNull(qr1.getTexts());
         assertNull(qr2.getImage());
+        assertNull(qr1.getPossibleAnswers());
     }
 
     @Test

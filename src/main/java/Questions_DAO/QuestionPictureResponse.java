@@ -37,9 +37,7 @@ public class QuestionPictureResponse implements Question {
 
     @Override
     public ArrayList<String> getPossibleAnswers() {
-        ArrayList<String> ls = new ArrayList<>();
-        ls.add(image);
-        return ls;
+        return null;
     }
 
     @Override

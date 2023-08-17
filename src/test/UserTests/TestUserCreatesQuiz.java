@@ -8,6 +8,8 @@ import Questions_DAO.*;
 import Usernames_DAO.UserQuiz.UserCreatesQuiz;
 import Usernames_DAO.models.User;
 import junit.framework.TestCase;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -21,7 +23,7 @@ public class TestUserCreatesQuiz extends TestCase {
     private QuizQuestionDatabase quizQuestionDatabase;
     private TagsQuizDatabase tagsQuizDatabase;
 
-    @Override
+    @BeforeEach
     public void setUp() throws Exception {
         super.setUp();
         User user = new User("D.Gelashvili", false);
@@ -33,6 +35,7 @@ public class TestUserCreatesQuiz extends TestCase {
         tagsQuizDatabase = new TagsQuizDatabase();
     }
 
+    @Test
     public void testPage1() {
         userCreatesQuiz.setQuizName("Test Quiz");
         userCreatesQuiz.setCategory("Science");
@@ -54,6 +57,7 @@ public class TestUserCreatesQuiz extends TestCase {
         assertFalse(userCreatesQuiz.isPracticeMode());
     }
 
+    @Test
     public void testAddQuestion() {
         userCreatesQuiz.addQuestion(new QuestionMatching("Match these two columns:", "3x4//7-2//36/6//6//5//12",
                 "3x4//12//7-2//5//36/6//6", false, false));
@@ -70,6 +74,7 @@ public class TestUserCreatesQuiz extends TestCase {
         assertEquals(6, userCreatesQuiz.getMaxScore());
     }
 
+    @Test
     public void testFinishAndPublish() throws SQLException {
         userCreatesQuiz.setQuizName("Test Quiz");
         userCreatesQuiz.setCategory("Science");
@@ -107,6 +112,7 @@ public class TestUserCreatesQuiz extends TestCase {
         assertEquals("Match these two columns:", quiz.getCurrentQuestion().getQuestion());
     }
 
+    @Test
     public void test1() throws SQLException {
         userCreatesQuiz1.setQuizName("Test Quiz 2");
         userCreatesQuiz1.setCategory("Geography");
