@@ -8,12 +8,20 @@
     <link rel="icon" href="logo.png" />
     <title>QuizHub</title>
     <link rel="stylesheet" type="text/css" href="css/QuizPageStyle.css" />
-    <%
-        UserTakesQuiz quiz = (UserTakesQuiz) request.getSession().getAttribute("quiz");
-        Question curr = quiz.getQuiz().getCurrentQuestion();
-        request.getSession().setAttribute("correction", "corrected");
-    %>
 </head>
+<%
+    if(request.getSession().getAttribute("user") == null){
+%>
+<body style ="height: 820px; overflow-y: hidden; display: flex; flex-direction: column; justify-content: center; align-items: center">
+<p style="font-size: 68px; color: white">Did you get lost?</p>
+<p style="font-size: 68px; color: white">You can't get in without log in! ;)</p>
+</body>
+<%
+}else{
+    UserTakesQuiz quiz = (UserTakesQuiz) request.getSession().getAttribute("quiz");
+    Question curr = quiz.getQuiz().getCurrentQuestion();
+    request.getSession().setAttribute("correction", "corrected");
+%>
 <body style="overflow-y: hidden;">
 <form action = "MultiPage" method = "POST">
     <div class="top">
@@ -163,4 +171,7 @@
             </div>
 </form>
 </body>
+<%
+    }
+%>
 </html>

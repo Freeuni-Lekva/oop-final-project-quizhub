@@ -5,6 +5,7 @@
 <%@ page import="java.sql.SQLException" %>
 <%@ page import="Usernames_DAO.UserQuiz.SummaryQuiz" %>
 <%@ page import="Usernames_DAO.models.User" %>
+<%@ page import="Usernames_DAO.models.profile" %>
 <!DOCTYPE html>
 <html>
 
@@ -12,49 +13,74 @@
     <link rel="icon" href="logo.png" />
     <title>QuizHub</title>
     <link rel="stylesheet" type="text/css" href="css/QuizResultStyle.css" />
-    <%
-        User user = (User) request.getSession().getAttribute("user");
-        UserTakesQuiz quiz = (UserTakesQuiz) request.getSession().getAttribute("quiz");
-        SummaryQuiz quizSummary = (SummaryQuiz) request.getSession().getAttribute("quizSummary");
-        request.getSession().setAttribute("result page", 1);
-    %>
 </head>
-
+<%
+    if(request.getSession().getAttribute("user") == null){
+%>
+<body style ="height: 820px; overflow-y: hidden; display: flex; flex-direction: column; justify-content: center; align-items: center">
+<p style="font-size: 68px; color: white">Did you get lost?</p>
+<p style="font-size: 68px; color: white">You can't get in without log in! ;)</p>
+</body>
+<%
+}else{
+    User user = User.getUser((String) request.getSession().getAttribute("user"));
+    UserTakesQuiz quiz = (UserTakesQuiz) request.getSession().getAttribute("quiz");
+    SummaryQuiz quizSummary = (SummaryQuiz) request.getSession().getAttribute("quizSummary");
+    request.getSession().setAttribute("result page", 1);
+%>
 <body style="overflow-y: hidden;">
-<form action = "QuizResult" method = "POST">
-<div class="top">
-    <div style="display: flex; flex-direction: row; gap: 5px; align-items: center; padding: 10px">
-        <a href="Homepage.jsp"><img src="logo.png" alt="QuizHub Logo" width="80" height="80" ; /></a>
-        <a href="Homepage.jsp">
-            <p class="logo">QuizHub</p>
-        </a>
-    </div>
-    <div style="display: flex; flex-direction: row; gap: 30px; padding-right: 30px;">
-        <div style="position: relative;">
-            <input type="search" placeholder="Search..." class="search" />
-            <button type="submit" class="cButton"><img src="assets/search.svg" alt="Search button" width="34"
-                                                       height="34" ; /></button>
+    <div class="top">
+        <div style="display: flex; flex-direction: row; gap: 5px; align-items: center; padding: 10px">
+            <a href="Homepage.jsp"><img src="logo.png" alt="QuizHub Logo" width="80" height="80" ; /></a>
+            <a href="Homepage.jsp">
+                <p class="logo">QuizHub</p>
+            </a>
         </div>
-        <a href = "QuizCreate.jsp" class="addButton"><img src="assets/addQuiz.svg" alt="Add quiz button" width="50"
-                                                          height="50" ; /></a>
-        <div style="position: relative;">
-            <a href="Inbox.html" style="margin-top: -2px"><img src="assets/inbox.svg" alt="Inbox button" height="52"
-                                                               ; /></a>
-            <a href="Inbox.html" style="position: absolute; bottom: -15px; right: -15px;"><img
-                    src="assets/notificationMessage.svg" alt="Notification Icon" height="30" ; /></a>
+        <div style="display: flex; flex-direction: row; gap: 30px; padding-right: 30px;">
+            <form action = "Search" method = "POST">
+            <div style="position: relative;">
+                <input placeholder="Search..." class="search" name = "searchField" />
+                <button class="cButton" name = "searchButton" value="search"><img src="assets/search.svg" alt="Search button" width="34"
+                                                                                                height="34" ; /></button>
+            </div>
+            </form>
+            <a href = "QuizCreate.jsp" class="addButton"><img src="assets/addQuiz.svg" alt="Add quiz button" width="50"
+                                                              height="50" ; /></a>
+            <div style="position: relative;">
+                <a href="Inbox.jsp" style="margin-top: -2px"><img src="assets/inbox.svg" alt="Inbox button" height="52"
+                                                                  ; /></a>
+                <%
+                    profile profile = new profile((String)request.getSession().getAttribute("user"));
+                    if(profile.getNotification("message")){
+                %>
+                <a href="Inbox.jsp" style="position: absolute; bottom: -15px; right: -15px;"><img
+                        src="assets/notificationMessage.svg" alt="Notification Icon" height="30" ; /></a>
+                <%
+                }else if(profile.getNotification("request")){
+                %><a href="Inbox.jsp" style="position: absolute; bottom: -15px; right: -15px;"><img
+                    src="assets/notificationAddFriends.svg" alt="Notification Icon" height="30" ; /></a>
+                <%
+                }else if(profile.getNotification("challenge")){
+                %>
+                <a href="Inbox.jsp" style="position: absolute; bottom: -15px; right: -15px;"><img
+                        src="assets/notificationChallange.svg" alt="Notification Icon" height="30" ; /></a>
+                <%
+                    }
+                %>
+            </div>
+            <a href="Profile.jsp"><img src="assets/profile.svg" alt="Profile button" width="50" height="50" ; /></a>
         </div>
-        <a href="Profile.html"><img src="assets/profile.svg" alt="Profile button" width="50" height="50" ; /></a>
     </div>
-</div>
 <hr style="width: 100%; height: 1px; color: #FFF;">
+    <form action = "QuizResult" method = "POST">
 <div class="content">
     <div class="leftPannel">
         <div class="QuizCard">
             <div class="QuizDescCard">
-                <div class="QuizCardTitle" style="overflow: hidden;">
+                <div class="QuizCardTitle" style="overflow: hidden; min-height: 40px;">
                     <p class="QuizName" style = "max-width: 850px; overflow: hidden;"><%=quiz.getQuiz().getQuizName()%></p>
                     <div class="creator">
-                        <a href="profile.html" class="creatorLink"><%=quiz.getQuiz().getCreatorName()%></a>
+                        <a href="Profile.jsp?username=<%=quiz.getQuiz().getCreatorName()%>" class="creatorLink"><%=quiz.getQuiz().getCreatorName()%></a>
                         <img src="assets/creator.svg" alt="Creator Icon" height="40" ; />
                     </div>
                 </div>
@@ -64,7 +90,7 @@
                         <%
                             ArrayList<String> tags = quiz.getQuiz().getTags();
                             for(int i = 0; i < tags.size(); i++){%>
-                        <p class="QuizTag">#<%=tags.get(i)%></p>
+                        <a href="Search.jsp?search=<%=tags.get(i)%>" class="QuizTag">#<%=tags.get(i)%></a>
                         <%}%>
                     </div>
                 </div>
@@ -167,7 +193,13 @@
                             </p>
                             <p>Time: <%=quiz.getTime()%></p>
                         </div>
-                        <button type="submit" class="sButton">Challenge Friend!</button>
+                        <%
+                            request.getSession().setAttribute("challenge", "Result: " +
+                                    Integer.toString(Math.toIntExact(Math.round(((double) quiz.getQuiz().getUserScore() / quiz.getQuiz().getMaxScore()) * 100)))
+                                    + "% in " + quiz.getTime() + "!");
+                            request.getSession().setAttribute("challengeID", quiz.getQuizId());
+                        %>
+                        <a href="ChallangeFriend.jsp" class="sButton">Challenge Friend!</a>
                     </div>
                 </div>
             </div>
@@ -217,7 +249,7 @@
                                 for (int i = 0; i < ls.size(); i++) {
                             %>
                             <tr>
-                                <td><%=ls.get(i).getKey()%></td>
+                                <td><a href = "Profile.jsp?username=<%=ls.get(i).getKey()%>" class="perfLink"><%=ls.get(i).getKey()%></a></td>
                                 <td><%=ls.get(i).getValue().getKey()%>%</td>
                                 <td><%=ls.get(i).getValue().getValue()%></td>
                             </tr>
@@ -292,4 +324,7 @@
 </div>
 </form>
 </body>
+<%
+    }
+%>
 </html>

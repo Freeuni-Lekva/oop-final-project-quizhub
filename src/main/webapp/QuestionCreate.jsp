@@ -11,9 +11,19 @@
     <%
         UserCreatesQuiz quiz = (UserCreatesQuiz) request.getSession().getAttribute("new quiz");
         boolean selector = request.getSession().getAttribute("pageType").equals("selector");
+        request.getSession().setAttribute("profilePage", null);
     %>
 </head>
-
+<%
+    if(request.getSession().getAttribute("user") == null){
+%>
+<body style ="height: 820px; overflow-y: hidden; display: flex; flex-direction: column; justify-content: center; align-items: center">
+<p style="font-size: 68px; color: white">Did you get lost?</p>
+<p style="font-size: 68px; color: white">You can't get in without log in! ;)</p>
+</body>
+<%
+}else{
+%>
 <body style="overflow-y: hidden;">
 <form action="QuestionCreate" method="POST">
     <div class="top">
@@ -303,4 +313,7 @@
     </div>
 </form>
 </body>
+<%
+    }
+%>
 </html>

@@ -40,6 +40,34 @@
   <servlet-name>QuizResultServlet</servlet-name>
   <servlet-class>Servlets.QuizResultServlet</servlet-class>
 </servlet>
+<servlet>
+  <servlet-name>ProfileServlet</servlet-name>
+  <servlet-class>Servlets.ProfileServlet</servlet-class>
+</servlet>
+<servlet>
+  <servlet-name>SearchServlet</servlet-name>
+  <servlet-class>Servlets.SearchServlet</servlet-class>
+</servlet>
+<servlet>
+  <servlet-name>AnnouncementCreateServlet</servlet-name>
+  <servlet-class>Servlets.AnnouncementCreateServlet</servlet-class>
+</servlet>
+<servlet>
+  <servlet-name>FriendRequestsServlet</servlet-name>
+  <servlet-class>Servlets.FriendRequestsServlet</servlet-class>
+</servlet>
+<servlet>
+  <servlet-name>ChatServlet</servlet-name>
+  <servlet-class>Servlets.ChatServlet</servlet-class>
+</servlet>
+<servlet>
+  <servlet-name>ChallengeFriendServlet</servlet-name>
+  <servlet-class>Servlets.ChallengeFriendServlet</servlet-class>
+</servlet>
+<servlet>
+  <servlet-name>ChatSearchServlet</servlet-name>
+  <servlet-class>Servlets.ChatSearchServlet</servlet-class>
+</servlet>
 <servlet-mapping>
   <servlet-name>LogInServlet</servlet-name>
   <url-pattern>/LogIn</url-pattern>
@@ -75,5 +103,33 @@
 <servlet-mapping>
   <servlet-name>QuizResultServlet</servlet-name>
   <url-pattern>/QuizResult</url-pattern>
+</servlet-mapping>
+<servlet-mapping>
+  <servlet-name>ProfileServlet</servlet-name>
+  <url-pattern>/Profile</url-pattern>
+</servlet-mapping>
+<servlet-mapping>
+  <servlet-name>SearchServlet</servlet-name>
+  <url-pattern>/Search</url-pattern>
+</servlet-mapping>
+<servlet-mapping>
+  <servlet-name>AnnouncementCreateServlet</servlet-name>
+  <url-pattern>/AnnouncementCreate</url-pattern>
+</servlet-mapping>
+<servlet-mapping>
+  <servlet-name>FriendRequestsServlet</servlet-name>
+  <url-pattern>/FriendRequests</url-pattern>
+</servlet-mapping>
+<servlet-mapping>
+  <servlet-name>ChatServlet</servlet-name>
+  <url-pattern>/Chat</url-pattern>
+</servlet-mapping>
+<servlet-mapping>
+  <servlet-name>ChallengeFriendServlet</servlet-name>
+  <url-pattern>/ChallengeFriend</url-pattern>
+</servlet-mapping>
+<servlet-mapping>
+  <servlet-name>ChatSearchServlet</servlet-name>
+  <url-pattern>/ChatSearch</url-pattern>
 </servlet-mapping>
 </web-app>

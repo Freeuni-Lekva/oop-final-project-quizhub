@@ -13,26 +13,33 @@
   <link rel="icon" href="logo.png" />
   <title>QuizHub</title>
   <link rel="stylesheet" type="text/css" href="css/QuizPageStyle.css" />
-  <%UserTakesQuiz quiz = (UserTakesQuiz) request.getSession().getAttribute("quiz");
-    if (quiz == null){
-      User user = (User) request.getSession().getAttribute("user");
-      int page_id = Integer.parseInt(request.getParameter("quizID"));
-      int quiz_id = page_id/10;
-      Timestamp t = new Timestamp(System.currentTimeMillis());
-      boolean practiceMode = page_id%10 == 1;
-      try {
-        quiz = new UserTakesQuiz(user, quiz_id, t, practiceMode);
-      } catch (SQLException e) {
-        throw new RuntimeException(e);
-      }
-      request.getSession().setAttribute("quiz", quiz);
-    }
-    request.getSession().setAttribute("LastDaySwitch", null);
-    request.getSession().setAttribute("order", null);
-    request.getSession().setAttribute("quizSummaryPage", null);
-  %>
 </head>
 <%
+  if(request.getSession().getAttribute("user") == null){
+%>
+<body style ="height: 820px; overflow-y: hidden; display: flex; flex-direction: column; justify-content: center; align-items: center">
+<p style="font-size: 68px; color: white">Did you get lost?</p>
+<p style="font-size: 68px; color: white">You can't get in without log in! ;)</p>
+</body>
+<%
+}else{
+  UserTakesQuiz quiz = (UserTakesQuiz) request.getSession().getAttribute("quiz");
+  if (quiz == null){
+    User user = User.getUser((String) request.getSession().getAttribute("user"));
+    int page_id = Integer.parseInt(request.getParameter("quizID"));
+    int quiz_id = page_id/10;
+    Timestamp t = new Timestamp(System.currentTimeMillis());
+    boolean practiceMode = page_id%10 == 1;
+    try {
+      quiz = new UserTakesQuiz(user, quiz_id, t, practiceMode);
+    } catch (SQLException e) {
+      throw new RuntimeException(e);
+    }
+    request.getSession().setAttribute("quiz", quiz);
+  }
+  request.getSession().setAttribute("LastDaySwitch", null);
+  request.getSession().setAttribute("order", null);
+  request.getSession().setAttribute("quizSummaryPage", null);
   if(quiz.getQuiz().isPracticeMode()){
 %>
 <body style="overflow-y: hidden; background: #3B3B47;">
@@ -483,5 +490,7 @@
   %>
 </form>
 </body>
-
+<%
+    }
+%>
 </html>

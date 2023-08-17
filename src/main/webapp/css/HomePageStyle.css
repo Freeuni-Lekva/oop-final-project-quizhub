@@ -100,6 +100,7 @@ button {
   border: 1px solid #fff;
   border-radius: 50%;
   background: #fff;
+  cursor: pointer;
 }
 
 .cButton:hover {
@@ -309,6 +310,32 @@ button {
   overflow-y: auto;
 }
 
+.addAnnouncement{
+  width: 902px;
+  min-height: 50px;
+  border-radius: 30px;
+  background: #eee;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  color: #11023d;
+  font-family: Hubballi;
+  font-size: 32px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  letter-spacing: 0.72px;
+
+}
+
+.addAnnouncement:hover{
+  color: white;
+  background: #1c1a5e;
+  border: 1px solid #eee;
+}
+
 .announcement {
   width: 902px;
   display: flex;
@@ -413,11 +440,21 @@ button {
   gap: 5px;
   color: #4f52ad;
   font-family: Hubballi;
-  font-size: 20px;
+  font-size: 22px;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
   letter-spacing: 0.32px;
+}
+.frName:link {
+  color: #4f52ad;
+}
+.frName:visited {
+  color: #4f52ad;
+}
+
+.frName:active {
+  color: rgba(217, 217, 217, 0);
 }
 
 .dot {
@@ -470,7 +507,7 @@ button {
 .friendsActivities {
   display: flex;
   flex-direction: column;
-  height: 300px;
+  height: 600px;
   gap: 8px;
   position: relative;
 }

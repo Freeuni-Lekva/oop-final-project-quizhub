@@ -1,3 +1,4 @@
+<%@ page import="Usernames_DAO.models.User" %>
 <!DOCTYPE html>
 <html>
 
@@ -5,6 +6,9 @@
     <link rel="icon" href="logo.png" />
     <title>QuizHub</title>
     <link rel="stylesheet" type="text/css" href="css/LogInStyle.css" />
+    <%
+        request.getSession().setAttribute("user", null);
+    %>
 </head>
 
 <body>
