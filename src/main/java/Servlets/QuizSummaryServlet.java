@@ -1,10 +1,13 @@
 package Servlets;
 
+import Usernames_DAO.manager.AdminManager;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.SQLException;
 
 public class QuizSummaryServlet extends HttpServlet {
     @Override
@@ -16,7 +19,26 @@ public class QuizSummaryServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        if(request.getParameter("AllTimeOrLastDay") != null){
+        if(request.getParameter("removeQuiz") != null){
+            try {
+                AdminManager admin = new AdminManager((String) request.getSession().getAttribute("user"));
+                admin.removeQuiz((int)request.getSession().getAttribute("quiz_idForAdmin"));
+                request.getSession().setAttribute("quiz_idForAdmin", null);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            request.getRequestDispatcher("Homepage.jsp").forward(request, response);
+            return;
+        }
+        if(request.getParameter("clearHistory") != null){
+            try {
+                AdminManager admin = new AdminManager((String) request.getSession().getAttribute("user"));
+                admin.clearHistory(((int)request.getSession().getAttribute("quiz_idForAdmin")));
+                request.getSession().setAttribute("quiz_idForAdmin", null);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }else if(request.getParameter("AllTimeOrLastDay") != null){
             if (request.getParameter("AllTimeOrLastDay").equals("AllTime")) {
                 request.getSession().setAttribute("LastDaySwitch", "Last Day");
             } else {
