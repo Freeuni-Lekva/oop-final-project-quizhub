@@ -33,9 +33,6 @@ public class MessageManager {
         return db.getRecievedMessageSenders(username);
     }
 
-    public void add(Message msg) throws SQLException {
-        db.add(msg);
-    }
 
     public ArrayList<Message> getMessages(String username_from,String username_to) throws SQLException {
         return db.getMessagesBetween(username_from,username_to);

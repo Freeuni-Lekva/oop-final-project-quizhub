@@ -41,6 +41,7 @@ public class User {
         return username;
     }
     public void demoteFromAdmin() throws SQLException {
+        is_admin = false;
         user_db.removeAdministrator(username);
     }
     public List<String> getFriends() throws SQLException {
@@ -54,9 +55,6 @@ public class User {
     public void promoteToAdmin() throws SQLException {
         user_db.promoteAdministrator(username);
         is_admin = true;
-    }
-    public int GetRating(int quiz_id) throws SQLException {
-        return rating_db.UserMaxScore(username,quiz_id);
     }
     public List<Achievement> getAchievement() throws SQLException {
         List<Integer> list =  achievement_db.getAchievements(username);
