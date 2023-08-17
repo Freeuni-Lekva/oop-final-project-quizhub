@@ -30,7 +30,9 @@ public class QuestionCreateServlet extends HttpServlet {
         if (request.getParameter("finish-button") != null) {
             UserCreatesQuiz quiz = (UserCreatesQuiz) request.getSession().getAttribute("new quiz");
             try {
-                quiz.FinishAndPublish();
+                if(quiz != null) {
+                    quiz.FinishAndPublish();
+                }
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }

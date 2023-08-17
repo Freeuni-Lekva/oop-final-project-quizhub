@@ -29,7 +29,12 @@ public class QuizCreateServlet extends HttpServlet {
 
         UserCreatesQuiz newQuiz = (UserCreatesQuiz)  request.getSession().getAttribute("new quiz");
         if (newQuiz == null) {
-            User user = (User) request.getSession().getAttribute("user");
+            User user = null;
+            try {
+                user = User.getUser((String) request.getSession().getAttribute("user"));
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
             try {
                 newQuiz = new UserCreatesQuiz(user);
             } catch (SQLException e) {
