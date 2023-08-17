@@ -22,6 +22,7 @@ public class TestQuestionFillBlank extends TestCase {
         assertTrue(qfb2.isCaseSensitive());
         assertEquals(1, qfb1.getMaxScore());
         assertNull(qfb1.getImage());
+        assertNull(qfb2.getPossibleAnswers());
     }
 
     @Test

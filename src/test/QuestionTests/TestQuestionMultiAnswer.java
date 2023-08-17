@@ -32,6 +32,7 @@ public class TestQuestionMultiAnswer extends TestCase {
 
         assertNull(qma1.getImage());
         assertNull(qma2.getTexts());
+        assertNull(qma3.getPossibleAnswers());
     }
 
     @Test

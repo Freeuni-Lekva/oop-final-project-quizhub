@@ -23,7 +23,9 @@ public class TestQuiz extends TestCase {
         quiz = new Quiz("TestQuiz", "D.Gelashvili", "All","this is test quiz, feel free to take it",
                 tags, questions, false, false, true, false);
         Quiz quiz2 = new Quiz(quiz.getQuizName(), quiz.getCreatorName(), quiz.getCategory(), quiz.getDescription(),
-                tags, questions, true, true, false, true);
+                null, questions, true, true, false, true);
+        quiz2 = new Quiz(quiz.getQuizName(), quiz.getCreatorName(), quiz.getCategory(), quiz.getDescription(),
+                tags, null, true, true, false, true);
     }
 
     private void declareVariables() {

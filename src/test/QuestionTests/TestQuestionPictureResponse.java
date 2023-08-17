@@ -19,6 +19,7 @@ public class TestQuestionPictureResponse extends TestCase {
 
         QuestionPictureResponse qpr2 = new QuestionPictureResponse("Number of Triangles?", "triangles.png",
                                                                                     "30", false, false);
+        assertEquals(4, qpr2.getType());
         assertEquals("Number of Triangles?", qpr2.getQuestion());
         assertEquals("triangles.png", qpr2.getImage());
         assertFalse(qpr2.isOrdered());
@@ -26,6 +27,7 @@ public class TestQuestionPictureResponse extends TestCase {
         assertEquals(1, qpr2.getMaxScore());
         assertNull(qpr1.getTexts());
         assertNull(qpr2.getTexts());
+        assertNull(qpr1.getPossibleAnswers());
     }
 
     @Test
