@@ -2,6 +2,7 @@ package Usernames_DAO.manager;
 
 import DATABASE_DAO.QuizDatabases.QuizDatabase;
 import DATABASE_DAO.UsernameDatabases.*;
+import Usernames_DAO.models.Announcement;
 import javafx.util.Pair;
 
 import java.sql.SQLException;
@@ -16,6 +17,11 @@ public class HomepageManager {
         rating_db = new RankingsDatabase();
         userQuiz_db = new UserQuizDatabase();
         quiz_db = new QuizDatabase();
+    }
+
+    public ArrayList<Announcement> getAnnouncements() throws SQLException {
+        AnnouncementDatabase ann_db = new AnnouncementDatabase();
+        return ann_db.getAnnouncements();
     }
 
     public List<Pair<Pair<Integer, Integer>, String>> getPopularQuizes() throws SQLException {
