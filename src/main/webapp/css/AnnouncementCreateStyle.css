@@ -1,0 +1,209 @@
+@font-face {
+  font-family: "Hubballi";
+  src: url("Hubballi.ttf");
+}
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+html {
+  height: 100%;
+}
+body {
+  background: #1c1a5e;
+  font-family: Hubballi;
+}
+ul {
+  list-style: none;
+}
+
+li {
+  text-decoration: none;
+  list-style: none;
+}
+a {
+  text-decoration: none;
+}
+input,
+option,
+button {
+  font-family: Hubballi;
+}
+
+:root {
+  scrollbar-color: #eee #11023d;
+  scrollbar-width: thin;
+}
+::-webkit-scrollbar {
+  width: 17px;
+}
+::-webkit-scrollbar-track {
+  border-radius: 13px;
+  background: #11023d;
+}
+::-webkit-scrollbar-thumb {
+  border: 4px solid #11023d;
+  border-radius: 13px;
+  background: #eee;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #eee;
+}
+
+.logo {
+  color: #fff;
+  font-family: Hubballi;
+  font-size: 64px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.eButton {
+  width: 150px;
+  height: 72px;
+  border-radius: 20px;
+  border: none;
+  color: #fff;
+  text-align: center;
+  font-family: Hubballi;
+  font-size: 48px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  background: #ff3e3e;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.eButton:hover {
+  border: 1px solid #ff3e3e;
+  color: #ff3e3e;
+  background: #1c1a5e;
+}
+
+.endButtons {
+  display: flex;
+  flex-direction: row;
+  gap: 25px;
+  margin-right: 25px;
+}
+
+.top {
+  height: 100px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.content {
+  display: flex;
+  flex-direction: row;
+  padding-top: 10px;
+  justify-content: center;
+  gap: 30px;
+}
+
+.rightPannel {
+  width: 1200px;
+  height: 800px;
+  border-radius: 30px;
+  background: #eee;
+  padding-left: 50px;
+  padding-right: 50px;
+  padding-top: 25px;
+  color: #11023d;
+  text-align: center;
+  font-family: Hubballi;
+  font-size: 36px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  letter-spacing: 0.72px;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.pannelRow {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.nameInput {
+  width: 650px;
+  height: 50px;
+  border-radius: 100px;
+  margin-top: 5px;
+  padding-left: 10px;
+  border: 1px solid #11023d;
+  background: #d9d9d9;
+  display: flex;
+  align-items: center;
+}
+
+input[type="text"].nameInp {
+  outline: none;
+  padding: 5px;
+  margin-top: 2px;
+  margin-bottom: 2px;
+  width: 640px;
+  height: 50px;
+  font-size: 24px;
+  border-radius: 50px;
+  background: rgba(217, 217, 217, 0);
+  border: 0px solid #11023d;
+}
+
+.descDiv {
+  width: 1100px;
+  height: 500px;
+  background: #d9d9d9;
+  border: 1px solid #11023d;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.descTextArea {
+  padding: 5px 10px;
+  outline: none;
+  width: 1080px;
+  height: 490px;
+  resize: none;
+  background: rgba(217, 217, 217, 0);
+  border: 0px solid #11023d;
+  font-family: Hubballi;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  letter-spacing: 0.48px;
+}
+
+.sButton {
+  width: 500px;
+  border-radius: 100px;
+  border: none;
+  color: #fff;
+  text-align: center;
+  font-family: Hubballi;
+  font-size: 36px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  letter-spacing: 0.72px;
+  background: #2bc990;
+  cursor: pointer;
+}
+
+.sButton:hover {
+  border: 1px solid #2bc990;
+  color: #2bc990;
+  background: #eee;
+}
