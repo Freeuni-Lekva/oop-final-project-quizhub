@@ -43,13 +43,13 @@ public class AdminManager{
     public void removeUser(String username) throws SQLException {
         ach_db.delete(username,"Achievements");
         frReq_db.delete(username);
-        fr_db.delete(username);
+        fr_db.remove(username);
         msg_db.delete(username);
         rank_db.delete(username,"Rankings");
         ArrayList<Integer> deletedQuizId = (ArrayList<Integer>) userQuiz_db.getQuizes(username);
         userQuiz_db.delete(username,"UserQuiz");
         user_db.delete(username,"Users");
-        ann_db.delete(username);
+        ann_db.delete(username , AnnouncementDatabase.tablename);
         for (int quiz_id : deletedQuizId) {
             removeQuiz(quiz_id);
         }
@@ -76,7 +76,7 @@ public class AdminManager{
         ann_db.add(id,username,subject,text);
     }
 
-    public void clearHistory(int quiz_id){
+    public void clearHistory(int quiz_id) throws SQLException {
         rank_db.delete(quiz_id);
     }
 }
