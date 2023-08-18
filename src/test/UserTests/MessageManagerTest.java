@@ -6,7 +6,6 @@ import DATABASE_DAO.QuizDatabases.QuizQuestionDatabase;
 import DATABASE_DAO.QuizDatabases.TagsQuizDatabase;
 import DATABASE_DAO.UsernameDatabases.*;
 import Usernames_DAO.manager.FriendshipManager;
-import Usernames_DAO.message.FriendRequest;
 import Usernames_DAO.message.Message;
 import Usernames_DAO.message.MessageManager;
 import junit.framework.TestCase;
