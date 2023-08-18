@@ -23,13 +23,13 @@ public class MessageManager {
         db.add(msg);
     }
 
-    public  ArrayList<String> getFriendRequests(String username) {
+    public  ArrayList<String> getFriendRequests(String username) throws SQLException {
         ArrayList<String> requests;
         requests = fr_db.friendRequestsRecieved(username);
         return requests;
     }
 
-    public  ArrayList<String> getRecievedUsers(String username) {
+    public  ArrayList<String> getRecievedUsers(String username) throws SQLException {
         return db.getRecievedMessageSenders(username);
     }
 
