@@ -117,8 +117,15 @@ public class UserCreatesQuiz {
 
         for (Question question : questions) {
             int question_id = questionsDatabase.getMinId(QuestionsDatabase.tablename);
-            questionsDatabase.insertQuestion(question_id, question.getType(), question.getQuestion(),
-                    question.getPossibleAnswers(), question.getAnswers(), question.isOrdered(), question.isCaseSensitive());
+            if (question.getType() != 4) {
+                questionsDatabase.insertQuestion(question_id, question.getType(), question.getQuestion(),
+                        question.getPossibleAnswers(), question.getAnswers(), question.isOrdered(), question.isCaseSensitive());
+            } else {
+                ArrayList<String> ls = new ArrayList<>();
+                ls.add(question.getImage());
+                questionsDatabase.insertQuestion(question_id, question.getType(), question.getQuestion(),
+                        ls, question.getAnswers(), question.isOrdered(), question.isCaseSensitive());
+            }
             quizQuestionDatabase.addQuestion(quiz_id, question_id);
         }
 
