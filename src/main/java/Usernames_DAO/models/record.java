@@ -10,9 +10,11 @@ public class record {
     public int quiz_id;
     public int rating;
     public String quizName;
-    QuizDatabase quiz_db;
-    RankingsDatabase rating_db;
+    private QuizDatabase quiz_db;
+    private RankingsDatabase rating_db;
     public record(String username,int quiz_id) throws SQLException {
+        this.quiz_db = new QuizDatabase();
+        this.rating_db = new RankingsDatabase();
         this.username = username;
         this.quiz_id = quiz_id;
         this.rating = getRating(username,quiz_id);

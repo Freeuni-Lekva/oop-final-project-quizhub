@@ -194,7 +194,7 @@
                             <p>Time: <%=quiz.getTime()%></p>
                         </div>
                         <%
-                            request.getSession().setAttribute("challenge", "Result: " +
+                            request.getSession().setAttribute("challenge", quiz.getQuiz().getQuizName() + "//" + "Result: " +
                                     Integer.toString(Math.toIntExact(Math.round(((double) quiz.getQuiz().getUserScore() / quiz.getQuiz().getMaxScore()) * 100)))
                                     + "% in " + quiz.getTime() + "!");
                             request.getSession().setAttribute("challengeID", quiz.getQuizId());

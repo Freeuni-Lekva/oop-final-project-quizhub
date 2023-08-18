@@ -14,7 +14,6 @@ public class User {
     static String username;
     private FriendsDatabase friends_db;
     private RankingsDatabase rating_db;
-    private ReviewDatabase review_db;
     private AchievementDatabase achievement_db;
     private UserQuizDatabase userQuiz_db;
     private QuizDatabase quiz_db;
@@ -23,7 +22,6 @@ public class User {
     public User(String username,boolean is_admin) throws SQLException {
         this.username = username;
         rating_db = new RankingsDatabase();
-        review_db = new ReviewDatabase();
         achievement_db = new AchievementDatabase();
         userQuiz_db = new UserQuizDatabase();
         quiz_db = new QuizDatabase();
@@ -41,6 +39,7 @@ public class User {
         return username;
     }
     public void demoteFromAdmin() throws SQLException {
+        is_admin = false;
         user_db.removeAdministrator(username);
     }
     public List<String> getFriends() throws SQLException {
@@ -54,9 +53,6 @@ public class User {
     public void promoteToAdmin() throws SQLException {
         user_db.promoteAdministrator(username);
         is_admin = true;
-    }
-    public int GetRating(int quiz_id) throws SQLException {
-        return rating_db.UserMaxScore(username,quiz_id);
     }
     public List<Achievement> getAchievement() throws SQLException {
         List<Integer> list =  achievement_db.getAchievements(username);

@@ -21,9 +21,16 @@ public class Message {
     }
 
     public String getQuizName() throws SQLException {
-        QuizDatabase q_db = new QuizDatabase();
-        Quiz q = q_db.getQuiz(quiz_id);
-        return q.getQuizName();
+        String name = "";
+        if(isChallenge){
+            String text = getText();
+            for(int i = 0; i < text.length(); i++){
+                if(text.charAt(i) == '/' && text.charAt(i+1) == '/')
+                    break;
+                name += text.charAt(i);
+            }
+        }
+        return name;
     }
 
     public String getFrom() {
