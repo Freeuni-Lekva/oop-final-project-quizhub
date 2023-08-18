@@ -14,7 +14,6 @@ public class User {
     static String username;
     private FriendsDatabase friends_db;
     private RankingsDatabase rating_db;
-    private ReviewDatabase review_db;
     private AchievementDatabase achievement_db;
     private UserQuizDatabase userQuiz_db;
     private QuizDatabase quiz_db;
@@ -23,7 +22,6 @@ public class User {
     public User(String username,boolean is_admin) throws SQLException {
         this.username = username;
         rating_db = new RankingsDatabase();
-        review_db = new ReviewDatabase();
         achievement_db = new AchievementDatabase();
         userQuiz_db = new UserQuizDatabase();
         quiz_db = new QuizDatabase();
