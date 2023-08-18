@@ -6,6 +6,7 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="Usernames_DAO.message.Message" %>
 <%@ page import="Questions_DAO.Quiz" %>
+<%@ page import="javafx.util.Pair" %>
 <!DOCTYPE html>
 <html>
 
@@ -44,7 +45,7 @@
     profile profile = new profile((String)request.getSession().getAttribute("user"));
     profile.setNotification("message", false);
     profile.setNotification("request", false);
-    profile.setNotification("challange", false);
+    profile.setNotification("challenge", false);
 %>
 <body style="overflow-y: hidden;">
 <form action="Search" method="POST">
@@ -177,6 +178,14 @@
                     for(int i = 0; i < chat.size(); i++){
                         Message currsms = chat.get(i);
                         if(currsms.isChallenge()){
+                            String txt = currsms.getText();
+                            int j = 0;
+                            while(!(txt.charAt(j) == '/' && txt.charAt(j+1) == '/')){
+                                j++;
+                            }
+                            j++;
+                            j++;
+                            String text = txt.substring(j);
                             if(currsms.getFrom().equals(me)){
                         %>
                         <div class="challangeBox">
@@ -185,8 +194,20 @@
                             </div>
                             <div class="challangeData">
                                 <p class="challangeText">You Challenged <%=currUser%>!</p>
+                                <%
+                                    User u = User.getUser(me);
+                                    Pair<Integer, String> par = new Pair(currsms.getQuiz_id(), currsms.getQuizName());
+                                    if(!u.getRecentTakenQuizes().contains(par)){
+                                %>
+                                <a href="Homepage.jsp" class="challangeQuiz">Deleted Quiz</a>
+                                <%
+                                    }else{
+                                %>
                                 <a href="QuizSummary.jsp?quizID=<%=currsms.getQuiz_id()%>" class="challangeQuiz"><%=currsms.getQuizName()%></a>
-                                <p class="challangeText">Your <%=currsms.getText()%></p>
+                                <%
+                                    }
+                                %>
+                                <p class="challangeText">Your <%=text%></p>
                             </div>
                         </div>
                         <%
@@ -198,8 +219,20 @@
                             </div>
                             <div class="challangeData">
                                 <p class="challangeText"><%=currUser%> Challenged You!</p>
+                                <%
+                                    User u = User.getUser(currUser);
+                                    Pair<Integer, String> par = new Pair(currsms.getQuiz_id(), currsms.getQuizName());
+                                    if(!u.getRecentTakenQuizes().contains(par)){
+                                %>
+                                <a href="Homepage.jsp" class="challangeQuiz">Deleted Quiz</a>
+                                <%
+                                }else{
+                                %>
                                 <a href="QuizSummary.jsp?quizID=<%=currsms.getQuiz_id()%>" class="challangeQuiz"><%=currsms.getQuizName()%></a>
-                                <p class="challangeText"><%=currUser%>'s <%=currsms.getText()%></p>
+                                <%
+                                    }
+                                %>
+                                <p class="challangeText"><%=currUser%>'s <%=text%></p>
                             </div>
                         </div>
                         <%
