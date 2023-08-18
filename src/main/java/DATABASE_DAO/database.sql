@@ -1,24 +1,27 @@
+# For database-side testing, switch from using the "my_database" to the "test_database".
+# This change will ensure that our tests don't affect the production database and help maintain data integrity.
+# Remember to update any relevant configurations and connection strings accordingly.
+
 USE my_database;
 DROP TABLE IF EXISTS QuestionsTable;
 CREATE TABLE QuestionsTable
 
 (id BIGINT,
  type BIGINT,
- question CHAR(64),
- possibleAnswers CHAR(64),
- answer CHAR(64),
+ question TEXT,
+ possibleAnswers TEXT,
+ answer TEXT,
  ordered BIGINT,
  caseSensitive BIGINT);
 
--- id, name, creator, category, description,create_date, random, onePage, immediateCorrection
 
 DROP TABLE IF EXISTS QuizTable;
 CREATE TABLE QuizTable
 (id BIGINT,
- name CHAR(64),
- creator CHAR(64),
- category CHAR(64),
- description CHAR(64),
+ name TEXT,
+ creator TEXT,
+ category TEXT,
+ description TEXT,
  create_date TIMESTAMP,
  random BOOLEAN,
  onePage BOOLEAN,
@@ -32,67 +35,68 @@ CREATE TABLE Quiz_QuestionTable
 
 DROP TABLE IF EXISTS Tags_QuizTable;
 CREATE TABLE Tags_QuizTable
-(tags CHAR(64),
+(tags TEXT,
  id BIGINT);
 
 DROP TABLE IF EXISTS Users;
 CREATE TABLE Users
-(username CHAR(64),
- password CHAR(64),
- administrator BOOLEAN);
+(username TEXT,
+ password TEXT,
+ administrator BOOLEAN,
+ challengeNotification BOOLEAN,
+ messageNotification BOOLEAN,
+ requestNotification BOOLEAN);
 
 DROP TABLE IF EXISTS FriendRequests;
 CREATE TABLE FriendRequests
-(username_from CHAR(64),
- username_to CHAR(64));
+(username_from TEXT,
+ username_to TEXT,
+ date TIMESTAMP);
 
 DROP TABLE IF EXISTS Friends;
 CREATE TABLE Friends
-(username_from CHAR(64),
- username_to CHAR(64));
+(username_from TEXT,
+ username_to TEXT);
 
 DROP TABLE IF EXISTS UserQuiz;
 CREATE TABLE UserQuiz
-(username CHAR(64),
+(username TEXT,
  id BIGINT(64),
  create_time TIMESTAMP);
 
 DROP TABLE IF EXISTS Messages;
 CREATE TABLE Messages
-(id BIGINT,
- username_from CHAR(64),
- username_to CHAR(64),
+(username_from TEXT,
+ username_to TEXT,
  date TIMESTAMP,
- type enum('CHALLENGE','GENERAL') NOT NULL,
- unread BIGINT,
+ isChallenge BOOLEAN,
  quiz_id BIGINT,
- subject CHAR(64),
- text CHAR(64));
+ text TEXT);
 
 DROP TABLE IF EXISTS Achievements;
 CREATE TABLE Achievements
-(username CHAR(64),
+(username TEXT,
  id BIGINT(64));
 
 DROP TABLE IF EXISTS Announcements;
 CREATE TABLE Announcements
 (id BIGINT,
- username CHAR(64),
- subject CHAR(64),
- text CHAR(64));
+ username TEXT,
+ subject TEXT,
+ text TEXT);
 
 DROP TABLE IF EXISTS Rankings;
 CREATE TABLE Rankings
 (id BIGINT,
  quiz_id BIGINT,
- username CHAR(64),
+ username TEXT,
  score BIGINT,
  start_time TIMESTAMP,
  end_time TIMESTAMP);
 
 DROP TABLE IF EXISTS Reviews;
 CREATE TABLE Reviews
-(username CHAR(64),
+(username TEXT,
  id BIGINT,
- text CHAR(64),
+ text TEXT,
  date TIMESTAMP);
