@@ -45,7 +45,7 @@ public class profile {
     public int getCreatedQuizes() throws SQLException {
         return uq_db.numberOfCreatedQuizes(u.getUsername());
     }
-    public int getFriendCount(){
+    public int getFriendCount() throws SQLException {
         return f_db.getFriends(u.getUsername()).size();
     }
     public int getHighestScore() throws SQLException {
