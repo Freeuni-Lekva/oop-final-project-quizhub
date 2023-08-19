@@ -477,11 +477,13 @@ button {
   font-weight: 400;
   line-height: normal;
   letter-spacing: 0.4px;
+  overflow: hidden;
 }
 
 .friendQuizName:link {
   color: #fff;
   text-decoration: underline;
+  white-space: nowrap;
 }
 .friendQuizName:visited {
   color: #fff;
