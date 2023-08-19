@@ -312,7 +312,7 @@
             <%
               }
             %>
-            <a href="QuizSummary.jsp?quizID=<%=curr.getValue().getValue().getValue()%>" class="friendQuizName" style="max-width: 200px; overflow: hidden;"><%=curr.getValue().getValue().getKey()%></a>
+            <a href="QuizSummary.jsp?quizID=<%=curr.getValue().getValue().getValue()%>" class="friendQuizName" style="max-width: 180px; overflow: hidden;"><%=curr.getValue().getValue().getKey()%></a>
           </div>
         </div>
         <%
