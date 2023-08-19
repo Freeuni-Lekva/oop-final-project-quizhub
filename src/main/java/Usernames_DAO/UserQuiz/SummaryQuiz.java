@@ -95,7 +95,7 @@ public class SummaryQuiz {
         return ans;
     }
 
-    private ArrayList<Pair<String, Pair<Integer, String>>> getPairs(ArrayList<UserAction> ls1) {
+    public ArrayList<Pair<String, Pair<Integer, String>>> getPairs(ArrayList<UserAction> ls1) {
         ArrayList<Pair<String, Pair<Integer, String>>> ls = new ArrayList<>();
         for (UserAction element : ls1) {
             String username = element.getUsername();
