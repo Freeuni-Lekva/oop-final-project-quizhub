@@ -23,14 +23,14 @@ public class UserTakesQuiz {
     private final Timestamp start_time;
     private Timestamp end_time;
     private final Quiz quiz;
-    private QuizDatabase quizDatabase;
-    private QuestionsDatabase questionsDatabase;
-    private QuizQuestionDatabase quizQuestionDatabase;
-    private TagsQuizDatabase tagsQuizDatabase;
-    private RankingsDatabase rankingsDatabase;
+    private final RankingsDatabase rankingsDatabase;
+    private final Achievement achievement;
     public UserTakesQuiz(User user, int quiz_id, Timestamp start_time, boolean practiceMode) throws SQLException {
+        QuizDatabase quizDatabase;
+        QuizQuestionDatabase quizQuestionDatabase;
+        TagsQuizDatabase tagsQuizDatabase;
+
         quizDatabase = new QuizDatabase();
-        questionsDatabase = new QuestionsDatabase();
         quizQuestionDatabase = new QuizQuestionDatabase();
         tagsQuizDatabase = new TagsQuizDatabase();
         rankingsDatabase = new RankingsDatabase();
@@ -44,6 +44,8 @@ public class UserTakesQuiz {
         ArrayList<Question> questions = quizQuestionDatabase.getQuestions(quiz_id);
         quiz = new Quiz(quiz1.getQuizName(), quiz1.getCreatorName(), quiz1.getCategory(), quiz1.getDescription(),
                 tags, questions, quiz1.isRandom(), quiz1.isOnePage(), quiz1.hasImmediateCorrection(), practiceMode);
+
+        achievement = new Achievement(user.getUsername(), -1);
     }
 
     public User getUser() {
@@ -63,10 +65,9 @@ public class UserTakesQuiz {
         }
     }
 
-    public void finish() throws SQLException {
+    public Timestamp finish() throws SQLException {
         end_time = new Timestamp(System.currentTimeMillis());
 
-        Achievement achievement = new Achievement(user.getUsername(), -1);
         if (quiz.isPracticeMode()) {
             achievement.alertPractice(user.getUsername());
         } else {
@@ -77,6 +78,8 @@ public class UserTakesQuiz {
                 achievement.alertHighestscore(user.getUsername());
             }
         }
+
+        return end_time;
     }
 
     public String getTime() {

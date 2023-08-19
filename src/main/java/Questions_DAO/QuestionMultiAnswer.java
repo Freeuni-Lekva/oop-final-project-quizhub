@@ -1,7 +1,5 @@
 package Questions_DAO;
 
-import Questions_DAO.Question;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;

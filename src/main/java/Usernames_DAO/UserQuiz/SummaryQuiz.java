@@ -17,17 +17,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SummaryQuiz {
-    private QuizDatabase quizDatabase;
     private final RankingsDatabase rankingsDatabase;
-    private TagsQuizDatabase tagsQuizDatabase;
-    private QuizQuestionDatabase quizQuestionDatabase;
     private final Quiz quiz;
     private final int quiz_id;
     public SummaryQuiz (int quiz_id) throws SQLException {
-        quizDatabase = new QuizDatabase();
+        QuizDatabase quizDatabase = new QuizDatabase();
         rankingsDatabase = new RankingsDatabase();
-        tagsQuizDatabase = new TagsQuizDatabase();
-        quizQuestionDatabase = new QuizQuestionDatabase();
+        TagsQuizDatabase tagsQuizDatabase = new TagsQuizDatabase();
+        QuizQuestionDatabase quizQuestionDatabase = new QuizQuestionDatabase();
 
         Quiz quiz1 = quizDatabase.getQuiz(quiz_id);
         ArrayList<String> tags = tagsQuizDatabase.getTags(quiz_id);
