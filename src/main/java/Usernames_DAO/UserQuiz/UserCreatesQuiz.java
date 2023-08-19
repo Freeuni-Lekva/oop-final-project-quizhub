@@ -16,11 +16,11 @@ import java.util.ArrayList;
 
 public class UserCreatesQuiz {
     private String quizName;
-    private String creator_name;
+    private final String creator_name;
     private String category;
     private String description;
-    private ArrayList<String> tags;
-    private ArrayList<Question> questions;
+    private final ArrayList<String> tags;
+    private final ArrayList<Question> questions;
     private boolean random;
     private boolean onePage;
     private boolean immediateCorrection;
@@ -31,6 +31,8 @@ public class UserCreatesQuiz {
     private final QuestionsDatabase questionsDatabase;
     private final QuizQuestionDatabase quizQuestionDatabase;
     private final TagsQuizDatabase tagsQuizDatabase;
+    private final UserQuizDatabase userQuizDatabase;
+    private final Achievement achievement;
     public UserCreatesQuiz (User user) throws SQLException {
         creator_name = user.getUsername();
         tags = new ArrayList<>();
@@ -42,6 +44,9 @@ public class UserCreatesQuiz {
         questionsDatabase = new QuestionsDatabase();
         quizQuestionDatabase = new QuizQuestionDatabase();
         tagsQuizDatabase = new TagsQuizDatabase();
+        userQuizDatabase = new UserQuizDatabase();
+
+        achievement = new Achievement(creator_name, -1);
     }
 
     public void setQuizName (String quizName) {
@@ -133,10 +138,8 @@ public class UserCreatesQuiz {
             tagsQuizDatabase.addQuiz(tag, quiz_id);
         }
 
-        UserQuizDatabase userQuizDatabase = new UserQuizDatabase();
         userQuizDatabase.add(creator_name, quiz_id, new Timestamp(System.currentTimeMillis()));
 
-        Achievement achievement = new Achievement(creator_name, -1);
         achievement.alertCreateQuiz(creator_name);
         return quiz_id;
     }
