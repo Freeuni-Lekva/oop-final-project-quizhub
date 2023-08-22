@@ -23,9 +23,7 @@ public class ConnectionPool {
             try {
                 availableConnections.add(DriverManager.getConnection("jdbc:mysql://localhost:3306",
                         "root", "Lmebo2021."));
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
+            } catch (SQLException e) { throw new RuntimeException(e); }
         }
     }
     private ConnectionPool(){};

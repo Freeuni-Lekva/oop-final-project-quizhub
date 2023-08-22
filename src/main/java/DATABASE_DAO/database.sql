@@ -89,3 +89,5 @@ CREATE TABLE Rankings
  score BIGINT,
  start_time TIMESTAMP,
  end_time TIMESTAMP);
+
+

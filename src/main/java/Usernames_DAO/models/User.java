@@ -87,8 +87,7 @@ public class User {
             UserAction ua = list.get(i);
             String username = ua.getUsername();
             boolean isCreated;
-            if(ua.getSource() == "Rankings")isCreated = false;
-            else isCreated=true;
+            isCreated = !ua.getSource().equals("Rankings");
             int quiz_id = (int)ua.quizId();
             Quiz quiz1 = quiz_db.getQuiz(quiz_id);
             String quiz_name = quiz1.getQuizName();

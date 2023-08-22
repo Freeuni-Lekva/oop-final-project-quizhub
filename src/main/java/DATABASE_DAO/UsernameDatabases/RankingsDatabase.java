@@ -183,7 +183,7 @@ public class RankingsDatabase extends Database {
         UserHistory userHistory = null;
         String query = "SELECT end_time AS finishDate , score, TIMESTAMPDIFF(SECOND, start_time, end_time) AS actionTime " +
                 "FROM " + tablename +
-                " WHERE username = ? AND quiz_id = ? AND score = " + UserMaxScore(username, quiz_id) + ";";
+                " WHERE username = ? AND quiz_id = ? AND score = " + UserMaxScore(username, quiz_id) + " ORDER BY actionTime;";
         Connection connection = ConnectionPool.openConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, username);

@@ -87,7 +87,7 @@ public class SummaryQuiz {
             String name = friends.get(i);
             UserHistory uh = rankingsDatabase.FriendMaxScore(name,quiz_id);
             if(uh == null)
-                return ans;
+                continue;
             int score = toPercent(Double.parseDouble(uh.getScore()),quiz.getMaxScore());
             String time = timeToString(uh.getAtionTime());
             ans.add(new Pair<>(name,new Pair<>(score,time)));
