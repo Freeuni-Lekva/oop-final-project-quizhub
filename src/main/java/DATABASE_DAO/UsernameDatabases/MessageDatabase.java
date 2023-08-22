@@ -3,9 +3,9 @@ package DATABASE_DAO.UsernameDatabases;
 import DATABASE_DAO.ConnectionPool;
 import DATABASE_DAO.Database;
 import Usernames_DAO.message.Message;
-
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -17,10 +17,6 @@ public class MessageDatabase extends Database {
     public MessageDatabase() throws SQLException {
     }
 
-    public MessageDatabase(String under_score) throws SQLException{
-        super(under_score);
-        databaseName = "test_database;";
-    }
 
     public void delete(String username) throws SQLException {
         Connection connection = ConnectionPool.openConnection();
@@ -71,6 +67,7 @@ public class MessageDatabase extends Database {
             }
         }
         ConnectionPool.closeConnection(connection);
+        Collections.sort(result);
         return result;
     }
 

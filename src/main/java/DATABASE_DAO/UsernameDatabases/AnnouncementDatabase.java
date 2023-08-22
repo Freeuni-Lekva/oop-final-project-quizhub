@@ -21,11 +21,6 @@ public class AnnouncementDatabase extends Database {
     public AnnouncementDatabase() throws SQLException {
     }
 
-    public AnnouncementDatabase(String under_score) throws SQLException{
-        super(under_score);
-        databaseName = "test_database;";
-    }
-
     public void add(int id, String username, String subject, String text) throws SQLException{
         Connection connection = ConnectionPool.openConnection();
         String insertStatement = "INSERT INTO " + tablename + " (id, username, subject, text) " +

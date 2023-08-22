@@ -18,10 +18,6 @@ public class UserQuizDatabase extends Database {
     public UserQuizDatabase() throws SQLException {
     }
 
-    public UserQuizDatabase(String under_score) throws SQLException{
-        super(under_score);
-        databaseName = "test_database;";
-    }
 
     public void add(String username, int id, Timestamp create_time) throws SQLException {
         Connection connection = ConnectionPool.openConnection();

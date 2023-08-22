@@ -17,10 +17,6 @@ public class FriendRequestsDatabase extends Database {
 
     }
 
-    public FriendRequestsDatabase(String under_score) throws SQLException{
-        super(under_score);
-        databaseName = "test_database;";
-    }
 
 
     public void add(String username_from, String username_to) throws SQLException {
@@ -51,14 +47,12 @@ public class FriendRequestsDatabase extends Database {
     public void delete(String username) throws SQLException {
         Connection connection = ConnectionPool.openConnection();
         String statementToExecute = "DELETE FROM " + tablename + " WHERE username_from = ? OR username_to = ?";
-        try (PreparedStatement statement = connection.prepareStatement(statementToExecute)) {
-            statement.setString(1, username);
-            statement.setString(2,username);
-            statement.execute("USE " + databaseName);
-            statement.execute();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        PreparedStatement statement = connection.prepareStatement(statementToExecute);
+        statement.setString(1, username);
+        statement.setString(2,username);
+        statement.execute("USE " + databaseName);
+        statement.execute();
+
         ConnectionPool.closeConnection(connection);
     }
 

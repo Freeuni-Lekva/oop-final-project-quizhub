@@ -16,10 +16,6 @@ public class UsersDatabase extends Database {
     public UsersDatabase() throws SQLException {
     }
 
-    public UsersDatabase(String under_score) throws SQLException{
-        super(under_score);
-        databaseName = "test_database;";
-    }
 
     public void add(String username, String password, Boolean isAdministrator) throws SQLException {
         Connection connection = ConnectionPool.openConnection();

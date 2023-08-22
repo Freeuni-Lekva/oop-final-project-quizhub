@@ -17,11 +17,6 @@ public class AchievementDatabase extends Database {
     public AchievementDatabase() throws SQLException {
     }
 
-    public AchievementDatabase(String under_score) throws SQLException{
-        super(under_score);
-        databaseName = "test_database;";
-    }
-
     public void add(String username, int id) throws SQLException {
         if(hasAchievement(username,id)) return;
         Connection connection = ConnectionPool.openConnection();

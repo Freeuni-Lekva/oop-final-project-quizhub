@@ -20,11 +20,6 @@ public class RankingsDatabase extends Database {
     public RankingsDatabase() throws SQLException {
     }
 
-    public RankingsDatabase(String under_score) throws SQLException{
-        super(under_score);
-        databaseName = "test_database;";
-    }
-
     public void add(int id, String username, int quiz_id, int score, Timestamp start_time, Timestamp end_time) throws SQLException {
         Connection connection = ConnectionPool.openConnection();
         String insertStatement = "INSERT INTO " + tablename + " (id, username, quiz_id, score, start_time, end_time) " +
@@ -214,26 +209,26 @@ public class RankingsDatabase extends Database {
         String userQuizQuery = "SELECT DISTINCT id, username, create_time AS action_time FROM " + UserQuizDatabase.tablename + " WHERE username = ?";
         String rankingsQuery = "SELECT DISTINCT quiz_id, username, end_time AS action_time, score FROM " + tablename + " WHERE username = ?";
         PreparedStatement userQuizStatement = connection.prepareStatement(userQuizQuery);
-             PreparedStatement rankingsStatement = connection.prepareStatement(rankingsQuery);
-            userQuizStatement.setString(1, username);
-            rankingsStatement.setString(1, username);
-            userQuizStatement.execute("USE " + databaseName);
-            rankingsStatement.execute("USE " + databaseName);
-            ResultSet userQuizResultSet = userQuizStatement.executeQuery();
-                 ResultSet rankingsResultSet = rankingsStatement.executeQuery();
-                while (userQuizResultSet.next()) {
-                    long id = userQuizResultSet.getLong("id");
-                    Timestamp actionTime = userQuizResultSet.getTimestamp("action_time");
-                    UserAction userAction = new UserAction("UserQuiz", id, username, actionTime, "x");
-                    userActions.add(userAction);
-                }
-                while (rankingsResultSet.next()) {
-                    long id = rankingsResultSet.getLong("quiz_id");
-                    Timestamp actionTime = rankingsResultSet.getTimestamp("action_time");
-                    String score = rankingsResultSet.getString("score");
-                    UserAction userAction = new UserAction("Rankings", id, username, actionTime, score);
-                    userActions.add(userAction);
-                }
+        PreparedStatement rankingsStatement = connection.prepareStatement(rankingsQuery);
+        userQuizStatement.setString(1, username);
+        rankingsStatement.setString(1, username);
+        userQuizStatement.execute("USE " + databaseName);
+        rankingsStatement.execute("USE " + databaseName);
+        ResultSet userQuizResultSet = userQuizStatement.executeQuery();
+        ResultSet rankingsResultSet = rankingsStatement.executeQuery();
+        while (userQuizResultSet.next()) {
+            long id = userQuizResultSet.getLong("id");
+            Timestamp actionTime = userQuizResultSet.getTimestamp("action_time");
+            UserAction userAction = new UserAction("UserQuiz", id, username, actionTime, "x");
+            userActions.add(userAction);
+        }
+        while (rankingsResultSet.next()) {
+            long id = rankingsResultSet.getLong("quiz_id");
+            Timestamp actionTime = rankingsResultSet.getTimestamp("action_time");
+            String score = rankingsResultSet.getString("score");
+            UserAction userAction = new UserAction("Rankings", id, username, actionTime, score);
+            userActions.add(userAction);
+        }
         userActions.sort(Comparator.comparing(UserAction::getActionTime));
         ConnectionPool.closeConnection(connection);
         return userActions;
@@ -306,22 +301,20 @@ public class RankingsDatabase extends Database {
         }
         ArrayList<UserAction> result = new ArrayList<>();
         Set<String> set = new HashSet<>();
-
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setInt(1, quiz_id);
-            preparedStatement.execute("USE " + databaseName);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                String username = resultSet.getString("username");
-                String score = resultSet.getString("score");
-                int elapsedSeconds = resultSet.getInt("elapsed_time");
-                UserAction userAction = new UserAction("_", quiz_id, username, new Timestamp(elapsedSeconds), score);
-                if(!set.contains(username)){
-                    result.add(userAction);
-                    set.add(username);
-                }
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setInt(1, quiz_id);
+        preparedStatement.execute("USE " + databaseName);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        while (resultSet.next()) {
+            String username = resultSet.getString("username");
+            String score = resultSet.getString("score");
+            int elapsedSeconds = resultSet.getInt("elapsed_time");
+            UserAction userAction = new UserAction("_", quiz_id, username, new Timestamp(elapsedSeconds), score);
+            if(!set.contains(username)){
+                result.add(userAction);
+                set.add(username);
             }
-
+        }
         ConnectionPool.closeConnection(connection);
         return result;
 

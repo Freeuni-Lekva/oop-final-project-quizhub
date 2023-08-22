@@ -17,12 +17,6 @@ public class FriendsDatabase extends Database {
     public FriendsDatabase() throws SQLException {
     }
 
-    public FriendsDatabase(String under_score) throws SQLException{
-        super(under_score);
-        databaseName = "test_database;";
-    }
-
-
     public void remove(String username) throws SQLException {
         Connection connection = ConnectionPool.openConnection();
         String query = "DELETE FROM " + tablename + " WHERE (username_from = ?) OR (username_to = ?)";
