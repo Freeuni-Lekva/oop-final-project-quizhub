@@ -25,23 +25,8 @@ public class MessageManagerTest extends TestCase {
     protected void setUp() throws SQLException {
         mm = new MessageManager();
         msg_db = new MessageDatabase();
-        clearTables();
-    }
-    public void clearTables() throws SQLException {
-        UsersDatabase UserDB = new UsersDatabase();
-        UserDB.clearTable(UsersDatabase.tablename);
-        UserDB.clearTable(RankingsDatabase.tablename);
-        UserDB.clearTable(FriendsDatabase.tablename);
-        UserDB.clearTable(QuizDatabase.tablename);
-        UserDB.clearTable(QuizQuestionDatabase.tablename);
-        UserDB.clearTable(QuestionsDatabase.tablename);
-        UserDB.clearTable(UserQuizDatabase.tablename);
-        UserDB.clearTable(AchievementDatabase.tablename);
-        UserDB.clearTable(AnnouncementDatabase.tablename);
-        UserDB.clearTable(FriendRequestsDatabase.tablename);
-        UserDB.clearTable(MessageDatabase.tablename);
-        UserDB.clearTable(TagsQuizDatabase.tablename);
-        msg_db.clearTable(MessageDatabase.tablename);
+        QuizDatabase database = new QuizDatabase();
+        database.clearAllTables();
     }
     @Test
     public void testAdd() throws SQLException {
