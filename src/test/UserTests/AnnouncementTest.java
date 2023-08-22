@@ -8,15 +8,20 @@ import DATABASE_DAO.UsernameDatabases.*;
 import Usernames_DAO.manager.AdminManager;
 import Usernames_DAO.manager.HomepageManager;
 import junit.framework.TestCase;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.BeforeEach;
 
 import java.sql.SQLException;
 
 public class AnnouncementTest extends TestCase {
     private AdminManager manager;
-    public AnnouncementTest() throws SQLException {
+
+    @BeforeEach
+    protected void setUp() throws SQLException {
         clearTables();
         manager = new AdminManager("admin");
     }
+
     public void clearTables() throws SQLException {
         UsersDatabase UserDB = new UsersDatabase();
         UserDB.clearTable(UsersDatabase.tablename);
@@ -32,6 +37,8 @@ public class AnnouncementTest extends TestCase {
         UserDB.clearTable(MessageDatabase.tablename);
         UserDB.clearTable(TagsQuizDatabase.tablename);
     }
+
+    @Test
     public void testGetters() throws SQLException {
         manager.addAnnouncement("admin","subject","text");
         HomepageManager hmp = new HomepageManager();
