@@ -19,7 +19,6 @@ public class TestUserCreatesQuiz extends TestCase {
     private UserCreatesQuiz userCreatesQuiz;
     private UserCreatesQuiz userCreatesQuiz1;
     private QuizDatabase quizDatabase;
-    private QuestionsDatabase questionsDatabase;
     private QuizQuestionDatabase quizQuestionDatabase;
     private TagsQuizDatabase tagsQuizDatabase;
 
@@ -30,9 +29,9 @@ public class TestUserCreatesQuiz extends TestCase {
         userCreatesQuiz = new UserCreatesQuiz(user);
         userCreatesQuiz1 = new UserCreatesQuiz(user);
         quizDatabase = new QuizDatabase();
-        questionsDatabase = new QuestionsDatabase();
         quizQuestionDatabase = new QuizQuestionDatabase();
         tagsQuizDatabase = new TagsQuizDatabase();
+        quizDatabase.clearAllTables();
     }
 
     @Test
@@ -75,7 +74,7 @@ public class TestUserCreatesQuiz extends TestCase {
     }
 
     @Test
-    public void testFinishAndPublish() throws SQLException {
+    public void testFinishAndPublish1() throws SQLException {
         userCreatesQuiz.setQuizName("Test Quiz");
         userCreatesQuiz.setCategory("Science");
         userCreatesQuiz.addQuestion(new QuestionMatching("Match these two columns:", "3x4//7-2//36/6//6//5//12",
@@ -113,12 +112,12 @@ public class TestUserCreatesQuiz extends TestCase {
     }
 
     @Test
-    public void test1() throws SQLException {
+    public void testFinishAndPublish2() throws SQLException {
         userCreatesQuiz1.setQuizName("Test Quiz 2");
         userCreatesQuiz1.setCategory("Geography");
         userCreatesQuiz1.addQuestion(new QuestionFillBlank("3 x ___ = 12 and ___ is a capital city of Georgia", "4//Tbilisi",
                 true, false));
-        userCreatesQuiz1.setTags("Hard", "", "");
+        userCreatesQuiz1.setTags("Hard", "", "For You");
         userCreatesQuiz1.setDescription("This is a second test quiz for beginners. Enjoy it <3");
         userCreatesQuiz1.setOnePage(true);
         userCreatesQuiz1.addQuestion(new QuestionMultiAnswer("Name 5 Europian City", "London//Paris//Tbilisi//Kiev//Madrid",
@@ -132,5 +131,23 @@ public class TestUserCreatesQuiz extends TestCase {
                 "corgi", true, false));
 
         int quiz_id = userCreatesQuiz1.FinishAndPublish();
+
+        Quiz quiz1 = quizDatabase.getQuiz(quiz_id);
+        ArrayList<String> tags = tagsQuizDatabase.getTags(quiz_id);
+        ArrayList<Question> questions = quizQuestionDatabase.getQuestions(quiz_id);
+        Quiz quiz = new Quiz(quiz1.getQuizName(), quiz1.getCreatorName(), quiz1.getCategory(), quiz1.getDescription(),
+                tags, questions, quiz1.isRandom(), quiz1.isOnePage(), quiz1.hasImmediateCorrection(), quiz1.isPracticeMode());
+
+        assertEquals("Test Quiz 2", quiz.getQuizName());
+        assertEquals("D.Gelashvili", quiz.getCreatorName());
+        assertEquals("Geography", quiz.getCategory());
+        assertEquals(Arrays.asList("Hard", "For You"), quiz.getTags());
+        assertEquals("This is a second test quiz for beginners. Enjoy it <3", quiz.getDescription());
+        assertTrue(quiz.isRandom());
+        assertTrue(quiz.isOnePage());
+        assertFalse(quiz.hasImmediateCorrection());
+        assertFalse(quiz.isPracticeMode());
+        assertEquals(9, quiz.getMaxScore());
+        assertEquals(4, quiz.getTotalNumberOfQuestions());
     }
 }
