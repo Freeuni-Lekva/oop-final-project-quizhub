@@ -9,7 +9,8 @@ import Usernames_DAO.manager.FriendshipManager;
 import Usernames_DAO.manager.accountManager;
 import Usernames_DAO.models.User;
 import junit.framework.TestCase;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.BeforeEach;
 
 import java.sql.SQLException;
 
@@ -18,7 +19,9 @@ public class FriendshipManagerTest extends TestCase {
     private FriendRequestsDatabase frReq_db;
     private FriendsDatabase fr_db;
     private UsersDatabase U_db;
-    public FriendshipManagerTest() throws SQLException {
+
+    @BeforeEach
+    protected void setUp() throws SQLException {
         User u = new User("vako",false);
         manager = new FriendshipManager();
         frReq_db = new FriendRequestsDatabase();
@@ -26,6 +29,7 @@ public class FriendshipManagerTest extends TestCase {
         U_db = new UsersDatabase();
         clearTables();
     }
+
     public void clearTables() throws SQLException {
         UsersDatabase UserDB = new UsersDatabase();
         UserDB.clearTable(UsersDatabase.tablename);
