@@ -9,7 +9,8 @@ import Usernames_DAO.manager.FriendshipManager;
 import Usernames_DAO.manager.accountManager;
 import Usernames_DAO.models.User;
 import junit.framework.TestCase;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.BeforeEach;
 
 import java.sql.SQLException;
 
@@ -18,29 +19,18 @@ public class FriendshipManagerTest extends TestCase {
     private FriendRequestsDatabase frReq_db;
     private FriendsDatabase fr_db;
     private UsersDatabase U_db;
-    public FriendshipManagerTest() throws SQLException {
+
+    @BeforeEach
+    protected void setUp() throws SQLException {
         User u = new User("vako",false);
         manager = new FriendshipManager();
         frReq_db = new FriendRequestsDatabase();
         fr_db = new FriendsDatabase();
         U_db = new UsersDatabase();
-        clearTables();
+        QuizDatabase database = new QuizDatabase();
+        database.clearAllTables();
     }
-    public void clearTables() throws SQLException {
-        UsersDatabase UserDB = new UsersDatabase();
-        UserDB.clearTable(UsersDatabase.tablename);
-        UserDB.clearTable(RankingsDatabase.tablename);
-        UserDB.clearTable(FriendsDatabase.tablename);
-        UserDB.clearTable(QuizDatabase.tablename);
-        UserDB.clearTable(QuizQuestionDatabase.tablename);
-        UserDB.clearTable(QuestionsDatabase.tablename);
-        UserDB.clearTable(UserQuizDatabase.tablename);
-        UserDB.clearTable(AchievementDatabase.tablename);
-        UserDB.clearTable(AnnouncementDatabase.tablename);
-        UserDB.clearTable(FriendRequestsDatabase.tablename);
-        UserDB.clearTable(MessageDatabase.tablename);
-        UserDB.clearTable(TagsQuizDatabase.tablename);
-    }
+
     @Test
     public void testAddFriendshipRequest() throws Exception {
         User u = new User("vako",false);
@@ -55,7 +45,8 @@ public class FriendshipManagerTest extends TestCase {
         fr_db.clearTable(FriendsDatabase.tablename);
         frReq_db.clearTable(FriendRequestsDatabase.tablename);
         U_db.clearTable(UsersDatabase.tablename);
-        clearTables();
+        QuizDatabase database = new QuizDatabase();
+        database.clearAllTables();
     }
     @Test
     public void testReject() throws SQLException {

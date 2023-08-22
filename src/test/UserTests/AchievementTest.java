@@ -8,7 +8,8 @@ import DATABASE_DAO.UsernameDatabases.*;
 import Usernames_DAO.models.Achievement;
 import Usernames_DAO.models.User;
 import junit.framework.TestCase;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.BeforeEach;
 
 import java.sql.SQLException;
 
@@ -17,29 +18,16 @@ public class AchievementTest extends TestCase {
     private UserQuizDatabase quiz_db;
     private RankingsDatabase rank_db;
 
-    public AchievementTest() throws SQLException {
+    @BeforeEach
+    protected void setUp() throws SQLException {
         ach_db = new AchievementDatabase();
         ach_db.clearTable(AchievementDatabase.tablename);
         quiz_db = new UserQuizDatabase();
         quiz_db.clearTable(UserQuizDatabase.tablename);
         rank_db = new RankingsDatabase();
         rank_db.clearTable(RankingsDatabase.tablename);
-        clearTables();
-    }
-    public void clearTables() throws SQLException {
-        UsersDatabase UserDB = new UsersDatabase();
-        UserDB.clearTable(UsersDatabase.tablename);
-        UserDB.clearTable(RankingsDatabase.tablename);
-        UserDB.clearTable(FriendsDatabase.tablename);
-        UserDB.clearTable(QuizDatabase.tablename);
-        UserDB.clearTable(QuizQuestionDatabase.tablename);
-        UserDB.clearTable(QuestionsDatabase.tablename);
-        UserDB.clearTable(UserQuizDatabase.tablename);
-        UserDB.clearTable(AchievementDatabase.tablename);
-        UserDB.clearTable(AnnouncementDatabase.tablename);
-        UserDB.clearTable(FriendRequestsDatabase.tablename);
-        UserDB.clearTable(MessageDatabase.tablename);
-        UserDB.clearTable(TagsQuizDatabase.tablename);
+        QuizDatabase database = new QuizDatabase();
+        database.clearAllTables();
     }
 
     @Test

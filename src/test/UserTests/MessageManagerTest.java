@@ -5,11 +5,14 @@ import DATABASE_DAO.QuizDatabases.QuizDatabase;
 import DATABASE_DAO.QuizDatabases.QuizQuestionDatabase;
 import DATABASE_DAO.QuizDatabases.TagsQuizDatabase;
 import DATABASE_DAO.UsernameDatabases.*;
+import Usernames_DAO.UserQuiz.UserCreatesQuiz;
 import Usernames_DAO.manager.FriendshipManager;
 import Usernames_DAO.message.Message;
 import Usernames_DAO.message.MessageManager;
+import Usernames_DAO.models.User;
 import junit.framework.TestCase;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.BeforeEach;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -17,25 +20,13 @@ import java.util.ArrayList;
 public class MessageManagerTest extends TestCase {
     private MessageManager mm;
     MessageDatabase msg_db;
-    public MessageManagerTest() throws SQLException {
+
+    @BeforeEach
+    protected void setUp() throws SQLException {
         mm = new MessageManager();
         msg_db = new MessageDatabase();
-        clearTables();
-    }
-    public void clearTables() throws SQLException {
-        UsersDatabase UserDB = new UsersDatabase();
-        UserDB.clearTable(UsersDatabase.tablename);
-        UserDB.clearTable(RankingsDatabase.tablename);
-        UserDB.clearTable(FriendsDatabase.tablename);
-        UserDB.clearTable(QuizDatabase.tablename);
-        UserDB.clearTable(QuizQuestionDatabase.tablename);
-        UserDB.clearTable(QuestionsDatabase.tablename);
-        UserDB.clearTable(UserQuizDatabase.tablename);
-        UserDB.clearTable(AchievementDatabase.tablename);
-        UserDB.clearTable(AnnouncementDatabase.tablename);
-        UserDB.clearTable(FriendRequestsDatabase.tablename);
-        UserDB.clearTable(MessageDatabase.tablename);
-        UserDB.clearTable(TagsQuizDatabase.tablename);
+        QuizDatabase database = new QuizDatabase();
+        database.clearAllTables();
     }
     @Test
     public void testAdd() throws SQLException {
@@ -62,7 +53,6 @@ public class MessageManagerTest extends TestCase {
         assertEquals("text",result2.get(0).getText());
         assertEquals("me",result3.get(0));
         assertEquals("mee",result3.get(1));
-        msg_db.clearTable(MessageDatabase.tablename);
     }
 
     @Test
@@ -73,5 +63,17 @@ public class MessageManagerTest extends TestCase {
         assertEquals("vako",req.get(0));
         msg_db.clearTable(MessageDatabase.tablename);
         msg_db.clearTable(FriendRequestsDatabase.tablename);
+    }
+
+    @Test
+    public void testChallenge() throws SQLException {
+        User user = new User("vako", false);
+        UserCreatesQuiz quiz = new UserCreatesQuiz(user);
+        quiz.setQuizName("name");
+        int id = quiz.FinishAndPublish();
+        assertEquals(id, 1);
+        Message sms = new Message("vako", "luka", "name//content",true, id);
+        String name = sms.getQuizName();
+        assertEquals("name", name);
     }
 }
