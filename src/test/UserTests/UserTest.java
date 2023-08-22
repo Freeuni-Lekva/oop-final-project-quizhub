@@ -1,3 +1,5 @@
+package UserTests;
+
 import DATABASE_DAO.QuizDatabases.QuestionsDatabase;
 import DATABASE_DAO.QuizDatabases.QuizDatabase;
 import DATABASE_DAO.QuizDatabases.QuizQuestionDatabase;
@@ -6,12 +8,16 @@ import DATABASE_DAO.UsernameDatabases.*;
 import Usernames_DAO.manager.accountManager;
 import Usernames_DAO.models.User;
 import junit.framework.TestCase;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.sql.SQLException;
 
 public class UserTest extends TestCase {
     private User u;
-    public UserTest() throws SQLException {
+
+    @BeforeEach
+    protected void setUp() throws SQLException {
         clearTables();
         u = new User("vako",true);
     }
@@ -31,6 +37,8 @@ public class UserTest extends TestCase {
         UserDB.clearTable(MessageDatabase.tablename);
         UserDB.clearTable(TagsQuizDatabase.tablename);
     }
+
+    @Test
     public void testGetters() throws Exception {
         accountManager accManager = new accountManager();
         accManager.addAcc("vako","123");
@@ -50,6 +58,8 @@ public class UserTest extends TestCase {
         clearTables();
 
     }
+
+    @Test
     public void testGetActivity() throws Exception {
         clearTables();
         accountManager accManager = new accountManager();
@@ -68,6 +78,7 @@ public class UserTest extends TestCase {
         clearTables();
     }
 
+    @Test
     public void testRecents() throws SQLException {
         UserQuizDatabase uq_db = new UserQuizDatabase();
         uq_db.add("vako",1,uq_db.getCurrentDate());
