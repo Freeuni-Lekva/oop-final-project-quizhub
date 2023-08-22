@@ -18,24 +18,9 @@ public class AnnouncementTest extends TestCase {
 
     @BeforeEach
     protected void setUp() throws SQLException {
-        clearTables();
+        QuizDatabase database = new QuizDatabase();
+        database.clearAllTables();
         manager = new AdminManager("admin");
-    }
-
-    public void clearTables() throws SQLException {
-        UsersDatabase UserDB = new UsersDatabase();
-        UserDB.clearTable(UsersDatabase.tablename);
-        UserDB.clearTable(RankingsDatabase.tablename);
-        UserDB.clearTable(FriendsDatabase.tablename);
-        UserDB.clearTable(QuizDatabase.tablename);
-        UserDB.clearTable(QuizQuestionDatabase.tablename);
-        UserDB.clearTable(QuestionsDatabase.tablename);
-        UserDB.clearTable(UserQuizDatabase.tablename);
-        UserDB.clearTable(AchievementDatabase.tablename);
-        UserDB.clearTable(AnnouncementDatabase.tablename);
-        UserDB.clearTable(FriendRequestsDatabase.tablename);
-        UserDB.clearTable(MessageDatabase.tablename);
-        UserDB.clearTable(TagsQuizDatabase.tablename);
     }
 
     @Test
