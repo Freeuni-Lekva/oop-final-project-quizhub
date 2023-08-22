@@ -1,7 +1,3 @@
-# For database-side testing, switch from using the "my_database" to the "test_database".
-# This change will ensure that our tests don't affect the production database and help maintain data integrity.
-# Remember to update any relevant configurations and connection strings accordingly.
-
 USE my_database;
 DROP TABLE IF EXISTS QuestionsTable;
 CREATE TABLE QuestionsTable
@@ -93,5 +89,3 @@ CREATE TABLE Rankings
  score BIGINT,
  start_time TIMESTAMP,
  end_time TIMESTAMP);
-
-
