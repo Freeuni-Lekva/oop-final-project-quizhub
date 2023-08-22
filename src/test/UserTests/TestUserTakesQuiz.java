@@ -1,5 +1,7 @@
 package UserTests;
 
+import DATABASE_DAO.Database;
+import DATABASE_DAO.QuizDatabases.QuizDatabase;
 import Questions_DAO.*;
 import Usernames_DAO.UserQuiz.SummaryQuiz;
 import Usernames_DAO.UserQuiz.UserCreatesQuiz;
@@ -29,6 +31,8 @@ public class TestUserTakesQuiz extends TestCase {
         User user = new User("D.Gelashvili", false);
         start_time1 = new Timestamp(System.currentTimeMillis());
         start_time2 = new Timestamp(System.currentTimeMillis());
+        QuizDatabase database = new QuizDatabase();
+        database.clearAllTables();
         quiz_id1 = CreateFirstQuiz(user);
         quiz_id2 = CreateSecondQuiz(user);
         userTakesQuiz1 = new UserTakesQuiz(user, quiz_id1, start_time1, true);
@@ -52,6 +56,7 @@ public class TestUserTakesQuiz extends TestCase {
 
         return userCreatesQuiz.FinishAndPublish();
     }
+
     private int CreateSecondQuiz(User user) throws SQLException {
         UserCreatesQuiz userCreatesQuiz = new UserCreatesQuiz(user);
         userCreatesQuiz.setQuizName("Test Quiz 2");
@@ -93,13 +98,18 @@ public class TestUserTakesQuiz extends TestCase {
         ArrayList<String> ans1 = new ArrayList<>();
         ArrayList<String> userAns2 = new ArrayList<>();
 
-        userAns1.add("3x4//12"); userAns1.add("7-2//6"); userAns1.add("36/6//5");
-        ans1.add("36/6//6"); ans1.add("3x4//12"); ans1.add("7-2//5");
+        userAns1.add("3x4//12");
+        userAns1.add("7-2//6");
+        userAns1.add("36/6//5");
+        ans1.add("36/6//6");
+        ans1.add("3x4//12");
+        ans1.add("7-2//5");
         assertEquals(ans1, userTakesQuiz1.submitQuestion(userAns1));
         assertEquals(1, userTakesQuiz1.getQuiz().getUserScore());
         userTakesQuiz1.getQuiz().goToNextQuestion();
 
-        userAns2.add("4"); userAns2.add("tbilisi");
+        userAns2.add("4");
+        userAns2.add("tbilisi");
         assertNull(userTakesQuiz2.submitQuestion(userAns2));
         assertEquals(2, userTakesQuiz2.getQuiz().getUserScore());
         userTakesQuiz2.getQuiz().goToNextQuestion();
@@ -132,7 +142,9 @@ public class TestUserTakesQuiz extends TestCase {
         ArrayList<String> userAns1 = new ArrayList<>();
         ArrayList<String> userAns2 = new ArrayList<>();
 
-        userAns1.add("3x4//12"); userAns1.add("7-2//6"); userAns1.add("36/6//5");
+        userAns1.add("3x4//12");
+        userAns1.add("7-2//6");
+        userAns1.add("36/6//5");
         userTakesQuiz1.submitQuestion(userAns1);
         userTakesQuiz1.getQuiz().goToNextQuestion();
         userAns1.clear();
@@ -142,7 +154,9 @@ public class TestUserTakesQuiz extends TestCase {
         userTakesQuiz1.getQuiz().goToNextQuestion();
         userAns1.clear();
 
-        userAns1.add("3x4//12"); userAns1.add("7-2//5"); userAns1.add("36/6//6");
+        userAns1.add("3x4//12");
+        userAns1.add("7-2//5");
+        userAns1.add("36/6//6");
         userTakesQuiz1.submitQuestion(userAns1);
         userTakesQuiz1.getQuiz().goToNextQuestion();
         userAns1.clear();
@@ -152,7 +166,9 @@ public class TestUserTakesQuiz extends TestCase {
         userTakesQuiz1.getQuiz().goToNextQuestion();
         userAns1.clear();
 
-        userAns1.add("3x4//12"); userAns1.add("7-2//5"); userAns1.add("36/6//6");
+        userAns1.add("3x4//12");
+        userAns1.add("7-2//5");
+        userAns1.add("36/6//6");
         userTakesQuiz1.submitQuestion(userAns1);
         userTakesQuiz1.getQuiz().goToNextQuestion();
         userAns1.clear();
@@ -162,7 +178,9 @@ public class TestUserTakesQuiz extends TestCase {
         userTakesQuiz1.getQuiz().goToNextQuestion();
         userAns1.clear();
 
-        userAns1.add("3x4//12"); userAns1.add("7-2//5"); userAns1.add("36/6//6");
+        userAns1.add("3x4//12");
+        userAns1.add("7-2//5");
+        userAns1.add("36/6//6");
         userTakesQuiz1.submitQuestion(userAns1);
         assertFalse(userTakesQuiz1.getQuiz().hasNextQuestion());
 
@@ -170,10 +188,11 @@ public class TestUserTakesQuiz extends TestCase {
         LocalDateTime startDateTime1 = start_time1.toLocalDateTime();
         LocalDateTime endDateTime1 = end_time1.toLocalDateTime();
         Duration duration1 = Duration.between(startDateTime1, endDateTime1);
-        assertEquals(SummaryQuiz.timeToString((int)(duration1.toMillis() / 1000)), userTakesQuiz1.getTime());
+        assertEquals(SummaryQuiz.timeToString((int) (duration1.toMillis() / 1000)), userTakesQuiz1.getTime());
 
 
-        userAns2.add("4"); userAns2.add("tbilisi");
+        userAns2.add("4");
+        userAns2.add("tbilisi");
         userTakesQuiz2.submitQuestion(userAns2);
         userTakesQuiz2.getQuiz().goToNextQuestion();
         userAns2.clear();
@@ -189,6 +208,6 @@ public class TestUserTakesQuiz extends TestCase {
         LocalDateTime startDateTime2 = start_time2.toLocalDateTime();
         LocalDateTime endDateTime2 = end_time2.toLocalDateTime();
         Duration duration2 = Duration.between(startDateTime2, endDateTime2);
-        assertEquals(SummaryQuiz.timeToString((int)(duration2.toMillis() / 1000)), userTakesQuiz2.getTime());
+        assertEquals(SummaryQuiz.timeToString((int) (duration2.toMillis() / 1000)), userTakesQuiz2.getTime());
     }
 }

@@ -1,5 +1,6 @@
 package UserTests;
 
+import DATABASE_DAO.QuizDatabases.QuizDatabase;
 import Questions_DAO.*;
 import Usernames_DAO.UserQuiz.SummaryQuiz;
 import Usernames_DAO.UserQuiz.UserCreatesQuiz;
@@ -22,6 +23,8 @@ public class TestSummaryQuiz extends TestCase {
     @BeforeEach
     public void setUp() throws Exception {
         super.setUp();
+        QuizDatabase database = new QuizDatabase();
+        database.clearAllTables();
         User user = new User("D.Gelashvili", false);
         quiz_id1 = CreateQuiz(user);
         summaryQuiz = new SummaryQuiz(quiz_id1);
