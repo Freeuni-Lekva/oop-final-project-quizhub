@@ -7,6 +7,8 @@ import DATABASE_DAO.QuizDatabases.TagsQuizDatabase;
 import DATABASE_DAO.UsernameDatabases.*;
 import junit.framework.TestCase;
 import Usernames_DAO.manager.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.sql.SQLException;
 
@@ -14,13 +16,15 @@ import java.sql.SQLException;
 public class accountManagerTest extends TestCase {
     accountManager manager;
     private UsersDatabase userDB;
-    @Override
+
+    @BeforeEach
     protected void setUp() throws Exception {
         super.setUp();
         manager = new accountManager();
         userDB = new UsersDatabase();
         clearTables();
     }
+
     public void clearTables() throws SQLException {
         UsersDatabase UserDB = new UsersDatabase();
         UserDB.clearTable(UsersDatabase.tablename);
@@ -36,7 +40,7 @@ public class accountManagerTest extends TestCase {
         UserDB.clearTable(MessageDatabase.tablename);
         UserDB.clearTable(TagsQuizDatabase.tablename);
     }
-
+    @Test
     public void testAdd() throws Exception {
         assertTrue( manager.addAcc("name", "pass") );
         assertTrue( manager.addAcc("name1", "pass1") );
@@ -53,6 +57,7 @@ public class accountManagerTest extends TestCase {
         assertFalse( manager.addAcc(null, "pass") );
         assertFalse( manager.addAcc(null, null) );
     }
+    @Test
     public void testMatch() throws Exception {
         assertFalse( manager.matchesPassword("name", "pass") );
         assertFalse( manager.matchesPassword("name", null) );
@@ -79,6 +84,7 @@ public class accountManagerTest extends TestCase {
         assertFalse( manager.matchesPassword(null, null) );
     }
 
+    @Test
     public void testExists() throws Exception {
         assertFalse(manager.ContainsKey(null));
         assertFalse(manager.ContainsKey("user"));
