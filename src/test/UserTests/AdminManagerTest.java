@@ -39,7 +39,8 @@ public class AdminManagerTest extends TestCase {
 
     @BeforeEach
     protected void setUp() throws Exception {
-        clearTables();
+        QuizDatabase database = new QuizDatabase();
+        database.clearAllTables();
         db = new UsersDatabase();
         db.clearTable(UsersDatabase.tablename);
         accManager = new accountManager();
@@ -55,21 +56,6 @@ public class AdminManagerTest extends TestCase {
         this.rank_db = new RankingsDatabase();
         this.msg_db = new MessageDatabase();
         this.ann_db = new AnnouncementDatabase();
-    }
-    public void clearTables() throws SQLException {
-        UsersDatabase UserDB = new UsersDatabase();
-        UserDB.clearTable(UsersDatabase.tablename);
-        UserDB.clearTable(RankingsDatabase.tablename);
-        UserDB.clearTable(FriendsDatabase.tablename);
-        UserDB.clearTable(QuizDatabase.tablename);
-        UserDB.clearTable(QuizQuestionDatabase.tablename);
-        UserDB.clearTable(QuestionsDatabase.tablename);
-        UserDB.clearTable(UserQuizDatabase.tablename);
-        UserDB.clearTable(AchievementDatabase.tablename);
-        UserDB.clearTable(AnnouncementDatabase.tablename);
-        UserDB.clearTable(FriendRequestsDatabase.tablename);
-        UserDB.clearTable(MessageDatabase.tablename);
-        UserDB.clearTable(TagsQuizDatabase.tablename);
     }
     @Test
     public void testNumOfUser() throws Exception {
