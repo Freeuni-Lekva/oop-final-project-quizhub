@@ -29,8 +29,17 @@ public class QuestionsDatabaseTest extends TestCase {
     }
 
     private void addQuestion() throws SQLException {
-        database.insertQuestion(database.getMinId(QuestionsDatabase.tablename),questions.get(questions.size() - 1).getType(), questions.get(questions.size() - 1).getQuestion(), questions.get(questions.size() - 1).getPossibleAnswers(), questions.get(questions.size() - 1).getAnswers(), questions.get(questions.size() - 1).isOrdered(), questions.get(questions.size() - 1).isCaseSensitive() );
-
+        Question question = questions.get(questions.size() - 1);
+        int question_id = database.getMinId(QuestionsDatabase.tablename);
+        if (question.getType() != 4) {
+            database.insertQuestion(question_id, question.getType(), question.getQuestion(),
+                    question.getPossibleAnswers(), question.getAnswers(), question.isOrdered(), question.isCaseSensitive());
+        } else {
+            ArrayList<String> ls = new ArrayList<>();
+            ls.add(question.getImage());
+            database.insertQuestion(question_id, question.getType(), question.getQuestion(),
+                    ls, question.getAnswers(), question.isOrdered(), question.isCaseSensitive());
+        }
     }
 
 
@@ -199,7 +208,7 @@ public class QuestionsDatabaseTest extends TestCase {
         assertEquals(question.getQuestion(), "Name of the president?");
 
 
-        assertEquals(question.getPossibleAnswers(), Arrays.asList("president.png"));
+        assertEquals(question.getImage(), "president.png");
 
 
         assertEquals(question.getAnswers(), Arrays.asList("Donald Trump"));
@@ -220,7 +229,4 @@ public class QuestionsDatabaseTest extends TestCase {
         addQuestion();
         assertEquals(database.getQuestion(2).getQuestion(), "Name 5 Europian City");
     }
-
-
-
 }
