@@ -31,6 +31,7 @@ public class TestUserCreatesQuiz extends TestCase {
         quizDatabase = new QuizDatabase();
         quizQuestionDatabase = new QuizQuestionDatabase();
         tagsQuizDatabase = new TagsQuizDatabase();
+        quizDatabase.clearAllTables();
     }
 
     @Test
