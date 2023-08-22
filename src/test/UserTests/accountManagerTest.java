@@ -22,24 +22,10 @@ public class accountManagerTest extends TestCase {
         super.setUp();
         manager = new accountManager();
         userDB = new UsersDatabase();
-        clearTables();
+        QuizDatabase database = new QuizDatabase();
+        database.clearAllTables();
     }
 
-    public void clearTables() throws SQLException {
-        UsersDatabase UserDB = new UsersDatabase();
-        UserDB.clearTable(UsersDatabase.tablename);
-        UserDB.clearTable(RankingsDatabase.tablename);
-        UserDB.clearTable(FriendsDatabase.tablename);
-        UserDB.clearTable(QuizDatabase.tablename);
-        UserDB.clearTable(QuizQuestionDatabase.tablename);
-        UserDB.clearTable(QuestionsDatabase.tablename);
-        UserDB.clearTable(UserQuizDatabase.tablename);
-        UserDB.clearTable(AchievementDatabase.tablename);
-        UserDB.clearTable(AnnouncementDatabase.tablename);
-        UserDB.clearTable(FriendRequestsDatabase.tablename);
-        UserDB.clearTable(MessageDatabase.tablename);
-        UserDB.clearTable(TagsQuizDatabase.tablename);
-    }
     @Test
     public void testAdd() throws Exception {
         assertTrue( manager.addAcc("name", "pass") );
