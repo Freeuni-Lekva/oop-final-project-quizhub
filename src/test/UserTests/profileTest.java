@@ -36,24 +36,10 @@ public class profileTest extends TestCase {
         q_db = new QuizDatabase();
         qq_db = new QuizQuestionDatabase();
         Question_db = new QuestionsDatabase();
-        clearTables();
+        QuizDatabase database = new QuizDatabase();
+        database.clearAllTables();
     }
 
-    public void clearTables() throws SQLException {
-        UsersDatabase UserDB = new UsersDatabase();
-        UserDB.clearTable(UsersDatabase.tablename);
-        UserDB.clearTable(RankingsDatabase.tablename);
-        UserDB.clearTable(FriendsDatabase.tablename);
-        UserDB.clearTable(QuizDatabase.tablename);
-        UserDB.clearTable(QuizQuestionDatabase.tablename);
-        UserDB.clearTable(QuestionsDatabase.tablename);
-        UserDB.clearTable(UserQuizDatabase.tablename);
-        UserDB.clearTable(AchievementDatabase.tablename);
-        UserDB.clearTable(AnnouncementDatabase.tablename);
-        UserDB.clearTable(FriendRequestsDatabase.tablename);
-        UserDB.clearTable(MessageDatabase.tablename);
-        UserDB.clearTable(TagsQuizDatabase.tablename);
-    }
     @Test
     public void testProfile1() throws Exception {
         User u = new User("vako",false);
