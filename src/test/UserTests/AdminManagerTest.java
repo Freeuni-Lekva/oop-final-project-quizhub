@@ -5,12 +5,16 @@ import DATABASE_DAO.QuizDatabases.QuizDatabase;
 import DATABASE_DAO.QuizDatabases.QuizQuestionDatabase;
 import DATABASE_DAO.QuizDatabases.TagsQuizDatabase;
 import DATABASE_DAO.UsernameDatabases.*;
+import Questions_DAO.QuestionResponse;
+import Usernames_DAO.UserQuiz.UserCreatesQuiz;
 import Usernames_DAO.manager.AdminManager;
 import Usernames_DAO.manager.HomepageManager;
 import Usernames_DAO.manager.accountManager;
 import Usernames_DAO.message.Message;
+import Usernames_DAO.models.User;
 import junit.framework.TestCase;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.sql.SQLException;
 import java.sql.Time;
@@ -32,7 +36,9 @@ public class AdminManagerTest extends TestCase {
     private RankingsDatabase rank_db;
     private MessageDatabase msg_db;
     private AnnouncementDatabase ann_db;
-    public AdminManagerTest() throws Exception {
+
+    @BeforeEach
+    protected void setUp() throws Exception {
         clearTables();
         db = new UsersDatabase();
         db.clearTable(UsersDatabase.tablename);
@@ -95,17 +101,23 @@ public class AdminManagerTest extends TestCase {
     }
 
     @Test
-    public void testclearHistory() throws SQLException {
+    public void testClearHistory() throws SQLException {
         rank_db.add(1,"vako",1,1,null,null);
         manager.clearHistory(1);
         assertEquals(0,rank_db.getRecords("vako").size());
         rank_db.clearTable(RankingsDatabase.tablename);
     }
+    @Test
     public void testRemoveUser() throws Exception {
         accManager.addAcc("vako","123");
+        User u = new User("vako",false);
+        UserCreatesQuiz quiz = new UserCreatesQuiz(u);
+        quiz.addQuestion(new QuestionResponse("1+1?", "2", false,false));
+        quiz.FinishAndPublish();
         manager.removeUser("vako");
         assertFalse(accManager.ContainsKey("vako"));
     }
+    @Test
     public void testRemoveQuiz() throws SQLException {
         quiz_db.addQuiz(1,"12","vako","","",false,false,false,false);
         manager.removeQuiz(1);
