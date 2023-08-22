@@ -28,9 +28,7 @@ public class ConnectionPool {
             }
         }
     }
-    private ConnectionPool(){
-
-    }
+    private ConnectionPool(){};
 
     public synchronized static Connection openConnection(){
         Connection connection = availableConnections.get(availableConnections.size() - 1);

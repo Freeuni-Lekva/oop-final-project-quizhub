@@ -94,9 +94,4 @@ CREATE TABLE Rankings
  start_time TIMESTAMP,
  end_time TIMESTAMP);
 
-DROP TABLE IF EXISTS Reviews;
-CREATE TABLE Reviews
-(username TEXT,
- id BIGINT,
- text TEXT,
- date TIMESTAMP);
+

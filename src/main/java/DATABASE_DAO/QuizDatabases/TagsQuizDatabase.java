@@ -16,10 +16,6 @@ public class TagsQuizDatabase extends Database {
     public TagsQuizDatabase() throws SQLException {
     }
 
-    public TagsQuizDatabase(String under_score) throws SQLException{
-        super(under_score);
-        databaseName = "test_database;";
-    }
 
     public void addQuiz(String tags, int quiz_id) throws SQLException {
         Connection connection = ConnectionPool.openConnection();

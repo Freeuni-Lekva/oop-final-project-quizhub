@@ -10,16 +10,9 @@ import java.util.ArrayList;
 public class QuestionsDatabase extends Database {
 
     public static String tablename = "QuestionsTable";
-
     private String databaseName = "my_database;";
     public QuestionsDatabase() throws SQLException {
 
-    }
-
-    // New constructor with an additional parameter for testing
-    public QuestionsDatabase(String under_score) throws SQLException {
-        super(under_score);
-        databaseName = "test_database;";
     }
 
     private String ListToString(ArrayList<String> list){

@@ -17,11 +17,6 @@ public class QuizQuestionDatabase extends Database {
     public QuizQuestionDatabase() throws SQLException {
     }
 
-    public QuizQuestionDatabase(String under_score) throws SQLException{
-        super(under_score);
-        databaseName = "test_database;";
-    }
-
     public void addQuestion(int quiz_id, int question_id) throws SQLException {
         Connection connection = ConnectionPool.openConnection();
         String insertStatement = "INSERT INTO " + tablename + " (id, question_id) " +

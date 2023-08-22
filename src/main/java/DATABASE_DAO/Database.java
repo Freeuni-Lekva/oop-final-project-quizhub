@@ -1,6 +1,12 @@
 package DATABASE_DAO;
 
 
+import DATABASE_DAO.QuizDatabases.QuestionsDatabase;
+import DATABASE_DAO.QuizDatabases.QuizDatabase;
+import DATABASE_DAO.QuizDatabases.QuizQuestionDatabase;
+import DATABASE_DAO.QuizDatabases.TagsQuizDatabase;
+import DATABASE_DAO.UsernameDatabases.*;
+
 import java.sql.*;
 import java.time.LocalDateTime;
 
@@ -12,9 +18,6 @@ public class Database {
 
     }
 
-    public Database(String under_score) throws SQLException{
-        databaseName = "test_database;";
-    }
 
     public void clearTable(String tablename) throws SQLException {
         Connection connection = ConnectionPool.openConnection();
@@ -48,7 +51,20 @@ public class Database {
         return maxId;
     }
 
-
+    public void clearAllTables() throws SQLException {
+        clearTable(QuestionsDatabase.tablename);
+        clearTable(QuizDatabase.tablename);
+        clearTable(QuizQuestionDatabase.tablename);
+        clearTable(TagsQuizDatabase.tablename);
+        clearTable(AchievementDatabase.tablename);
+        clearTable(AnnouncementDatabase.tablename);
+        clearTable(FriendRequestsDatabase.tablename);
+        clearTable(FriendsDatabase.tablename);
+        clearTable(MessageDatabase.tablename);
+        clearTable(RankingsDatabase.tablename);
+        clearTable(UserQuizDatabase.tablename);
+        clearTable(UsersDatabase.tablename);
+    }
 
     public Timestamp getCurrentDate() throws SQLException {
         Connection connection = ConnectionPool.openConnection();

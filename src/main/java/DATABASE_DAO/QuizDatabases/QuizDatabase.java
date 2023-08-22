@@ -19,10 +19,6 @@ public class QuizDatabase extends Database {
     public QuizDatabase() throws SQLException {
     }
 
-    public QuizDatabase(String under_score) throws SQLException{
-        super(under_score);
-        databaseNmae = "test_database;";
-    }
 
     public String getQuizName(int id) throws SQLException {
         Connection connection = ConnectionPool.openConnection();
@@ -94,6 +90,7 @@ public class QuizDatabase extends Database {
         Statement statement = connection.createStatement();
         statement.execute("USE " + databaseNmae);
         ResultSet resultSet = statement.executeQuery("SELECT* FROM " + tablename + " WHERE name LIKE '%" + name + "%';");
+
         while(resultSet.next()){
             int id = resultSet.getInt("id");
             Quiz quiz1 = getQuiz(id);
@@ -104,6 +101,7 @@ public class QuizDatabase extends Database {
             Pair<Quiz, Integer> pair = new Pair<>(quiz, id);
             list.add(pair);
         }
+
         ConnectionPool.closeConnection(connection);
         return list;
     }
