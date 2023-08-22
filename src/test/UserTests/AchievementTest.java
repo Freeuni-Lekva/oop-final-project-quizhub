@@ -8,7 +8,8 @@ import DATABASE_DAO.UsernameDatabases.*;
 import Usernames_DAO.models.Achievement;
 import Usernames_DAO.models.User;
 import junit.framework.TestCase;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.BeforeEach;
 
 import java.sql.SQLException;
 
@@ -17,7 +18,8 @@ public class AchievementTest extends TestCase {
     private UserQuizDatabase quiz_db;
     private RankingsDatabase rank_db;
 
-    public AchievementTest() throws SQLException {
+    @BeforeEach
+    protected void setUp() throws SQLException {
         ach_db = new AchievementDatabase();
         ach_db.clearTable(AchievementDatabase.tablename);
         quiz_db = new UserQuizDatabase();
@@ -26,6 +28,7 @@ public class AchievementTest extends TestCase {
         rank_db.clearTable(RankingsDatabase.tablename);
         clearTables();
     }
+
     public void clearTables() throws SQLException {
         UsersDatabase UserDB = new UsersDatabase();
         UserDB.clearTable(UsersDatabase.tablename);
